@@ -1,17 +1,15 @@
-"""
-Unit tests for cleaning module in the RAP pipeline.
-"""
+#Unit tests for cleaning module in the RAP pipeline.
+
 library(testthat)
 
-source("cleaning.R")
+source("D:/repos/R_rap_demo/R/cleaning.R")
 
 test_that("test_clean_health_data", {
-  """
-  Test the clean_health_data function to ensure it:
-  - Fills missing smoker values with 'No'
-  - Converts 'gender' to uppercase
-  - Drops rows with missing 'diagnosis'
-  """
+  #Test the clean_health_data function to ensure it:
+  #- Fills missing smoker values with 'No'
+  #- Converts 'gender' to uppercase
+  #- Drops rows with missing 'diagnosis'
+  
   # Create a sample data frame
   df <- data.frame(
     diagnosis = c("A", "B"),

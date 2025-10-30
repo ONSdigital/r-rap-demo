@@ -1,13 +1,10 @@
-"""
-Unit tests for the I/O module in the RAP pipeline.
-"""
+#Unit tests for the I/O module in the RAP pipeline.
+
 library(testthat)
 
-source("io.R") 
+source("D:/repos/R_rap_demo/R/io.R") 
 test_that("test_read_health_data", {
-  """
-  Test reading a CSV file into a DataFrame.
-  """
+  #Test reading a CSV file into a DataFrame.
   # Create a temporary CSV file
   temp_file <- tempfile(fileext = ".csv")
   df <- data.frame(a = c(1, 2), b = c(3, 4))
@@ -18,9 +15,8 @@ test_that("test_read_health_data", {
 })
 
 test_that("write_dataframe writes CSV correctly", {
-  """
-  Test writing a DataFrame to a CSV file.
-  """
+  #Test writing a DataFrame to a CSV file.
+  
   df <- data.frame(a = c(1, 2), b = c(3, 4))
   temp_file <- tempfile(fileext = ".csv")
   write_dataframe(df, temp_file)

@@ -1,17 +1,14 @@
-"""
-processing.R: Data processing functions for RAP pipeline
-"""
+# processing.R: Data processing functions for RAP pipeline
 library(dplyr)
+
 calculate_disease_prevalence <- function(df){
-  """
-  Calculate disease prevalence rates per month.
+  # Calculate disease prevalence rates per month.
 
-  Args:
-      df (DataFrame): Cleaned health data DataFrame.
+  # Args:
+  #     df (DataFrame): Cleaned health data DataFrame.
 
-  Returns:
-      DataFrame: DataFrame with prevalence rates per month and diagnosis.
-  """
+  # Returns:
+  #     DataFrame: DataFrame with prevalence rates per month and diagnosis.
   prevalence = df %>%
     group_by(month, diagnosis) %>%
     summarise(case_count = n(), .groups = "drop")

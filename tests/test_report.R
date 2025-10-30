@@ -1,9 +1,8 @@
-"""
-Unit tests for the report module in the RAP pipeline.
-"""
+# Unit tests for the report module in the RAP pipeline.
+
 library(testthat)
 library(readr)
-source("report.R")
+source("D:/repos/R_rap_demo/R/report.R")
 
 test_that("test_format_month_section", {
   # Define the variable month used in format_month_section
@@ -29,13 +28,11 @@ test_that("test_format_month_section", {
 
 
 test_that("test_generate_markdown_report", {
-  """
-  Test the generate_markdown_report function to ensure it:
-  - Creates a markdown file
-  - Includes expected content
-  """
+  # Test the generate_markdown_report function to ensure it:
+  # - Creates a markdown file
+  # - Includes expected content
   out_path <- tempfile(fileext = ".md")
-  # Create a saample DataFrame for the report
+  # Create a sample DataFrame for the report
   test_df <- data.frame(
     month = "2025-01",
     diagnosis = "A",

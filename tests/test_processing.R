@@ -1,15 +1,13 @@
-"""
-Unit tests for the processing module in the RAP pipeline.
-"""
+#Unit tests for the processing module in the RAP pipeline.
+
 library(testthat)
-source("processing.R")
+source("D:/repos/R_rap_demo/R/processing.R")
 
 test_that("test_calculate_disease_prevalence", {
-  """
-  Test the calculate_disease_prevalence function to ensure it:
-  - Calculates case counts and prevalence rates correctly.
-  - Returns a DataFrame with expected columns.
-  """
+  #Test the calculate_disease_prevalence function to ensure it:
+  # - Calculates case counts and prevalence rates correctly.
+  # - Returns a DataFrame with expected columns.
+  
   # Create a sample DataFrame
   df = data.frame(month = c("2025-01", "2025-01", "2025-02"),
                   diagnosis = c("A","B","A"))
