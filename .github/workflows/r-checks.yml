@@ -21,15 +21,6 @@ jobs:
         run: |
           Rscript -e "install.packages(c('lintr', 'styler'), repos='https://cran.r-project.org')"
 
-      - name: Annotate lintr warnings
-        run: |
-          Rscript -e "\
-            lints <- c(lintr::lint_dir('R'), lintr::lint('main.R'));\
-            for (lint in lints) {\
-              cat(sprintf('::warning file=%s,line=%d,col=%d::%s\n', lint$filename, lint$line_number, lint$column_number, lint$message));\
-            }\
-          "
-
       - name: Run lintr
         run: |
           Rscript -e "print(lintr::lint_dir('R'))"
@@ -37,16 +28,5 @@ jobs:
 
       - name: Run styler (format check)
         run: |
-          Rscript -e "\
-            files <- list.files('R', pattern = '\\.R$', full.names = TRUE);\
-            styled <- styler::style_file(files, dry = 'on');\
-            if (!all(styled)) {\
-              cat('::warning::Some R files need styling!\\n');\
-              cat('The following files need formatting:\\n');\
-              cat(files[!styled], sep = '\\n');\
-              cat('\\nPlease run styler locally before committing.\\n');\
-              quit(status = 1)\
-            } else {\
-              cat('All R files are properly styled.\\n');\
-            }\
-          "
+          Rscript -e "if (!styler::style_dir('R', dry = 'on')) quit(status = 1)"
+          Rscript -e "if (!styler::style_file('main.R', dry = 'on')) quit(status = 1)"
