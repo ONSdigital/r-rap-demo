@@ -17,13 +17,13 @@ main <- function() {
 
   input_path <- config$input_path
   cleaned_path <- config$cleaned_path
-  report_path = config$report_path
+  report_path <- config$report_path
 
   # I/O Read data
   df <- read_health_data(input_path)
 
   # Cleaning
-  df_clean <- clean_health_data(df)
+  df_clean = clean_health_data(df)
   df_clean <- add_bmi_column(df_clean)
   write_dataframe(df_clean, cleaned_path)
 
