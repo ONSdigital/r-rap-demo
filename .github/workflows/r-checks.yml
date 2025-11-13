@@ -28,4 +28,4 @@ jobs:
 
       - name: Run styler (format check)
         run: |
-          Rscript -e "result <- styler::style_dir('R', dry = 'on'); if (any(result$changed)) { cat('::warning::Some R files need styling!\\n'); cat('The following files need formatting:\\n'); cat(result$file[result$changed], sep = '\\n'); cat('\\nPlease run styler locally before committing.\\n'); quit(status = 1) } else { cat('All R files are properly styled.\\n') }; invisible()"
+          Rscript -e "result <- styler::style_dir('R', dry = 'on'); capture.output(result); if (any(result$changed)) { cat('::warning::Some R files need styling!\\n'); cat('The following files need formatting:\\n'); cat(result$file[result$changed], sep = '\\n'); cat('\\nPlease run styler locally before committing.\\n'); quit(status = 1) } else { cat('All R files are properly styled.\\n') }; invisible(result)"
