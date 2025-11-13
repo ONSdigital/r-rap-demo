@@ -21,6 +21,15 @@ jobs:
         run: |
           Rscript -e "install.packages(c('lintr', 'styler'), repos='https://cran.r-project.org')"
 
+      - name: Annotate lintr warnings
+        run: |
+          Rscript -e "\
+            lints <- c(lintr::lint_dir('R'), lintr::lint('main.R'));\
+            for (lint in lints) {\
+              cat(sprintf('::warning file=%s,line=%d,col=%d::%s\n', lint$filename, lint$line_number, lint$column_number, lint$message));\
+            }\
+          "
+
       - name: Run lintr
         run: |
           Rscript -e "print(lintr::lint_dir('R'))"
