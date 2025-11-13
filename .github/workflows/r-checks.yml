@@ -17,6 +17,9 @@ jobs:
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
 
+      - name: Cache R packages
+        uses: r-lib/actions/cache@v2
+
       - name: Install lintr and styler
         run: |
           Rscript -e "install.packages(c('lintr', 'styler'), repos='https://cran.r-project.org')"
@@ -28,5 +31,5 @@ jobs:
 
       - name: Run styler (format check)
         run: |
-          Rscript -e "styler::style_dir('R', dry = TRUE)"
-          Rscript -e "styler::style_file('main.R', dry = TRUE)"
+          Rscript -e "if (!styler::style_dir('R', dry = 'on')) quit(status = 1)"
+          Rscript -e "if (!styler::style_file('main.R', dry = 'on')) quit(status = 1)"
