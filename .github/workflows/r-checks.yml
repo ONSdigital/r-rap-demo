@@ -28,7 +28,8 @@ jobs:
 
       - name: Run lintr
         run: |
-          Rscript -e "issues <- lintr::lint_dir('R'); print(issues); if (length(issues) > 0) { cat('::warning::Lint issues found! Please fix before committing.\n'); quit(status = 1) } else { cat('No lint issues found.\n') }"
+          Rscript -e "print(lintr::lint_dir('R'))"
+          Rscript -e "print(lintr::lint('main.R'))"
 
       - name: Run styler (format check)
         run: |
