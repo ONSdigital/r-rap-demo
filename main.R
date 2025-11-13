@@ -17,7 +17,7 @@ main <- function() {
 
   input_path = config$input_path
   cleaned_path = config$cleaned_path
-  report_path <- config$report_path
+  report_path = config$report_path
   
   # I/O Read data
   df <- read_health_data(input_path)
