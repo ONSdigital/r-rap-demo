@@ -10,8 +10,8 @@ format_month_section <- function(month, month_df) {
   # Returns:
   #     str: Markdown string for the month section.
   lines <- sprintf("## Month: %s\n", month)
-  
-  for (i in 1:nrow(month_df)){
+
+  for (i in 1:nrow(month_df)) {
     row <- month_df[i, ]
     line <- sprintf(
       "- %s: %.2f%% (%d cases)\n",
@@ -21,7 +21,7 @@ format_month_section <- function(month, month_df) {
     )
     lines <- c(lines, line)
   }
-  
+
   return(paste(lines, collapse = ""))
 }
 
