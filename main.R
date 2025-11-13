@@ -7,6 +7,7 @@ source("R/report.R")
 source("R/utils.R")
 
 main <- function() {
+  print("test")
   # Run the RAP pipeline: I/O, cleaning, processing, reporting
 
   # Construct the path to the YAML configuration file
@@ -23,7 +24,7 @@ main <- function() {
   df <- read_health_data(input_path)
 
   # Cleaning
-  df_clean = clean_health_data(df)
+  df_clean <- clean_health_data(df)
   df_clean <- add_bmi_column(df_clean)
   write_dataframe(df_clean, cleaned_path)
 
