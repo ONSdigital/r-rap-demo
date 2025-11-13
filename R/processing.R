@@ -11,11 +11,11 @@ calculate_disease_prevalence <- function(df){
   #     DataFrame: DataFrame with prevalence rates per month and diagnosis.
   prevalence = df %>%
     group_by(month, diagnosis) %>%
-    summarise(case_count = n(), .groups = "drop")
+    summarise(case_count = n(), .groups = "drop"      )
   
   total_per_month = df %>%
     group_by(month) %>%
-    summarise(total = n(), .groups = "drop")
+    summarise(total = n(),    .groups = "drop")
   
   prevalence = prevalence %>%
     left_join(total_per_month, by = "month")
@@ -23,4 +23,4 @@ calculate_disease_prevalence <- function(df){
   prevalence$prevalence_rate = prevalence$case_count / prevalence$total
 
   return(prevalence)
-}
+} 
