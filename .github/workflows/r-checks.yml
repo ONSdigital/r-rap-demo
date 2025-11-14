@@ -27,7 +27,7 @@ jobs:
 
       - name: Install lintr
         run: |
-          Rscript -e "install.packages('lintr'), repos='https://cran.r-project.org')"
+          Rscript -e "install.packages('lintr', repos='https://cran.r-project.org')"
 
       - name: Annotate lintr warnings
         run: |
