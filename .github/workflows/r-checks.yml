@@ -48,10 +48,14 @@ jobs:
                   cat('DEBUG: lint object follows:\\n')
                   str(lint)
                   cat('DEBUG: lint is a lint object\\n')
-                  cat('DEBUG: lint$filename =', lint$filename, '\\n')
-                  cat('DEBUG: lint$line_number =', lint$line_number, '\\n')
-                  cat('DEBUG: lint$column_number =', lint$column_number, '\\n')
-                  cat('DEBUG: lint$message =', lint$message, '\\n')
+                  cat('DEBUG: lint$filename: \\n')
+                  str(lint$filename)
+                  cat('DEBUG: lint$line_number: \\n')
+                  str(lint$line_number)
+                  cat('DEBUG: lint$column_number: \\n')
+                  str(lint$column_number)
+                  cat('DEBUG: lint$message: \\n')
+                  str(lint$message)
                   tryCatch({
                     cat(sprintf('::warning file=%s,line=%d,col=%d::%s\\n',
                                 lint$filename, lint$line_number, lint$column_number, lint$message))
