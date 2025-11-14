@@ -44,18 +44,15 @@ jobs:
             if (length(lints) > 0) {
               for (lint in lints) {
                 if (!is.null(lint) && inherits(lint, 'lint')) {
-                  cat('DEBUG: lint object follows:\\n')
-                  str(lint)
                   cat('DEBUG: lint is a lint object\\n')
                   cat('DEBUG: lint$filename: \\n')
-                  str(lint$filename)
+                  str(basename(lint$filename))
                   cat('DEBUG: lint$line_number: \\n')
                   str(lint$line_number)
                   cat('DEBUG: lint$column_number: \\n')
                   str(lint$column_number)
                   cat('DEBUG: lint$message: \\n')
                   str(lint$message)
-                  print(as.character(basename(lint$filename)))
                   tryCatch({
                     writeLines(sprintf('::warning file=%s,line=%d,col=%d::%s',
                       as.character(basename(lint$filename)),
