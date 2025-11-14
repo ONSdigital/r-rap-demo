@@ -45,6 +45,8 @@ jobs:
             if (length(lints) > 0) {
               for (lint in lints) {
                 if (!is.null(lint) && inherits(lint, 'lint')) {
+                  cat("DEBUG: lint object follows:\n")
+                  str(lint)
                   cat('DEBUG: lint is a lint object\\n')
                   cat('DEBUG: lint$filename =', lint$filename, '\\n')
                   cat('DEBUG: lint$line_number =', lint$line_number, '\\n')
