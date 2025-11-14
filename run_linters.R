@@ -21,7 +21,8 @@ if (length(lints) > 0) {
           as.integer(lint$column_number),
           as.character(lint$message)
         ))
-        warnings <- c(warnings, sprintf('%s:%d:%d - %s', rel_path, lint$line_number, lint$column_number, lint$message))
+        # Improved bullet-point formatting for PR comment
+        warnings <- c(warnings, sprintf("- **%s** (line %d, col %d): %s", rel_path, lint$line_number, lint$column_number, lint$message))
         flush.console()
       }, error = function(e) {
         cat('DEBUG: sprintf error:', conditionMessage(e), '\n')
@@ -32,8 +33,14 @@ if (length(lints) > 0) {
       str(lint)
     }
   }
-  # Write summary for PR comment bot
-  writeLines(warnings, 'lintr_warnings.txt')
+  # Write improved markdown summary for PR comment bot
+  writeLines(c(
+    "# :warning: Lintr Warnings Found",
+    "",
+    "The following issues were detected by [lintr](https://github.com/r-lib/lintr):",
+    "",
+    warnings
+  ), 'lintr_warnings.txt')
 } else {
   cat('No lintr warnings found.\n')
 }
