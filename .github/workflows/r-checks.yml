@@ -57,8 +57,9 @@ jobs:
                   cat('DEBUG: lint$message: \\n')
                   str(lint$message)
                   tryCatch({
-                    cat(sprintf('::warning file=%s,line=%d,col=%d::%s\\n',
+                    writeLines(sprintf('::warning file=%s,line=%d,col=%d::%s',
                                 lint$filename, lint$line_number, lint$column_number, lint$message))
+                    flush.console()
                   }, error = function(e) {
                     cat('DEBUG: sprintf error:', conditionMessage(e), '\\n')
                     str(lint)
@@ -71,4 +72,5 @@ jobs:
             } else {
               cat('No lintr warnings found.\\n')
             }
+            flush.console()
           "
