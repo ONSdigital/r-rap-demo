@@ -7,7 +7,6 @@ source("R/report.R")
 source("R/utils.R")
 
 main <- function() {
-  print("test")
   # Run the RAP pipeline: I/O, cleaning, processing, reporting
 
   # Construct the path to the YAML configuration file

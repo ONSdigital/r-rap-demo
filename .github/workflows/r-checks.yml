@@ -35,7 +35,7 @@ jobs:
             lints <- c(lintr::lint_dir('R'), lintr::lint('main.R'));
             if (length(lints) > 0) {
               for (lint in lints) {
-                if (inherits(lint, 'lint')) {
+                if (!is.null(lint) && inherits(lint, 'lint')) {
                   cat(sprintf('::warning file=%s,line=%d,col=%d::%s\n', lint$filename, lint$line_number, lint$column_number, lint$message));
                 }
               }
