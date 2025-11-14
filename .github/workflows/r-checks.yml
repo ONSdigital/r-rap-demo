@@ -42,14 +42,11 @@ jobs:
               for (lint in lints) {
                 if (!is.null(lint) && inherits(lint, 'lint')) {
                   cat('DEBUG: lint is a lint object\\n')
-                  cat('DEBUG: lint$filename: \\n')
-                  str(lint$filename)
-                  cat('DEBUG: lint$line_number: \\n')
-                  str(lint$line_number)
-                  cat('DEBUG: lint$column_number: \\n')
-                  str(lint$column_number)
-                  cat('DEBUG: lint$message: \\n')
-                  str(lint$message)
+                  cat('DEBUG: lint$filename =', paste(lint$filename, collapse = " "), '; typeof:', typeof(lint$filename), '\n')
+                  cat('DEBUG: basename(lint$filename) =', paste(basename(lint$filename), collapse = " "), '; typeof:', typeof(basename(lint$filename)), '\n')
+                  cat('DEBUG: lint$line_number =', paste(lint$line_number, collapse = " "), '; typeof:', typeof(lint$line_number), '\n')
+                  cat('DEBUG: lint$column_number =', paste(lint$column_number, collapse = " "), '; typeof:', typeof(lint$column_number), '\n')
+                  cat('DEBUG: lint$message =', paste(lint$message, collapse = " "), '; typeof:', typeof(lint$message), '\n')
                   tryCatch({
                     writeLines(sprintf('::warning file=%s,line=%d,col=%d::%s',
                       as.character(basename(lint$filename)),
