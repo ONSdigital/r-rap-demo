@@ -1,9 +1,6 @@
 name: R Quality Checks
 
 on:
-  push:
-    paths:
-      - '**.R'
   pull_request:
     paths:
       - '**.R'
@@ -35,7 +32,6 @@ jobs:
             lints <- c(lintr::lint_dir('R'), lintr::lint('main.R'))
             cat('DEBUG: lints length =', length(lints), '\\n')
             for (i in seq_along(lints)) {
-              cat('DEBUG: lints[[', i, ']] class:', class(lints[[i]]), '\\n')
               if (!is.null(lints[[i]])) {
                 str(lints[[i]])
               }
@@ -58,7 +54,11 @@ jobs:
                   str(lint$message)
                   tryCatch({
                     writeLines(sprintf('::warning file=%s,line=%d,col=%d::%s',
-                                lint$filename, lint$line_number, lint$column_number, lint$message))
+                      basename(lint$filename),
+                      as.integer(lint$line_number),
+                      as.integer(lint$column_number),
+                      as.character(lint$message)
+                    ))
                     flush.console()
                   }, error = function(e) {
                     cat('DEBUG: sprintf error:', conditionMessage(e), '\\n')
