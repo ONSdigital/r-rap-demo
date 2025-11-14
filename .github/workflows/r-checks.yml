@@ -25,11 +25,21 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-r-
 
-      - name: Install lintr and styler
+      - name: Install lintr
         run: |
-          Rscript -e "install.packages(c('lintr', 'styler'), repos='https://cran.r-project.org')"
+          Rscript -e "install.packages('lintr'), repos='https://cran.r-project.org')"
 
-      - name: Run lintr
+      - name: Annotate lintr warnings
         run: |
-          Rscript -e "print(lintr::lint_dir('R'))"
-          Rscript -e "print(lintr::lint('main.R'))"
+          Rscript -e "
+            lints <- c(lintr::lint_dir('R'), lintr::lint('main.R'));
+            if (length(lints) > 0) {
+              for (lint in lints) {
+                if (inherits(lint, 'lint')) {
+                  cat(sprintf('::warning file=%s,line=%d,col=%d::%s\n', lint$filename, lint$line_number, lint$column_number, lint$message));
+                }
+              }
+            } else {
+              cat('No lintr warnings found.\n')
+            }
+          "
