@@ -33,11 +33,11 @@ if (length(lints) > 0) {
       str(lint)
     }
   }
-  # Write improved markdown summary for PR comment bot
+  # Write markdown summary for PR comment bot
   writeLines(c(
     "# :warning: Lintr Warnings Found",
     "",
-    "The following issues were detected by [lintr](https://github.com/r-lib/lintr):",
+    "Issues were detected by [lintr](https://github.com/r-lib/lintr). Please review the below warnings and address them as needed:",
     "",
     warnings
   ), 'lintr_warnings.txt')
