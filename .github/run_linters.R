@@ -59,12 +59,16 @@ if (length(lints) > 0) {
       )
     }
 
-    writeLines(md_blocks, "lintr_warnings.txt")
+    writeLines(md_blocks, "../lintr_warnings.txt")
   } else {
     cat("No lintr warnings found.\n")
+    # Always create the file, but with a marker for no warnings
+    writeLines(c(), "../lintr_warnings.txt")
   }
   flush.console()
 } else {
   cat("No lintr warnings found.\n")
+  # Always create the file, but with a marker for no warnings
+  writeLines(c(), "../lintr_warnings.txt")
 }
 flush.console()
