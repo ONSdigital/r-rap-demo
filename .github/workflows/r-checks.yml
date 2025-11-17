@@ -25,10 +25,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-r-
 
-      - name: Install packages
+      - name: Install lintr
         run: |
           Rscript -e "install.packages('lintr', repos='https://cran.r-project.org')"
-          Rscript -e "install.packages('styler', repos='https://cran.r-project.org')"
 
 
       - name: Annotate lintr warnings
