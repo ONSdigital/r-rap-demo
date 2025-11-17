@@ -1,0 +1,38 @@
+# .pre-commit-config.yaml for python_rap_demo RAP project
+#
+# This file configures pre-commit hooks, which automatically check and fix code before you commit changes to Git.
+# Pre-commit hooks help maintain code quality, consistency, and security by running checks
+# (like formatting, linting, and secret detection) every time you make a commit.
+#
+# To use this file:
+# 1. Install pre-commit: `pip install pre-commit`
+# 2. Run `pre-commit install` in your project root to activate hooks.
+# 3. When you commit, the hooks below will run automatically.
+#
+# Each section below sets up a different tool or check. Comments explain what each hook does.
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      # Prevents accidentally committing very large files
+      - id: check-added-large-files
+        name: Check for files larger than 5 MB
+        args: [ "--maxkb=5120" ]
+        exclude: ^docs/user_guide/user_documentation\.md$
+      # Ensures every file ends with a blank line (good for compatibility)
+      - id: end-of-file-fixer
+        name: Check for a blank line at the end of scripts (auto-fixes)
+        exclude: '\.Rd|^docs/user_guide/user_documentation\.md$'
+      # Removes extra spaces at the end of lines
+      - id: trailing-whitespace
+        name: Check for trailing whitespaces (auto-fixes)
+
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      # Scans for accidentally committed secrets (like passwords or API keys)
+      - id: detect-secrets
+        name: detect-secrets - Detect secrets in staged code
+        args: [ "--baseline", ".secrets.baseline" ]
+        exclude: .*/tests/.*|^\.cruft\.json$|^docs/user_guide/user_documentation\.md$
