@@ -59,7 +59,7 @@ if (length(lints) > 0) {
       )
     }
 
-    writeLines(md_blocks, "lintr_warnings.txt")
+    writeLines(md_blocks, ".github/lintr_warnings.txt")
   } else {
     cat("No lintr warnings found.\n")
   }
