@@ -33,6 +33,13 @@ jobs:
       - name: Annotate lintr warnings
         run: Rscript .github/run_linters.R
 
+      - name: Debug lintr_warnings.txt
+        run: |
+          echo "Listing files in repo root:"
+          ls -l
+          echo "Contents of lintr_warnings.txt:"
+          cat lintr_warnings.txt || echo "File not found"
+
       - name: Post lintr summary to PR
         uses: actions/github-script@v7
         if: github.event_name == 'pull_request'
