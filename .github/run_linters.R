@@ -33,14 +33,32 @@ if (length(lints) > 0) {
       str(lint)
     }
   }
-  # Write markdown summary for PR comment bot
-  writeLines(c(
-    "# :warning: Lintr Warnings Found",
-    "",
-    "Issues were detected by [lintr](https://github.com/r-lib/lintr). Please review the below warnings and address them as needed:",
-    "",
-    warnings
-  ), 'lintr_warnings.txt')
+  # Group warnings by file for collapsible markdown
+  if (length(warnings) > 0) {
+    # Extract file names for grouping
+    warning_files <- sapply(lints, function(lint) sub('.*/(R/.*|main\\.R)$', '\\1', lint$filename))
+    warning_groups <- split(warnings, warning_files)
+
+    md_blocks <- c(
+      "# :warning: Lintr Warnings Found",
+      "",
+      "Issues were detected by [lintr](https://github.com/r-lib/lintr). Please review the below warnings and address them as needed:",
+      ""
+    )
+
+    for (file in names(warning_groups)) {
+      md_blocks <- c(md_blocks,
+        sprintf("<details>\n<summary>%s</summary>", file),
+        warning_groups[[file]],
+        "</details>\n"
+      )
+    }
+
+    writeLines(md_blocks, 'lintr_warnings.txt')
+  } else {
+    cat('No lintr warnings found.\n')
+  }
+  flush.console()
 } else {
   cat('No lintr warnings found.\n')
 }
