@@ -40,7 +40,7 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const warnings = fs.readFileSync('lintr_warnings.txt', 'utf8');
+            const warnings = fs.readFileSync('.github/lintr_warnings.txt', 'utf8');
             if (warnings.trim().length > 0) {
               github.rest.issues.createComment({
                 issue_number: context.issue.number,
