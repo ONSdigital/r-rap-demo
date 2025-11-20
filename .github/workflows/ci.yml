@@ -26,11 +26,11 @@ jobs:
     steps:
       # Step 1: Download your repository code onto the runner
       - uses: actions/checkout@v4
-      # Step 2: Set up R version 4.5.1 on the runner
+      # Step 2: Set up R version 4.4.0 on the runner
       - name: Set up R
-        uses: r-lib/setup-r@v2 # check for latest version
+        uses: r-lib/setup-r-dependencies@v2 # check for latest version
         with:
-          R-version: '4.4.0'
+          r-version: '4.4.0'
       # Step 3: Install all required R packages listed in DESCRIPTION
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
