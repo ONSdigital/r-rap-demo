@@ -35,8 +35,9 @@ jobs:
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::devtools
+          extra-packages: any::devtools  
       - name: Run tests
         run: Rscript -e 'devtools::test()'
       - name: Check package
-        run: R CMD check
+        run: R CMD check    
+        
