@@ -2,7 +2,7 @@
 
 library(testthat)
 library(readr)
-source("D:/repos/R_rap_demo/R/report.R")
+source("R_rap_demo/R/report.R")
 
 test_that("test_format_month_section", {
   # Define the variable month used in format_month_section

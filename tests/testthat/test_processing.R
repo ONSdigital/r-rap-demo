@@ -1,7 +1,7 @@
 #Unit tests for the processing module in the RAP pipeline.
 
 library(testthat)
-source("D:/repos/R_rap_demo/R/processing.R")
+source("R_rap_demo/R/processing.R")
 
 test_that("test_calculate_disease_prevalence", {
   #Test the calculate_disease_prevalence function to ensure it:
