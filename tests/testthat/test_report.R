@@ -5,6 +5,7 @@ library(readr)
 source("R/report.R")
 
 test_that("test_format_month_section", {
+  source("R/report.R")
   # Define the variable month used in format_month_section
   month <- "January"
   # Create the dataframe month_df used in format_month_selection
@@ -28,6 +29,7 @@ test_that("test_format_month_section", {
 
 
 test_that("test_generate_markdown_report", {
+  source("R/report.R")
   # Test the generate_markdown_report function to ensure it:
   # - Creates a markdown file
   # - Includes expected content

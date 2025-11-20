@@ -9,6 +9,7 @@ test_that("test_calculate_disease_prevalence", {
   # - Returns a DataFrame with expected columns.
   
   # Create a sample DataFrame
+  source("R/processing.R")
   df = data.frame(month = c("2025-01", "2025-01", "2025-02"),
                   diagnosis = c("A","B","A"))
   

@@ -6,6 +6,7 @@ source("R/io.R")
 test_that("test_read_health_data", {
   #Test reading a CSV file into a DataFrame.
   # Create a temporary CSV file
+  source("R/io.R") 
   temp_file <- tempfile(fileext = ".csv")
   df <- data.frame(a = c(1, 2), b = c(3, 4))
   write.csv(df, temp_file, row.names = FALSE)

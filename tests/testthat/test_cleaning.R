@@ -11,6 +11,7 @@ test_that("test_clean_health_data", {
   #- Drops rows with missing 'diagnosis'
 
   # Create a sample data frame
+  source("R/cleaning.R")
   df <- data.frame(
     height_cm = c(NA, 170, 160),
     weight_kg = c(60, 50, 80),
