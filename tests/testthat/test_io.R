@@ -2,7 +2,7 @@
 
 library(testthat)
 
-source("R_rap_demo/R/io.R") 
+source("R/io.R") 
 test_that("test_read_health_data", {
   #Test reading a CSV file into a DataFrame.
   # Create a temporary CSV file
