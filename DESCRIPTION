@@ -11,8 +11,8 @@ Description: Learn RAP principles through practical R exercises. This repo
     useapplying RAP techniques.
 License: MIT
 Imports: 
-    dplyr
-    testthat
-    yaml
-    readr
+    dplyr,
+    testthat,
+    yaml,
+    readr,
     ggplot2
