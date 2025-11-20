@@ -10,3 +10,9 @@ Description: Learn RAP principles through practical R exercises. This repo
     descriptions of components and exercises to help users build confidence in 
     useapplying RAP techniques.
 License: MIT
+Imports: 
+    dplyr
+    testthat
+    yaml
+    readr
+    ggplot2
