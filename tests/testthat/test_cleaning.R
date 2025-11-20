@@ -2,7 +2,7 @@
 
 library(testthat)
 
-source("D:/repos/R_rap_demo/R/R_rap_demo/cleaning.R")
+source("D:/repos/R_rap_demo/R/cleaning.R")
 
 test_that("test_clean_health_data", {
   #Test the clean_health_data function to ensure it:
@@ -12,8 +12,10 @@ test_that("test_clean_health_data", {
 
   # Create a sample data frame
   df <- data.frame(
-    diagnosis = c("A", "B", ),
-    smoker = c(NA, "Yes", "No"),
+    height_cm = c(NA, 170, 160),
+    weight_kg = c(60, 50, 80),
+    diagnosis = c("A", "B", NA),
+    smoker = c("Yes", NA, "No"),
     gender = c("m", "f", "m"),
     stringsAsFactors = FALSE
   )
