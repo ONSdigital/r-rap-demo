@@ -1,0 +1,126 @@
+# Solutions: Unit Testing Exercises
+
+This notebook provides step-by-step solutions for writing and running unit tests in your RAP pipeline using testthat. Each solution matches the corresponding exercise notebook and is designed for beginners.
+
+## Solution 1: Write a simple unit test for a new function
+
+Here are example unit tests for the `flag_missing` and `impute_by_group` functions in `R/R_rap_demo/cleaning.R`:
+```{r}
+library(testthat)
+source("D:/repos/R_rap_demo/R/R_rap_demo/cleaning.R")
+test_that("test flag_missing", {
+  df <- data.frame(
+    height_cm = c(170, NA, 160),
+    weight_kg = c(70, 80, NA))
+  expected_output <- data.frame(
+    height_cm = c(170, NA, 160),
+    weight_kg = c(70, 80, NA),    
+    height_cm_imputed = c(FALSE, TRUE, FALSE),
+    weight_kg_imputed = c(FALSE, FALSE, TRUE))
+  
+  flagged = flag_missing(df)
+  expect_equal(as.data.frame(flagged), expected_output)
+})
+```
+
+```{r}
+library(testthat)
+source("D:/repos/R_rap_demo/R/R_rap_demo/cleaning.R")
+test_that("test impute_by_group", {
+  df <- data.frame(
+    height_cm = c(170, NA, 160, 150, 190, 180, NA, NA, 170, NA),
+    weight_kg = c(70, 80, 60, 50, 90, 70, 80, 100, 50, 90),
+    gender = c("M", "M", "F", "F", "M", "M", "F", "M", "F", "M"))
+  expected_output <- c(170, 180, 160, 150, 190, 180, 160, 180, 170, 180)
+  output <- impute_by_group(df, "height_cm", "gender")
+  expect_equal(round(output, 1), round(expected_output, 1))
+})
+```
+
+## Solution 2: Run your unit tests
+
+**Task:**
+- To run tests in the `tests/` folder you must open each test one at a time and click the `run tests` button in the top right corner of the source pane.
+- Check the output to see if your tests pass or fail.
+ 
+**Expected output:**
+- All tests should pass. If a test fails, check the error message and fix your code or tests.
+
+## Solution 3: Stretch - Check test coverage
+
+Run the following commands:
+```{r}
+library(covr)
+ cov <- covr::file_coverage("D:/repos/R_rap_demo/R/utils.R", "D:/repos/R_rap_demo/tests/test_utils.R")
+ zero_lines <- zero_coverage(cov)
+ print(zero_lines)
+# Note: The first argument is the path to the function, the second argument is the path to the test function
+```
+**Expected output:**
+- You will see a report showing the percentage of code covered by tests. Aim for high coverage, but focus on testing important logic.
+
+
+## Solution 4: Stretch - Try parameterisation in testthat
+
+Here are examples using `with_parameters_test_that` for `flag_missing` and `impute_by_group`. Parameterisation lets you run the same test with different inputs, making your tests more robust and easier to maintain.
+
+```{r}
+library(testthat)
+library(patrick)
+
+patrick::with_parameters_test_that("test flag_missing", {
+      flagged <- flag_missing(df, columns)
+    expect_equal(flagged$height_cm_imputed, expected_height_flags)
+    expect_equal(flagged$weight_kg_imputed, expected_weight_flags)
+  },
+  df = list(
+    data.frame(height_cm = c(170, NA), weight_kg = c(70, NA)),
+    data.frame(height_cm = c(NA, NA), weight_kg = c(NA, 80))
+  ),
+  columns = list(
+    c("height_cm", "weight_kg"),
+    c("height_cm", "weight_kg")
+  ),
+  expected_height_flags = list(
+    c(FALSE, TRUE),
+    c(TRUE, TRUE)
+  ),
+  expected_weight_flags = list(
+    c(FALSE, TRUE),
+    c(TRUE, FALSE)
+  )
+)
+```
+
+```{r}
+library(testthat)
+library(patrick)
+library(covr)
+impute_by_group <- function(df, col, group_col) {
+  group_means <- df %>%
+  dplyr::group_by(!!rlang::sym(group_col)) %>%
+  dplyr::mutate(group_mean = mean(!!rlang::sym(col), na.rm = TRUE)) %>%
+  dplyr::pull(group_mean)
+  result <- ifelse(is.na(df[[col]]), group_means, df[[col]])
+  result <- ifelse(is.na(result), mean(df[[col]], na.rm = TRUE), result)
+  result <- round(result, 1)
+  return(result)
+}
+
+patrick::with_parameters_test_that("test impute_by_group", {
+  imputed <- impute_by_group(df, col, group_col)
+  expect_equal(imputed, expected)
+  },
+  df = list(
+    data.frame(height_cm = c(170, NA, 160), gender = c("M", "F", "F")),
+    data.frame(height_cm = c(NA, NA, 150), gender = c("M", "M", "F"))
+  ),
+  col = c("height_cm", "height_cm"),
+  group_col = c("gender", "gender"),
+    expected = list(
+    height_cm = c(170, 160, 160),
+    height_cm = c(150, 150, 150)
+  )
+)
+```
+

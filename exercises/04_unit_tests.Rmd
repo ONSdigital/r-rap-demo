@@ -1,0 +1,202 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Unit Testing Exercises
+
+Unit tests help ensure your code works as expected and make your RAP
+pipeline more robust and reproducible. In this exercise, you'll learn
+how to write and run unit tests.
+
+## Why are unit tests important?
+
+Unit tests check that individual functions behave as expected. They: -
+Help catch bugs early - Make code easier to maintain - Support
+reproducibility and automation - Give confidence when refactoring or
+adding new features
+
+Read more in the [testthat documentation](https://testthat.r-lib.org/)
+
+## Exercise 1: Write a simple unit test for a new function
+
+Suppose you have created a function called `impute_by_group` in
+`R/python_rap_demo/cleaning.R`.
+
+**Task:** 1. Create a new test file in the `tests/` folder (e.g.,
+`test_cleaning.R`). 2. Write a unit test for `impute_by_group` that
+checks it correctly imputes missing values. 3. Use testthat for your
+test.
+
+**Hints:** - Read on for more guidance
+
+## Exercise 1a: Walkthrough - Write a unit test for flag_missing
+
+Let's start with a simple function called `flag_missing`. This function
+adds a new column to your DataFrame to flag missing values in specified
+columns.
+
+Below is the code for `flag_missing`:
+
+```{r}
+library(dplyr)
+flag_missing <- function(df) {
+  df <- df %>%
+    rowwise() %>%
+    mutate(height_cm_imputed = is.na(height_cm)) %>%
+    mutate(weight_kg_imputed = is.na(weight_kg)) %>%
+    ungroup()
+    return(df)
+}
+df <- data.frame(
+  height_cm = c(170, NA, 160),
+  weight_kg = c(70, 80, NA))
+flagged = flag_missing(df)
+
+```
+
+## How to write a unit test for `flag_missing`
+
+1.  Add the `flag_missing` function to the `R/R_rap_demo/cleaning.R`
+    file if you have not done so already.
+2.  Open the `test_cleaning.R file` in the `tests/` folder.
+3.  The source function in `test_cleaning.R` will automatically import
+    all of the functions saved in the `cleaning.R` file.
+4.  Write a test function using `test_that`:
+
+```{r}
+library(testthat)
+library(dplyr)
+# If running the test in a separate file to the function, use source() to import the function that is being tested
+
+test_that("test flag_missing", {
+  df <- data.frame(
+    height_cm = c(170, NA, 160),
+    weight_kg = c(70, 80, NA))
+  expected_output <- data.frame(
+    height_cm = c(170, NA, 160),
+    weight_kg = c(70, 80, NA),    
+    height_cm_imputed = c(FALSE, TRUE, FALSE),
+    weight_kg_imputed = c(FALSE, FALSE, TRUE))
+  
+  flagged = flag_missing(df)
+  expect_equal(as.data.frame(flagged), expected_output)
+})
+```
+
+5.  Run the tests by pressing the green arrow in the top right of the
+    cell
+6.  If the test passes, your function works as expected. If it fails,
+    check the error message and review your code.
+
+#### Understanding the test_flag_missing function
+
+Let's break down how the `test_flag_missing` function works:
+
+-   **Creating test data:** We create a small DataFrame `df` with some
+    missing values. This lets us check if our function works as
+    expected.
+-   **Calling the function:** We call `flag_missing` and pass in our
+    test DataFrame.
+-   **Checking the results:** We use and `expect` statement such as an
+    `expect_equal` statement to check that the new columns (e.g.,
+    `height_cm_imputed`, `weight_kg_imputed`) correctly show `True` for
+    missing values and `False` otherwise. If the output matches what we
+    expect, the test will pass.
+-   **Why use expect statements?** Expect statements are a way to say
+    "this must be true". If the condition is not true, testthat will
+    show an error and the test will fail.
+
+This approach helps you check that your function does what you expect,
+using simple, readable code. You can add more assert statements or test
+with different data to make your tests even stronger.
+
+## Exercise 1b: Write a unit test for impute_by_group
+
+Now try writing your own tests for the following function. Use the
+walkthrough above as a guide.
+
+**Hints:** - Import the function at the top of your test file. - Use a
+small DataFrame with missing values for testing. - Use `expect`
+statements to check the output.
+
+Below is the function definition:
+
+```{r}
+impute_by_group <- function(df, col, group_col) {
+  col <- rlang::sym(col)
+  group_col <- rlang::sym(group_col)
+  
+  df <- df %>%
+    dplyr::group_by(!!group_col) %>%
+    dplyr::mutate(
+      imputed = ifelse(
+        is.na(!!col),
+        mean(!!col, na.rm = TRUE),
+        !!col
+      )
+    ) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      imputed = ifelse(
+        is.na(imputed),
+        mean(imputed, na.rm = TRUE),
+        imputed
+      ),
+      imputed = round(imputed, 1)
+    )
+  
+  return(df$imputed)
+}
+df <- read.csv("D:/repos/R_rap_demo/data/inputs/health_data.csv")
+impute_by_group(df = df, col = "weight_kg", group_col = "gender")
+```
+
+**Task:** - Add the `flag_missing`, `impute_by_group` functions to the
+`R/R_rap_demo/cleaning.R` file if you have not done so already. - Open
+the `test_cleaning.R` file in the `tests/` folder. - Write a unit test
+for `impute_by_group` that checks missing values are correctly imputed
+using group means. - Use testthat and expect statements in your test
+file.
+
+**Note:** The tests will run for these functions, but they will not
+affect the output unless you implement them in the pipeline. See
+`02_modules_solutions` for a guide on how to do this
+
+## Exercise 2: Run your unit tests
+
+**Task:** - To run tests in the `tests/` folder you must open each test
+one at a time and click the `run tests` button in the top right corner
+of the source pane. - Check the output to see if your tests pass or
+fail.
+
+**Note:** The tests will run, but they will not affect the outputs
+unless you add them into the pipeline.
+
+## Exercise 3: Stretch - Check test coverage
+
+Test coverage shows how much of your code is tested by unit tests.
+
+**Task:** - Import covr: `library(covr)`
+
+\- Run: `file_coverage(path_to_function, path_to_test)` to get a
+percentage of the lines of code that are covered by the test.
+
+To which lines of code are not covered by the test, set a variable (for
+example: cov) equal to the code above and then run:
+
+`zero_lines <- zero_coverage(cov)`
+
+`print(zero_lines)` - Check which lines of your code are covered by
+tests.
+
+## Exercise 4: Stretch - Try parameterisation in testthat
+
+Parameterisation lets you run the same test with different inputs.
+
+**Task:** - Install the R package patrick - Use
+`with_parameters_test_that` in your test file to test your function with
+multiple input cases. - See the [patrick
+documentation](https://github.com/google/patrick/blob/main/README.md)
+for examples.

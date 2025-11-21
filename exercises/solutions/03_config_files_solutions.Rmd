@@ -1,0 +1,104 @@
+# Solutions: Using configuration files in your RAP pipeline
+
+This notebook provides step-by-step solutions for adding and using configuration parameters in a RAP pipeline. Each step matches the corresponding exercise notebook and demonstrates a modular approach.
+
+```{r}
+# Setup code for solutions
+
+library(yaml)
+source("D:/repos/R_rap_demo/R/R_rap_demo/cleaning.R")
+source("D:/repos/R_rap_demo/R/R_rap_demo/io.R")
+source("D:/repos/R_rap_demo/R/R_rap_demo/processing.R")
+source("D:/repos/R_rap_demo/R/R_rap_demo/report.R")
+source("D:/repos/R_rap_demo/R/R_rap_demo/utils.R")
+
+# Construct the path to the YAML configuration file
+config_path <- file.path("D:/repos/R_rap_demo/config/user_config.yaml")
+
+# Load the YAML configuration file
+config <- yaml::read_yaml(config_path)
+
+input_path = config$input_path
+
+# I/O Read data
+health_df <- read_health_data(input_path)
+
+# Output path
+output_path <- "D:/repos/R_rap_demo/data/outputs/cleaned/health_data_cleaned"
+```
+
+## Step 1 Solution: Add a new parameter to the config file
+
+Open `config/user_config.yaml` and add the following parameter:
+
+```         
+min_height_cm: 155  # Minimum height (cm) to include in analysis
+```
+
+This parameter allows you to control which rows are included based on height. Save the file after editing.
+
+## Step 2 Solution: Read config parameters in a modular way
+
+Create a function to read config values in a new module, e.g., `R/R_rap_demo/io.R`:
+
+```{r}
+# R/main.R
+
+min_height <- config$min_height
+```
+
+```{r}
+print(min_height)
+```
+
+## Step 3 Solution: Use config parameters in your pipeline
+
+Update your pipeline (e.g., in `main.R` or a cleaning module) to use the config-driven parameter for filtering:
+
+```{r}
+filter_by_min_height <- function(df, min_height) {
+  return(df[df$height_cm >= min_height, ])
+}
+```
+
+Example usage in main.R
+
+```{r}
+source("R/R_rap_demo/cleaning.R")
+source("R/R_rap_demo/io.R")
+
+min_height <- config$min_height
+
+filtered_df <- filter_by_min_height(health_df, min_height)
+```
+
+## Step 4 Solution: Add and use another config parameter (output format)
+
+Add another parameter to your config file:
+
+```         
+output_format: csv  # Output file format: csv or xlsx
+```
+
+Create a modular function to save output in the desired format, e.g., in `R/R_rap_demo/io.R`:
+
+```{r}
+library(openxlsx)
+save_output <- function(df, output_path, output_format) {
+  if (output_format == "csv") {
+    write.csv(df, paste0(output_path, ".csv"), row.names = FALSE)
+  } else if (output_format == "xlsx") {
+    write.xlsx(df, paste0(output_path, ".xlsx"), row.names = FALSE)
+  } else {
+    stop("Unsupported output format.")
+  }  
+}
+```
+
+```{r}
+source("R/R_rap_demo/io.R")
+
+output_format <- config$output_format
+save_output(filtered_df, output_path, output_format)
+```
+

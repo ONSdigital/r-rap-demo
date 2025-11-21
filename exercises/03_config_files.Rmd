@@ -1,0 +1,44 @@
+# Exercise: Using configuration files in your RAP pipeline
+
+In this exercise, you'll learn how to use configuration files to make your pipeline more flexible and reproducible. You will practice adding new parameters to a config file and updating your scripts to use those parameters.
+
+**Learning objectives:** - Understand the role of configuration files in RAP - Practice adding and updating parameters in a YAML config file - Learn how to read config values in Python scripts - Update pipeline code to use config-driven parameters
+
+# Step 1: Add a new parameter to the config file
+
+Open `config/user_config.yaml` and add a new parameter. For example, add a parameter to control the minimum height allowed in your analysis:
+
+``` yaml
+min_height_cm: 155
+```
+
+**Tasks:** - Add `min_height_cm` to your config file - Save the file
+
+**Bonus:** - Add a comment explaining what the parameter does
+
+## Step 2: Update your script to use the new parameter
+
+Update your pipeline code (e.g., in `main.R` or `cleaning.R`) to read the new parameter from config and use it to filter the data.
+
+**Tasks:** - Filter DataFrame to exclude rows where `height_cm` is less than `min_height_cm`
+
+**Hints:** - The config file is already read into `main.R` - Use `df$height_cm >= min_height_cm` to filter
+
+## Step 3: Test and reflect
+
+**Tasks:**
+
+-   Run your pipeline and check that the new parameter is applied
+-   Change the value in the config file and rerun to see the effect
+
+**Reflect:** - How does using config files improve reproducibility and flexibility? - What other parameters could you add to make your pipeline more configurable?
+
+**Bonus:** - Add unit tests to check that your code correctly applies the config parameter
+
+## Step 4: Challenge
+
+Add another parameter to your config file, such as `output_format` (e.g., `csv` or `xlsx`). Update your pipeline to use this parameter when saving output files.
+
+**Tasks:** - Add `output_format: csv` to your config file - Update your output code to save as CSV or Excel depending on the parameter
+
+**Bonus:** - Document your config file with clear comments and descriptions for each parameter
