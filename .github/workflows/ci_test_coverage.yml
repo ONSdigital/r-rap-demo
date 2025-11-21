@@ -37,4 +37,4 @@ jobs:
         run: Rscript -e 'devtools::test()'
       # Step 6: Test coverage using covr
       - name: Test coverage
-        run: Rscript -e 'covr::report()'
+        run: Rscript -e 'print(covr::report())'
