@@ -20,13 +20,13 @@ These exercises are intended as a starting point that you can build upon. Please
 
 ## How to use the exercises
 1. **Read each exercise notebook** and follow the instructions step by step.
-2. **Write your code** in the notebook cells or in the `R/R_rap_demo/` modules as instructed.
+2. **Write your code** in the notebook cells or in the `R/` modules as instructed.
 4. **Check your solutions** by comparing your results with the solutions notebooks in `exercises/solutions/`.
 5. **View outputs** in the `data/outputs/` folder (e.g., cleaned data, markdown reports, charts).
 
 ## Adding code to the src folder
-- Place reusable functions and classes in the appropriate module in `R/R_rap_demo/` (e.g., `cleaning.R`, `io.R`, `report.R`).
-- Use clear function names, type hints, and docstrings following PEP8 standards.
+- Place reusable functions and classes in the appropriate module in `R/` (e.g., `cleaning.R`, `io.R`, `report.R`).
+- Use clear function names, type hints, and docstrings following tidyverse standards.
 
 ## How to check if your solutions have worked
 - **Compare outputs**: Check your results against the solutions notebooks and output files.
