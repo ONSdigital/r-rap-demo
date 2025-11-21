@@ -2,10 +2,8 @@
 
 library(testthat)
 library(yaml)
-source("R/utils.R")
 
 test_that("test_add_bmi_column", {
-  source("R/utils.R")
   # Test the add_bmi_column function to ensure it adds a 'bmi' column correctly.
   df = data.frame(height_cm = c(180, 160),
                   weight_kg = c(80, 60))
@@ -16,14 +14,12 @@ test_that("test_add_bmi_column", {
 })
 
 test_that("test_calculate_bmi", {
-  source("R/utils.R")
   # Test the calculate_bmi function to ensure it calculates BMI correctly.
   bmi <- calculate_bmi(180,80)
   expect_equal(bmi, 24.69, tolerance = 0.01)
 })
 
 test_that("test_load_config", {
-  source("R/utils.R")
   # Test the load_config function to ensure it loads YAML config correctly.
   yaml_path <- tempfile(fileext = ".yaml")
   yaml_content <- c(

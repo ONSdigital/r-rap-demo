@@ -1,7 +1,6 @@
 #Unit tests for the processing module in the RAP pipeline.
 
 library(testthat)
-source("R/processing.R")
 
 test_that("test_calculate_disease_prevalence", {
   #Test the calculate_disease_prevalence function to ensure it:
@@ -9,7 +8,6 @@ test_that("test_calculate_disease_prevalence", {
   # - Returns a DataFrame with expected columns.
   
   # Create a sample DataFrame
-  source("R/processing.R")
   df = data.frame(month = c("2025-01", "2025-01", "2025-02"),
                   diagnosis = c("A","B","A"))
   
