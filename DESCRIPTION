@@ -15,4 +15,5 @@ Imports:
     testthat,
     yaml,
     readr,
-    ggplot2
+    ggplot2,
+    covr
