@@ -35,10 +35,7 @@ jobs:
       # Step 5: Run unit tests using devtools
       - name: Run tests
         run: Rscript -e 'devtools::test()'
-      # Step 6: Test coverage using covr
-      - name: Test coverage summary
-        run: Rscript -e 'print(covr::report())'
-      # Step 7: Generate coverage report and upload as artifact
+      # Step 6: Generate coverage report and upload as artifact
       - name: Generate coverage report
         run: Rscript -e 'covr::report(covr::package_coverage(), file = "coverage.html")'
       
