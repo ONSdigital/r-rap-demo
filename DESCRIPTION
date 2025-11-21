@@ -16,4 +16,6 @@ Imports:
     yaml,
     readr,
     ggplot2,
-    covr
+    covr,
+    DT,
+    htmltools
