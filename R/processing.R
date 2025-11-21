@@ -19,7 +19,6 @@ calculate_disease_prevalence <- function(df){
     left_join(total_per_month, by = "month")
 
   prevalence$prevalence_rate = prevalence$case_count / prevalence$total
-  print(prevalence)
   return(prevalence)
 }
 
