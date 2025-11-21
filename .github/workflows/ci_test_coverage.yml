@@ -1,23 +1,9 @@
-# This is a GitHub Actions workflow file for Continuous Integration (CI).
-# CI automatically checks your code for errors and runs your unit tests every time you push changes
-# or open a pull request to the main branch. This helps keep your code reproducible and reliable.
-#
-# What this file does:
-# - Runs on every push or pull request to the main branch
-# - Sets up a fresh R environment
-# - Installs your project's dependencies
-# - Runs all unit tests in the 'tests/' folder
-#
-# Each step is explained below.
-
-name: CI
+name: Test coverage CI (Any Branch)
 
 on:
-  # Run this workflow when you push to 'main' or open a pull request to 'main'
+  # Run this workflow when you push to any branch
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ "*" ]
 
 jobs:
   build:
@@ -49,4 +35,6 @@ jobs:
       # Step 5: Run unit tests using devtools
       - name: Run tests
         run: Rscript -e 'devtools::test()'
- 
+      # Step 6: Test coverage using covr
+      - name: Test coverage
+        run: Rscript -e 'covr::report()'
