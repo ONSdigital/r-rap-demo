@@ -2,6 +2,7 @@
 
 library(testthat)
 library(yaml)
+library(dplyr)
 
 test_that("test_add_bmi_column", {
   # Test the add_bmi_column function to ensure it adds a 'bmi' column correctly.
