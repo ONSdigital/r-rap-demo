@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # Unit Testing Exercises
 
 Unit tests help ensure your code works as expected and make your RAP
@@ -22,7 +16,7 @@ Read more in the [testthat documentation](https://testthat.r-lib.org/)
 ## Exercise 1: Write a simple unit test for a new function
 
 Suppose you have created a function called `impute_by_group` in
-`R/python_rap_demo/cleaning.R`.
+`R/cleaning.R`.
 
 **Task:** 1. Create a new test file in the `tests/` folder (e.g.,
 `test_cleaning.R`). 2. Write a unit test for `impute_by_group` that
@@ -58,7 +52,7 @@ flagged = flag_missing(df)
 
 ## How to write a unit test for `flag_missing`
 
-1.  Add the `flag_missing` function to the `R/R_rap_demo/cleaning.R`
+1.  Add the `flag_missing` function to the `R/cleaning.R`
     file if you have not done so already.
 2.  Open the `test_cleaning.R file` in the `tests/` folder.
 3.  The source function in `test_cleaning.R` will automatically import
@@ -154,11 +148,11 @@ impute_by_group(df = df, col = "weight_kg", group_col = "gender")
 ```
 
 **Task:** - Add the `flag_missing`, `impute_by_group` functions to the
-`R/R_rap_demo/cleaning.R` file if you have not done so already. - Open
-the `test_cleaning.R` file in the `tests/` folder. - Write a unit test
-for `impute_by_group` that checks missing values are correctly imputed
-using group means. - Use testthat and expect statements in your test
-file.
+`R/cleaning.R` file if you have not done so already. 
+- Open the `test_cleaning.R` file in the `tests/` folder. 
+- Write a unit test for `impute_by_group` that checks missing values
+are correctly imputed using group means. 
+- Use testthat and expect statements in your test file.
 
 **Note:** The tests will run for these functions, but they will not
 affect the output unless you implement them in the pipeline. See
@@ -180,7 +174,7 @@ Test coverage shows how much of your code is tested by unit tests.
 
 **Task:** - Import covr: `library(covr)`
 
-\- Run: `file_coverage(path_to_function, path_to_test)` to get a
+- Run: `file_coverage(path_to_function, path_to_test)` to get a
 percentage of the lines of code that are covered by the test.
 
 To which lines of code are not covered by the test, set a variable (for

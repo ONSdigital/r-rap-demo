@@ -4,10 +4,10 @@ This notebook provides step-by-step solutions for writing and running unit tests
 
 ## Solution 1: Write a simple unit test for a new function
 
-Here are example unit tests for the `flag_missing` and `impute_by_group` functions in `R/R_rap_demo/cleaning.R`:
+Here are example unit tests for the `flag_missing` and `impute_by_group` functions in `R/cleaning.R`:
 ```{r}
 library(testthat)
-source("D:/repos/R_rap_demo/R/R_rap_demo/cleaning.R")
+source("R/cleaning.R")
 test_that("test flag_missing", {
   df <- data.frame(
     height_cm = c(170, NA, 160),
@@ -25,7 +25,7 @@ test_that("test flag_missing", {
 
 ```{r}
 library(testthat)
-source("D:/repos/R_rap_demo/R/R_rap_demo/cleaning.R")
+source("R/cleaning.R")
 test_that("test impute_by_group", {
   df <- data.frame(
     height_cm = c(170, NA, 160, 150, 190, 180, NA, NA, 170, NA),
@@ -51,7 +51,7 @@ test_that("test impute_by_group", {
 Run the following commands:
 ```{r}
 library(covr)
- cov <- covr::file_coverage("D:/repos/R_rap_demo/R/utils.R", "D:/repos/R_rap_demo/tests/test_utils.R")
+ cov <- covr::file_coverage("R/utils.R", "tests/test_utils.R")
  zero_lines <- zero_coverage(cov)
  print(zero_lines)
 # Note: The first argument is the path to the function, the second argument is the path to the test function

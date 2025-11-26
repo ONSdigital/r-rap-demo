@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # Continuous Integration Exercises
 
 This set of exercises will help you understand and implement continuous
@@ -98,7 +92,7 @@ jobs:
 
 The DESCRIPTION file must be updated to include the packages covr, DT and htmltools:
 
-Package: r.rap.demo
+Package: r-rap-demo
 Title: R RAP Demo
 Version: 0.0.1
 Authors@R: 

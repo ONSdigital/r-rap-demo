@@ -62,7 +62,7 @@ head(imputed, 5)
 ## Step 2 solution: Add functions to pipeline
 Where you place these functions depends on the context and what makes most sense for your pipeline. However, for this exercise one appropriate solution is outlined below:
 
-1. Place the `flag_missing`, `impute_by_group` and `impute_height_weight` function into `src/python_rap_demo/cleaning.py`. You could also have added `flag_missing` to utils as it could be used across other modules.
+1. Place the `flag_missing`, `impute_by_group` and `impute_height_weight` function into `R/cleaning.R`. You could also have added `flag_missing` to utils as it could be used across other modules.
 ```{r}
 # cleaning.R: Data cleaning functions for RAP pipeline
 
@@ -250,7 +250,7 @@ impute_columns <- function(df, group_col) {
   }
   return(df)
 }
-df <- read.csv("D:/repos/R_rap_demo/data/inputs/health_data.csv")
+df <- read.csv("data/inputs/health_data.csv")
 imputed <- impute_columns(df, "gender")
 print(imputed)
 ```
@@ -270,15 +270,15 @@ plot_missing_values <- function(df, output_path) {
   ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
   print(plot)
 }
-df <- read.csv("D:/repos/R_rap_demo/data/inputs/health_data.csv")
-plot_missing_values(df, output_path = "D:/repos/R_rap_demo/exercises/outputs/")
+df <- read.csv("data/inputs/health_data.csv")
+plot_missing_values(df, output_path = "exercises/outputs/")
 ```
 
 ```{r}
-source("D:/repos/R_rap_demo/R/processing.R")
+source("R/processing.R")
 library(ggplot2)
 
-df <- read.csv("D:/repos/R_rap_demo/data/inputs/health_data.csv")
+df <- read.csv("data/inputs/health_data.csv")
 prevalence <- calculate_disease_prevalence(df)
 
 plot_disease_prevalence <- function(prevalence, output_path, month) {
@@ -289,7 +289,7 @@ plot_disease_prevalence <- function(prevalence, output_path, month) {
   ggsave(filename = paste0(output_path, "prevalence", month, ".png"), plot = plot)
   print(plot)
 }
-plot_disease_prevalence(prevalence, output_path = "D:/repos/R_rap_demo/exercises/outputs/", month = "2025-01")
+plot_disease_prevalence(prevalence, output_path = "exercises/outputs/", month = "2025-01")
 
 ```
 2. Add the functions to report.R and import ggplot2
@@ -337,16 +337,16 @@ plot_missing_values <- function(df, output_path) {
   ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
   print(plot)
 }
-df <- read.csv("D:/repos/R_rap_demo/data/inputs/health_data.csv")
-plot_missing_values(df, output_path = "D:/repos/R_rap_demo/exercises/outputs/")
+df <- read.csv("data/inputs/health_data.csv")
+plot_missing_values(df, output_path = "exercises/outputs/")
 ```
 
 ```{r}
-source("D:/repos/R_rap_demo/R/processing.R")
+source("R/processing.R")
 library(dplyr)
 library(ggplot2)
 
-df <- read.csv("D:/repos/R_rap_demo/data/inputs/health_data.csv")
+df <- read.csv("data/inputs/health_data.csv")
 prevalence <- calculate_disease_prevalence(df)
 
 plot_disease_prevalence_timeseries <- function(prevalence, output_path) {
@@ -374,7 +374,7 @@ plot_disease_prevalence_timeseries <- function(prevalence, output_path) {
   
   ggsave(filename = paste0(output_path, "prevalence_timeseries.png"), plot = p, width = 8, height = 5)
 }
-plot_disease_prevalence_timeseries(prevalence, output_path = "D:/repos/R_rap_demo/exercises/outputs/")
+plot_disease_prevalence_timeseries(prevalence, output_path = "exercises/outputs/")
 ```
 
 ```{r}

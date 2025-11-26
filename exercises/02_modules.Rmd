@@ -12,7 +12,7 @@ In this exercise, you'll practice refactoring a single, monolithic script into a
 # Setup code for exercises
 library(dplyr)
 # Load data
-df <- read.csv("D:/repos/R_rap_demo/data/inputs/health_data.csv")
+df <- read.csv("data/inputs/health_data.csv")
 
 # print the first 5 rows of health data
 head(df, 5)
@@ -53,7 +53,7 @@ Write your function(s) in the cell below:
 ## Step 2: Add your functions to the pipeline
 
 **Tasks:**
-- Add your functions to an appropriate module in `R/R_rap_demo`
+- Add your functions to an appropriate module in the `R/` folder
 - Ensure your functions are used when running the pipeline
 
 **Hints:**
@@ -64,19 +64,17 @@ Write your function(s) in the cell below:
 
 **Tasks:**
 - Compare the cleaned_data output with and without your changes
+- Try adding your own modules and functions to the pipeline
+- Document your modules with Roxygen documentation
 
 **Reflect:**
 - How does modular code improve reproducibility and maintainability?
 - What are the benefits of separating code into modules?
 - How would you extend this pipeline to add new features or analyses?
 
-**Bonus:**
-- Add unit tests for your new functions
-- Document your modules with clear comments and docstrings
-
 ## Step 4: Refactor Visualisation Code
 
-As an additional challenge, Add code to create visualisations. Place all visualisation functions in a separate module (e.g., `report.R`).
+As an additional challenge, Add code to create visualisations. Place all visualisation functions in the `report.R` module.
 
 **Tasks:**
 - Write a function to plot missing values per column before the data is cleaned
