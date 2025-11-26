@@ -2,7 +2,7 @@
 
 library(testthat)
 
-source("D:/repos/R_rap_demo/R/cleaning.R")
+source("R/cleaning.R")
 
 test_that("test_clean_health_data", {
   #Test the clean_health_data function to ensure it:
