@@ -7,6 +7,8 @@
 #' @param filepath Path to the CSV file
 #' 
 #' @returns Data frame containing the health data
+#' 
+#' @export
 read_health_data <- function(filepath) {
   read.csv(filepath, stringsAsFactors = FALSE)
 }
@@ -18,6 +20,8 @@ read_health_data <- function(filepath) {
 #' @param df data.frame to write
 #' 
 #' @param filepath Path to the output CSV file
+#' 
+#' @export
 write_dataframe <- function(df, filepath) {
   write.csv(df, filepath, row.names = FALSE)
 }

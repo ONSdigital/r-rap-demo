@@ -8,6 +8,8 @@ library(dplyr)
 #' @param df raw health data data.frame
 #' 
 #' @returns df_clean cleaned health data data.frame
+#' 
+#' @export
 clean_health_data <- function(df) {
   # Drop rows with missing diagnosis
   df$diagnosis[df$diagnosis == ""] <- NA

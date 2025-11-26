@@ -22,12 +22,14 @@ calculate_bmi <- function(height_cm, weight_kg){
 #' @param df Input data.frame with 'height_cm' and 'weight_kg' columns
 #' 
 #' @return data.frame with added 'bmi' column
+#' 
+#' @export
 add_bmi_column <- function(df, height_cm, weight_kg) {
   df <- df %>%
-        rowwise() %>%
-        mutate(bmi = calculate_bmi(height_cm, weight_kg)) %>%
-        ungroup()
-        return(df)
+    rowwise() %>%
+    mutate(bmi = calculate_bmi(height_cm, weight_kg)) %>%
+    ungroup()
+  return(df)
 }
 
 #' Load pipeline configuration files
@@ -37,6 +39,8 @@ add_bmi_column <- function(df, height_cm, weight_kg) {
 #' @param config_path Path to the YAML config file
 #' 
 #' @return dict Configuration dictionary
+#' 
+#' @export
 load_config <- function(config_path) {
   return (yaml::yaml.load_file(config_path))
 }

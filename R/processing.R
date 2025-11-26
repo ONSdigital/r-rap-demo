@@ -9,6 +9,8 @@ library(dplyr)
 #' @param df cleaned health data data.frame
 #' 
 #' @returns data.frame with prevalence rates per month and diagnosis
+#' 
+#' @export
 calculate_disease_prevalence <- function(df){
   prevalence = df %>%
     group_by(month, diagnosis) %>%

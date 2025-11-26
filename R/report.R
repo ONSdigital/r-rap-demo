@@ -30,6 +30,8 @@ format_month_section <- function(month, month_df) {
 #'
 #' @param prevalence_df data.frame with prevalence rates.
 #' @param output_path Path to output markdown file.
+#' 
+#' @export
 generate_markdown_report <- function(prevalence_df, output_path) {
   f <- file(output_path, "w")
   writeLines("# Disease Prevalence Report\n\n", con = f)
