@@ -6,9 +6,9 @@ source("R/processing.R")
 test_that("test_calculate_disease_prevalence", {
   #Test the calculate_disease_prevalence function to ensure it:
   # - Calculates case counts and prevalence rates correctly.
-  # - Returns a DataFrame with expected columns.
+  # - Returns a data.frame with expected columns.
   
-  # Create a sample DataFrame
+  # Create a sample data.frame
   df = data.frame(month = c("2025-01", "2025-01", "2025-02"),
                   diagnosis = c("A","B","A"))
   
