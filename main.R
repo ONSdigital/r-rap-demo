@@ -9,16 +9,16 @@ This script coordinates the full analysis pipeline, including:
 - Generating a markdown report
 
 Run this file to execute the complete RAP workflow using modular functions from
-R_rap_demo.
+the R/ folder.
 """
 
 # Main pipeline script for RAP demo
 library(yaml)
-source("R/R_rap_demo/cleaning.R")
-source("R/R_rap_demo/io.R")
-source("R/R_rap_demo/processing.R")
-source("R/R_rap_demo/report.R")
-source("R/R_rap_demo/utils.R")
+source("R/cleaning.R")
+source("R/io.R")
+source("R/processing.R")
+source("R/report.R")
+source("R/utils.R")
 
 main <- function() {
   # Run the RAP pipeline: I/O, cleaning, processing, reporting
@@ -50,4 +50,3 @@ main <- function() {
   cat("Report generated: ", report_path, "\n\n")
 }
 main()
-
