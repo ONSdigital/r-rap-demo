@@ -1,10 +1,13 @@
 # cleaning.R: Data cleaning functions for RAP pipeline
 library(dplyr)
 
-#' Clean health data by handling missing values and standardizing columns.
+#' Clean health data
+#' 
+#' @description Clean health data by handling missing values and standardizing columns
 #'
-#' @param df raw health data DataFrame.
-#' @returns df_clean cleaned health data DataFrame.
+#' @param df raw health data data.frame
+#' 
+#' @returns df_clean cleaned health data data.frame
 clean_health_data <- function(df) {
   # Drop rows with missing diagnosis
   df$diagnosis[df$diagnosis == ""] <- NA

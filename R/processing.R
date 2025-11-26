@@ -1,10 +1,14 @@
 # processing.R: Data processing functions for RAP pipeline
 library(dplyr)
 
-#' Calculate disease prevalence rates per month.
+#' Calculate disease prevalence rates per month
+#' 
+#' @description Calculate disease prevalence rates per month from 
+#' cleaned health data
 #'
-#' @param df cleaned health data DataFrame.
-#' @returns DataFrame with prevalence rates per month and diagnosis.
+#' @param df cleaned health data data.frame
+#' 
+#' @returns data.frame with prevalence rates per month and diagnosis
 calculate_disease_prevalence <- function(df){
   prevalence = df %>%
     group_by(month, diagnosis) %>%
