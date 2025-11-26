@@ -64,13 +64,15 @@ Write your function(s) in the cell below:
 
 **Tasks:**
 - Compare the cleaned_data output with and without your changes
-- Try adding your own modules and functions to the pipeline
 - Document your modules with Roxygen documentation
 
 **Reflect:**
 - How does modular code improve reproducibility and maintainability?
 - What are the benefits of separating code into modules?
 - How would you extend this pipeline to add new features or analyses?
+
+**Bonus:**
+- Try adding your own modules and functions to the pipeline
 
 ## Step 4: Refactor Visualisation Code
 
