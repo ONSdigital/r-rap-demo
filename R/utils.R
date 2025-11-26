@@ -38,5 +38,5 @@ add_bmi_column <- function(df, height_cm, weight_kg) {
 #' 
 #' @return dict Configuration dictionary
 load_config <- function(config_path) {
-  return (yaml:::yaml.load_file(config_path))
+  return (yaml::yaml.load_file(config_path))
 }
