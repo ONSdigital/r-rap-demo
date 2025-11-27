@@ -9,7 +9,7 @@ This script coordinates the full analysis pipeline, including:
 - Generating a markdown report
 
 Run this file to execute the complete RAP workflow using modular functions from
-R_rap_demo.
+the R/ folder.
 """
 
 # Main pipeline script for RAP demo
@@ -50,4 +50,3 @@ main <- function() {
   cat("Report generated: ", report_path, "\n\n")
 }
 main()
-

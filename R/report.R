@@ -1,10 +1,13 @@
 # report.R: Markdown report generation for RAP pipeline
 
-#' Format the markdown section for a single month.
+#' Format the markdown section for a single month
+#' 
+#' @description Format the markdown section for a single month
 #'
-#' @param month Month string.
-#' @param month_df DataFrame filtered for the month.
-#' @return Markdown string for the month section.
+#' @param month Month string
+#' @param month_df data.frame filtered for the month
+#' 
+#' @return Markdown string for the month section
 format_month_section <- function(month, month_df) {
   
   lines <- sprintf("## Month: %s\n", month)
@@ -25,8 +28,10 @@ format_month_section <- function(month, month_df) {
 
 #' Generate a markdown report of disease prevalence rates per month.
 #'
-#' @param prevalence_df DataFrame with prevalence rates.
+#' @param prevalence_df data.frame with prevalence rates.
 #' @param output_path Path to output markdown file.
+#' 
+#' @export
 generate_markdown_report <- function(prevalence_df, output_path) {
   f <- file(output_path, "w")
   writeLines("# Disease Prevalence Report\n\n", con = f)
