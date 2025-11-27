@@ -90,20 +90,8 @@ jobs:
           path: coverage.html
 
 
-The DESCRIPTION file must be updated to include the packages covr, DT and htmltools:
+The Imports section of the DESCRIPTION file must be updated to include the packages covr, DT and htmltools:
 
-Package: r-rap-demo
-Title: R RAP Demo
-Version: 0.0.1
-Authors@R: 
-    person("Analysis for Action",
-    email = "analysisforaction@ons.gov.uk",
-    role = c("aut", "cre"))
-Description: Learn RAP principles through practical R exercises. This repo 
-    showcases best practices for Reproducible Analytical Pipelines, with 
-    descriptions of components and exercises to help users build confidence in 
-    useapplying RAP techniques.
-License: MIT
 Imports: 
     dplyr,
     testthat,
