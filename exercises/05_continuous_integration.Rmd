@@ -8,8 +8,8 @@ present in this repository.
 ## Exercise 1: Explore the CI configuration files
 
 Open and review the following files in the repository: 
-- `.pre-commit-config.yaml`: Pre-commit hooks for code quality, notebook
-formatting, secrets detection, and more.
+- `.pre-commit-config.yaml`: Pre-commit hooks for code quality,
+secrets detection, and more.
 - `DESCRIPTION`: Lists required R packages for the pipeline and CI tools.
 
 **Task:**
@@ -43,6 +43,7 @@ Create a new GitHub Actions workflow file in `.github/workflows/`.
 
 **Task:** 
 1. Add the following workflow YAML to `.github/workflows/ci_test_coverage.yml`:
+```{yaml}
 name: Test coverage CI (Any Branch)
 
 on:
@@ -88,7 +89,7 @@ jobs:
         with:
           name: coverage-report
           path: coverage.html
-
+```
 
 The Imports section of the DESCRIPTION file must be updated to include the packages covr, DT and htmltools:
 
@@ -101,11 +102,12 @@ Imports:
     covr,
     DT,
     htmltools
-    
+```
 2. Commit and push your change to any branch. 
-3. Go to your repository on GitHub, click on the **Actions** tab, and look for the workflow run
+3. Ensure GitHub Actions is enabled for your repository in **Settings > Actions**.
+4. Go to your repository on GitHub, click on the **Actions** tab, and look for the workflow run
 named "Test coverage CI (Any Branch)". 
-4. Check the status and logs of the workflow to confirm it ran successfully.
+5. Check the status and logs of the workflow to confirm it ran successfully.
 
 This action will run any time you push code up to GitHub on any branch.
 
