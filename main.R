@@ -10,7 +10,7 @@ main <- function() {
   # Run the RAP pipeline: I/O, cleaning, processing, reporting
 
   # Construct the path to the YAML configuration file
-  config_path <- file.path("D:/repos/R_rap_demo/config/user_config.yaml")
+  config_path <- file.path("config/user_config.yaml")
 
   # Load the YAML configuration file
   config <- yaml::read_yaml(config_path)
