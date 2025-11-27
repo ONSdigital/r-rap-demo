@@ -156,7 +156,7 @@ impute_by_group(df = df, col = "weight_kg", group_col = "gender")
 are correctly imputed using group means. 
 - Use testthat and expect statements in your test file.
 
-**Note:** The tests will run for these functions, but they will not
+**Note:** The tests will run for these functions, but the functions will not
 affect the output unless you implement them in the pipeline. See
 `02_modules_solutions` for a guide on how to do this
 
