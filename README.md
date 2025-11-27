@@ -25,9 +25,11 @@ Welcome to the RAP (Reproducible Analytical Pipeline) demonstration repository! 
    - Click the "Fork" button in the top right to create your own copy.
    - Clone your forked repository:
      ```cmd
-     git clone https://github.com/<your-username>/r.rap.demo.git
-     cd r.rap.demo
+     git clone https://github.com/ONSdigital/r-rap-demo.git
+     cd r-rap-demo
      ```
+
+> **Note:** The GitHub repository is named `r-rap-demo`, but the R package name (as used in R and in the `DESCRIPTION` file) is `r.rap.demo`. This difference is intentional and follows best practices for naming in each context.
 
 2. **Set up your environment:**
    - Open RStudio (recommended) or your preferred R environment.
