@@ -2,6 +2,7 @@
 
 library(testthat)
 library(readr)
+
 source("R/report.R")
 
 test_that("test_format_month_section", {

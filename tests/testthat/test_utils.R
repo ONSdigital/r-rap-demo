@@ -2,6 +2,7 @@
 
 library(testthat)
 library(yaml)
+
 source("R/utils.R")
 
 test_that("test_add_bmi_column", {
