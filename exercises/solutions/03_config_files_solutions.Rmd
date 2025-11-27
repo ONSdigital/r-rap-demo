@@ -80,7 +80,7 @@ Add another parameter to your config file:
 output_format: csv  # Output file format: csv or xlsx
 ```
 
-Create a modular function to save output in the desired format, e.g., in `R/R_rap_demo/io.R`:
+Create a modular function to save output in the desired format, e.g., in `R/io.R`:
 
 ```{r}
 library(openxlsx)
