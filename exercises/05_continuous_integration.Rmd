@@ -12,16 +12,16 @@ Open and review the following files in the repository:
 formatting, secrets detection, and more.
 - `DESCRIPTION`: Lists required R packages for the pipeline and CI tools.
 
-**Task:**\
-Read through these files and note which tools and hooks are enabled.\
-Which hooks check notebooks? Which check R scripts?
+**Task:**
+Read through these files and note which tools and hooks are enabled.
+Which hooks check formatting? Which check for secrets?
 
 ## Exercise 2: Detect secrets in your code
 
 The `detect-secrets` hook scans for sensitive information
 and vulnerabilities in code.
 
-**Task:**\
+**Task:**
 1. Add a fake secret to any R file. For example:
 
 ```{r}
@@ -41,8 +41,8 @@ and vulnerabilities in code.
 
 Create a new GitHub Actions workflow file in `.github/workflows/`.
 
-**Task:** 1. Add the following workflow YAML to
-`.github/workflows/ci_test_coverage.yml`:
+**Task:** 
+1. Add the following workflow YAML to `.github/workflows/ci_test_coverage.yml`:
 name: Test coverage CI (Any Branch)
 
 on:
@@ -124,6 +124,6 @@ This action will run any time you push code up to GitHub on any branch.
 ## Reflection
 
 Continuous integration automates code quality checks, formatting,
-secrets detection, and testing.\
+secrets detection, and testing.
 By following these exercises, you ensure your RAP pipeline is
 reproducible, robust, and easy to maintain.
