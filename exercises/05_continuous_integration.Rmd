@@ -83,7 +83,7 @@ jobs:
         run: Rscript -e 'devtools::test()'
       # Step 6: Generate coverage report wit covr and upload as artifact
       - name: Generate coverage report
-        run: Rscript -e 'covr::report(covr::package_coverage(), file = "coverage.html")'
+        run: Rscript -e "cov <- covr::package_coverage(); print(covr::percent_coverage(cov)); print(covr::zero_coverage(cov))"
       
       - uses: actions/upload-artifact@v4
         with:
