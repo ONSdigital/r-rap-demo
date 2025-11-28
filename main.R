@@ -12,11 +12,7 @@
 
 # Main pipeline script for RAP demo
 library(yaml)
-source("R/cleaning.R")
-source("R/io.R")
-source("R/processing.R")
-source("R/report.R")
-source("R/utils.R")
+devtools::load_all()
 
 main <- function() {
   # Run the RAP pipeline: I/O, cleaning, processing, reporting
