@@ -17,8 +17,6 @@ jobs:
         uses: r-lib/actions/setup-r@v2 # check for latest version
         with:
           r-version: '4.4.0'
-      - name: Install latest covr, DT, htmltools
-        run: Rscript -e 'install.packages(c("covr", "DT", "htmltools"))'
       # Step 3: Cache R packages to speed up future runs 
       - name: Set R_LIBS_USER
         run: echo "R_LIBS_USER=$(Rscript -e 'cat(.libPaths()[1])')" >> $GITHUB_ENV
@@ -37,12 +35,7 @@ jobs:
       # Step 5: Run unit tests using devtools
       - name: Run tests
         run: Rscript -e 'devtools::test()'
-      # Step 6: Generate coverage report with covr
+      # Step 6: Prints the percentage of lines covered by unit tests and the lines 
+      # of code that are not covered
       - name: Generate coverage report
         run: Rscript -e 'covr::report(covr::package_coverage(), file = "coverage.html")'
-      
-      # 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage.html
