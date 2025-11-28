@@ -47,6 +47,6 @@ cat("DEBUG: lints length =", length(lints), "\n")
 # Filter only valid lint objects
 lints <- Filter(function(x) inherits(x, "lint"), lints)
 cat("Lintr found", length(lints), "warnings.\n")
-# Summarize and print warnings
-summarize_lintr_warnings(lints)
+# Summarise and print warnings
+summarise_lintr_warnings(lints)
 flush.console()

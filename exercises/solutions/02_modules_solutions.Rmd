@@ -67,7 +67,7 @@ Where you place these functions depends on the context and what makes most sense
 # cleaning.R: Data cleaning functions for RAP pipeline
 
 clean_health_data <- function(df) {
-  #' Clean health data by handling missing values and standardizing columns.
+  #' Clean health data by handling missing values and standardising columns.
   #' @param df raw health data DataFrame.
   #' @returns df_clean cleaned health data DataFrame.
   
