@@ -16,9 +16,17 @@ testthat::test_that("test_calculate_disease_prevalence", {
 
   result <- calculate_disease_prevalence(df)
   # Define the expected output columns
-  expected_cols <- c("month", "diagnosis", "case_count", "total", "prevalence_rate")
+  expected_cols <- c(
+    "month",
+    "diagnosis",
+    "case_count",
+    "total",
+    "prevalence_rate"
+  )
   # Check that the result has the expected columns
   testthat::expect_setequal(colnames(result), expected_cols)
   # Check that the prevalence rates are between 0 and 1
-  testthat::expect_true(all(result$prevalence_rate >= 0 & result$prevalence_rate <= 1))
+  testthat::expect_true(
+    all(result$prevalence_rate >= 0 & result$prevalence_rate <= 1)
+  )
 })

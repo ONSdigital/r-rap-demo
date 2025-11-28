@@ -1,14 +1,14 @@
-# run_linters.R
-# Annotate and summarize lintr warnings for GitHub Actions
+# run_linters.R: Annotate and summarise lintr warnings for GitHub Actions
+library(lintr)
 
-#' Summarize lintr warnings and print GitHub Actions annotations
+#' Summarise lintr warnings and print GitHub Actions annotations
 #'
 #' This function takes a list of lints and prints GitHub Actions warning annotations for each lint.
-#' It also returns a character vector summarizing the warnings for markdown reporting.
+#' It also returns a character vector summarising the warnings for markdown reporting.
 #'
 #' @param lints A list of lint objects returned by lintr::lint_dir or lintr::lint
 #' @return A character vector of markdown-formatted warning summaries
-summarize_lintr_warnings <- function(lints) {
+summarise_lintr_warnings <- function(lints) {
   warnings <- c()
   # Loop through each lint object
   for (lint in lints) {
@@ -85,7 +85,7 @@ cat("DEBUG: lints length =", length(lints), "\n")
 # Filter only valid lint objects
 lints <- Filter(function(x) inherits(x, "lint"), lints)
 cat("Lintr found", length(lints), "warnings.\n")
-# Summarize and write warnings
-warnings <- summarize_lintr_warnings(lints)
+# Summarise and write warnings
+warnings <- summarise_lintr_warnings(lints)
 write_lintr_summary(warnings)
 flush.console()
