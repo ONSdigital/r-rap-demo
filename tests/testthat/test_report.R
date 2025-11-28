@@ -24,7 +24,8 @@ testthat::test_that("test_format_month_section", {
     sep = "\n"
   )
   result <- format_month_section(month, month_df)
-  # Check that the output from format_month_selection matches the expected output
+  # Check that the output from format_month_selection matches the expected
+  # output
   testthat::expect_setequal(trimws(result), trimws(expected_output))
 })
 
@@ -44,7 +45,12 @@ testthat::test_that("test_generate_markdown_report", {
   test_df$prevalence_rate <- test_df$case_count / test_df$total
 
   format_month_section <- function(month, df) {
-    paste0("## ", month, "\n", paste(capture.output(print(df)), collapse = "\n"))
+    paste0(
+      "## ",
+      month,
+      "\n",
+      paste(capture.output(print(df)), collapse = "\n")
+    )
   }
 
   generate_markdown_report(test_df, out_path)
