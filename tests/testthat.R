@@ -9,4 +9,4 @@
 library(testthat)
 library(r.rap.demo)
 
-test_check("r.rap.demo")
+testthat::test_check("r.rap.demo")

@@ -8,7 +8,7 @@ Here are example unit tests for the `flag_missing` and `impute_by_group` functio
 ```{r}
 library(testthat)
 source("R/cleaning.R")
-test_that("test flag_missing", {
+testthat::test_that("test flag_missing", {
   df <- data.frame(
     height_cm = c(170, NA, 160),
     weight_kg = c(70, 80, NA))
@@ -19,21 +19,21 @@ test_that("test flag_missing", {
     weight_kg_imputed = c(FALSE, FALSE, TRUE))
   
   flagged = flag_missing(df)
-  expect_equal(as.data.frame(flagged), expected_output)
+  testthat::expect_equal(as.data.frame(flagged), expected_output)
 })
 ```
 
 ```{r}
 library(testthat)
 source("R/cleaning.R")
-test_that("test impute_by_group", {
+testthat::test_that("test impute_by_group", {
   df <- data.frame(
     height_cm = c(170, NA, 160, 150, 190, 180, NA, NA, 170, NA),
     weight_kg = c(70, 80, 60, 50, 90, 70, 80, 100, 50, 90),
     gender = c("M", "M", "F", "F", "M", "M", "F", "M", "F", "M"))
   expected_output <- c(170, 180, 160, 150, 190, 180, 160, 180, 170, 180)
   output <- impute_by_group(df, "height_cm", "gender")
-  expect_equal(round(output, 1), round(expected_output, 1))
+  testthat::expect_equal(round(output, 1), round(expected_output, 1))
 })
 ```
 
@@ -52,7 +52,7 @@ Run the following commands:
 ```{r}
 library(covr)
  cov <- covr::file_coverage("R/utils.R", "tests/test_utils.R")
- zero_lines <- zero_coverage(cov)
+ zero_lines <- covr::zero_coverage(cov)
  print(zero_lines)
 # Note: The first argument is the path to the function, the second argument is the path to the test function
 ```
@@ -69,9 +69,9 @@ library(testthat)
 library(patrick)
 
 patrick::with_parameters_test_that("test flag_missing", {
-      flagged <- flag_missing(df, columns)
-    expect_equal(flagged$height_cm_imputed, expected_height_flags)
-    expect_equal(flagged$weight_kg_imputed, expected_weight_flags)
+    flagged <- flag_missing(df, columns)
+    testthat::expect_equal(flagged$height_cm_imputed, expected_height_flags)
+    testthat::expect_equal(flagged$weight_kg_imputed, expected_weight_flags)
   },
   df = list(
     data.frame(height_cm = c(170, NA), weight_kg = c(70, NA)),
@@ -96,6 +96,7 @@ patrick::with_parameters_test_that("test flag_missing", {
 library(testthat)
 library(patrick)
 library(covr)
+library(dplyr)
 impute_by_group <- function(df, col, group_col) {
   group_means <- df %>%
   dplyr::group_by(!!rlang::sym(group_col)) %>%
@@ -109,7 +110,7 @@ impute_by_group <- function(df, col, group_col) {
 
 patrick::with_parameters_test_that("test impute_by_group", {
   imputed <- impute_by_group(df, col, group_col)
-  expect_equal(imputed, expected)
+  testthat::expect_equal(imputed, expected)
   },
   df = list(
     data.frame(height_cm = c(170, NA, 160), gender = c("M", "F", "F")),

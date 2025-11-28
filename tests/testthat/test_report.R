@@ -5,14 +5,15 @@ library(readr)
 
 source("R/report.R")
 
-test_that("test_format_month_section", {
+testthat::test_that("test_format_month_section", {
   # Define the variable month used in format_month_section
   month <- "January"
   # Create the data.frame month_df used in format_month_selection
   month_df <- data.frame(
-    diagnosis = c("A","B"),
+    diagnosis = c("A", "B"),
     case_count = c(10, 20),
-    total = c(20, 50))
+    total = c(20, 50)
+  )
   # Calculate the prevalence rate
   month_df$prevalence_rate <- month_df$case_count / month_df$total
   # Define the expected output of format_month_section
@@ -22,13 +23,13 @@ test_that("test_format_month_section", {
     "- B: 40.00% (20 cases)",
     sep = "\n"
   )
-  result = format_month_section(month, month_df)
+  result <- format_month_section(month, month_df)
   # Check that the output from format_month_selection matches the expected output
-  expect_setequal(trimws(result), trimws(expected_output))
+  testthat::expect_setequal(trimws(result), trimws(expected_output))
 })
 
 
-test_that("test_generate_markdown_report", {
+testthat::test_that("test_generate_markdown_report", {
   # Test the generate_markdown_report function to ensure it:
   # - Creates a markdown file
   # - Includes expected content
@@ -41,14 +42,14 @@ test_that("test_generate_markdown_report", {
     total = 20
   )
   test_df$prevalence_rate <- test_df$case_count / test_df$total
-  
+
   format_month_section <- function(month, df) {
     paste0("## ", month, "\n", paste(capture.output(print(df)), collapse = "\n"))
   }
-  
+
   generate_markdown_report(test_df, out_path)
   # Check that the file exists and contains expected text
-  expect_true(file.exists(out_path))
-  content <- read_file(out_path)
-  expect_true(grepl("Disease Prevalence Report", content))
+  testthat::expect_true(file.exists(out_path))
+  content <- readr::read_file(out_path)
+  testthat::expect_true(grepl("Disease Prevalence Report", content))
 })

@@ -208,9 +208,9 @@ flag_missing <- function(df, columns) {
 }  
 impute_numeric_by_group <- function(df, col, group_col) {
   group_means <- df %>%
-    group_by(!!rlang::sym(group_col)) %>%
-    mutate(group_mean = mean(!!rlang::sym(col), na.rm = TRUE)) %>%
-    pull(group_mean)
+    dplyr::group_by(!!rlang::sym(group_col)) %>%
+    dplyr::mutate(group_mean = mean(!!rlang::sym(col), na.rm = TRUE)) %>%
+    dplyr::pull(group_mean)
   result <- ifelse(is.na(df[[col]]), group_means, df[[col]])
   result <- ifelse(is.na(result), mean(df[[col]], na.rm = TRUE), result)
   result <- round(result, 1)
@@ -222,8 +222,8 @@ impute_categorical_by_group <- function(df, col, group_col) {
     ux[which.max(tabulate(match(x, ux)))]
   }
   df <- df %>%
-    group_by(!!sym(group_col)) %>%
-    mutate(!!sym(col) := ifelse(is.na(!!sym(col)),
+    dplyr::group_by(!!sym(group_col)) %>%
+    dplyr::mutate(!!sym(col) := ifelse(is.na(!!sym(col)),
                                 mode_function(!!sym(col)),
                                 !!sym(col)))
   return(df[[col]])
@@ -265,9 +265,9 @@ plot_missing_values <- function(df, output_path) {
   missing_counts <- data.frame(
   columns = names(df),
   missing = sapply(df, function(x) sum(is.na(x))))
-  plot <- ggplot(missing_counts, aes(x = columns, y = missing)) +
-    geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
-  ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
+  plot <- ggplot2::ggplot(missing_counts, aes(x = columns, y = missing)) +
+    ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
+  ggplot2::ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
   print(plot)
 }
 df <- read.csv("data/inputs/health_data.csv")
@@ -284,9 +284,9 @@ prevalence <- calculate_disease_prevalence(df)
 plot_disease_prevalence <- function(prevalence, output_path, month) {
   cat("building", output_path, "prevalence_", month, ".png\n")
   prevalence <- prevalence[prevalence$month == month, ]
-  plot <- ggplot(prevalence, aes(x = diagnosis, y = prevalence_rate)) +
-    geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
-  ggsave(filename = paste0(output_path, "prevalence", month, ".png"), plot = plot)
+  plot <- ggplot2::ggplot(prevalence, aes(x = diagnosis, y = prevalence_rate)) +
+    ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
+  ggplot2::ggsave(filename = paste0(output_path, "prevalence", month, ".png"), plot = plot)
   print(plot)
 }
 plot_disease_prevalence(prevalence, output_path = "exercises/outputs/", month = "2025-01")
@@ -332,9 +332,9 @@ plot_missing_values <- function(df, output_path) {
   missing_counts <- data.frame(
   columns = names(df),
   missing = sapply(df, function(x) sum(is.na(x))))
-  plot <- ggplot(missing_counts, aes(x = columns, y = missing)) +
-    geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
-  ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
+  plot <- ggplot2::ggplot(missing_counts, aes(x = columns, y = missing)) +
+    ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
+  ggplot2::ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
   print(plot)
 }
 df <- read.csv("data/inputs/health_data.csv")
@@ -360,19 +360,19 @@ plot_disease_prevalence_timeseries <- function(prevalence, output_path) {
   
   # Plot timeseries
   library(ggplot2)
-  p <- ggplot(prevalence, aes(x = month, y = prevalence_rate, color = diagnosis, group = diagnosis)) +
-    geom_line() +
-    geom_point() +
-    scale_color_manual(values = palette) +
-    labs(
+  p <- ggplot2::ggplot(prevalence, aes(x = month, y = prevalence_rate, color = diagnosis, group = diagnosis)) +
+    ggplot2::geom_line() +
+    ggplot2::geom_point() +
+    ggplot2::scale_color_manual(values = palette) +
+    ggplot2::labs(
       title = "Disease Prevalence Over Time by Disease Category",
       x = "Month",
       y = "Prevalence Rate",
       color = "Diagnosis"
     ) +
-    theme_minimal()
+    ggplot2::theme_minimal()
   
-  ggsave(filename = paste0(output_path, "prevalence_timeseries.png"), plot = p, width = 8, height = 5)
+  ggplot2::ggsave(filename = paste0(output_path, "prevalence_timeseries.png"), plot = p, width = 8, height = 5)
 }
 plot_disease_prevalence_timeseries(prevalence, output_path = "exercises/outputs/")
 ```

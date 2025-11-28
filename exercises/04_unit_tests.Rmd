@@ -37,10 +37,10 @@ Below is the code for `flag_missing`:
 library(dplyr)
 flag_missing <- function(df) {
   df <- df %>%
-    rowwise() %>%
-    mutate(height_cm_imputed = is.na(height_cm)) %>%
-    mutate(weight_kg_imputed = is.na(weight_kg)) %>%
-    ungroup()
+    dplyr::rowwise() %>%
+    dplyr::mutate(height_cm_imputed = is.na(height_cm)) %>%
+    dplyr::mutate(weight_kg_imputed = is.na(weight_kg)) %>%
+    dplyr::ungroup()
     return(df)
 }
 df <- data.frame(
@@ -61,10 +61,9 @@ flagged = flag_missing(df)
 
 ```{r}
 library(testthat)
-library(dplyr)
 # If running the test in a separate file to the function, use source() to import the function that is being tested
 
-test_that("test flag_missing", {
+testthat::test_that("test flag_missing", {
   # Create data frame to feed into the flag_missing function
   df <- data.frame(
     height_cm = c(170, NA, 160),
@@ -78,7 +77,7 @@ test_that("test flag_missing", {
   
   flagged = flag_missing(df)
   # Check that the output of flag_missing is the same as the expected output
-  expect_equal(as.data.frame(flagged), expected_output)
+  testthat::expect_equal(as.data.frame(flagged), expected_output)
 })
 ```
 
@@ -120,6 +119,7 @@ statements to check the output.
 Below is the function definition:
 
 ```{r}
+library(dplyr)
 impute_by_group <- function(df, col, group_col) {
   col <- rlang::sym(col)
   group_col <- rlang::sym(group_col)
@@ -179,7 +179,7 @@ percentage of the lines of code that are covered by the test.
 To which lines of code are not covered by the test, set a variable (for
 example: cov) equal to the code above and then run:
 
-`zero_lines <- zero_coverage(cov)`
+`zero_lines <- covr::zero_coverage(cov)`
 
 `print(zero_lines)` - Check which lines of your code are covered by
 tests.
