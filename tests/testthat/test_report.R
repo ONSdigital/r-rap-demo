@@ -2,12 +2,13 @@
 
 library(testthat)
 library(readr)
-source("D:/repos/R_rap_demo/R/report.R")
+
+source("R/report.R")
 
 test_that("test_format_month_section", {
   # Define the variable month used in format_month_section
   month <- "January"
-  # Create the dataframe month_df used in format_month_selection
+  # Create the data.frame month_df used in format_month_selection
   month_df <- data.frame(
     diagnosis = c("A","B"),
     case_count = c(10, 20),
@@ -32,7 +33,7 @@ test_that("test_generate_markdown_report", {
   # - Creates a markdown file
   # - Includes expected content
   out_path <- tempfile(fileext = ".md")
-  # Create a sample DataFrame for the report
+  # Create a sample data.frame for the report
   test_df <- data.frame(
     month = "2025-01",
     diagnosis = "A",
