@@ -3,8 +3,6 @@
 library(testthat)
 library(readr)
 
-source("R/report.R")
-
 testthat::test_that("test_format_month_section", {
   # Define the variable month used in format_month_section
   month <- "January"

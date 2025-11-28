@@ -1,7 +1,6 @@
 # Unit tests for the processing module in the RAP pipeline.
 
 library(testthat)
-source("R/processing.R")
 
 testthat::test_that("test_calculate_disease_prevalence", {
   # Test the calculate_disease_prevalence function to ensure it:

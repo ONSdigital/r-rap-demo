@@ -2,10 +2,8 @@
 
 library(testthat)
 
-source("R/io.R")
-
 testthat::test_that("test_read_health_data", {
-  # Test reading a CSV file into a data.frame.
+  #Test reading a CSV file into a data.frame.
   # Create a temporary CSV file
   temp_file <- tempfile(fileext = ".csv")
   df <- data.frame(a = c(1, 2), b = c(3, 4))
