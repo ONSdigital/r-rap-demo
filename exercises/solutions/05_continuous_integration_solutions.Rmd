@@ -13,7 +13,7 @@ This notebook provides step-by-step solutions for implementing and testing conti
 -   Add a fake secret to any Python file. For example:
 
     ``` python
-    password = "12345"
+    password = "add_your_fake_password_here"
     print(password)
     ```
 
