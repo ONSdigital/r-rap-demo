@@ -1,0 +1,88 @@
+# Exercise: using packages and functions
+
+In this exercise, you'll practice refactoring a single, monolithic script into a modular pipeline using functions and separate files. This is a key RAP best practice for reproducibility and maintainability.
+
+**Learning objectives:**
+- Understand the difference between monolithic and modular code
+- Practice breaking up a large script into reusable functions
+- Learn how to organise code into modules for analysis and reporting
+- Learn how to handle missing data using imputation
+
+```{r}
+# Setup code for exercises
+library(dplyr)
+# Load data
+df <- read.csv("data/inputs/health_data.csv")
+
+# print the first 5 rows of health data
+head(df, 5)
+```
+
+## Step 1: Review the Monolithic Script
+
+Below is a single script that identifies missing values and performs imputation. Your task is to refactor this into modular code.
+
+**Tasks:**
+- Convert the below into functions
+- Extend the function to impute missing height and weight using group means (e.g., by gender or diagnosis)
+- Add a new column to flag which values were imputed
+
+```{r}
+# Impute missing height and weight with column means
+# Flag missing values
+df$height_cm_imputed <- is.na(df$height_cm)
+df$weight_kg_imputed <- is.na(df$weight_kg)
+
+df <- dplyr::group_by(df, gender)
+df <- dplyr::mutate(df,
+             height_cm = ifelse(is.na(height_cm), mean(height_cm, na.rm = TRUE), height_cm),
+             weight_kg = ifelse(is.na(weight_kg), mean(weight_kg, na.rm = TRUE), weight_kg)
+             )
+df <- dplyr::ungroup(df)
+
+df <- dplyr::mutate(df,
+             height_cm = ifelse(is.na(height_cm), mean(height_cm, na.rm = TRUE), height_cm),
+             weight_kg = ifelse(is.na(weight_kg), mean(weight_kg, na.rm = TRUE), weight_kg)
+             )
+print(df)
+```
+Write your function(s) in the cell below:
+```{r}
+
+```
+## Step 2: Add your functions to the pipeline
+
+**Tasks:**
+- Add your functions to an appropriate module in the `R/` folder
+- Ensure your functions are used when running the pipeline
+
+**Hints:**
+- Add your functions into another function in the same module
+- If you create a new module, import the module into the main.R script
+
+## Step 3: Challenge & Reflection
+
+**Tasks:**
+- Compare the cleaned_data output with and without your changes
+- Document your modules with Roxygen documentation
+
+**Reflect:**
+- How does modular code improve reproducibility and maintainability?
+- What are the benefits of separating code into modules?
+- How would you extend this pipeline to add new features or analyses?
+
+**Bonus:**
+- Try adding your own modules and functions to the pipeline
+
+## Step 4: Refactor Visualisation Code
+
+As an additional challenge, Add code to create visualisations. Place all visualisation functions in the `report.R` module.
+
+**Tasks:**
+- Write a function to plot missing values per column before the data is cleaned
+- Write a function to plot disease prevalence for each disease category over time after the data is cleaned
+- Add the visualisations to the output report
+
+**Bonus:**
+- Save the charts to the outputs folder
+- Customise chart formatting and colours

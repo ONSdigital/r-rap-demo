@@ -11,7 +11,7 @@ The functions defined in the `R` folder feed into the overall workflow of your R
 - Facilitates testing and maintenance by keeping code separate from data and configuration files
 
 ## Common types of files in `R`
-- **Function scripts:** R scripts that define functions for specific tasks (e.g., data cleaning, analysis, visualization)
+- **Function scripts:** R scripts that define functions for specific tasks (e.g., data cleaning, analysis, visualisation)
 - **Module scripts:** Scripts that group related functions into modules for specific parts of the pipeline
 - **Utility scripts:** Helper functions that support common tasks used across multiple modules
 
@@ -21,7 +21,7 @@ R pipelines are often structured in one of the following ways:
   ```
   R/
   ├── clean_data.R
-  ├── analyze_data.R
+  ├── analyse_data.R
   ├── generate_report.R
   └── utils.R
   main.R
@@ -33,8 +33,8 @@ R pipelines are often structured in one of the following ways:
     │   ├── clean_data.R
     │   └── validate_data.R
     ├── analysis/
-    │   ├── analyze_data.R
-    │   └── summarize_results.R
+    │   ├── analyse_data.R
+    │   └── summarise_results.R
     └── reporting/
         ├── generate_report.R
         └── plot_results.R

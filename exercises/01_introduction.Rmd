@@ -1,0 +1,37 @@
+# Introduction to RAP pipeline exercises
+Welcome to the RAP (Reproducible Analytical Pipeline) exercises for this project. These exercises are designed to help you learn and apply best practices for reproducible, modular, and transparent data analysis in R.
+
+## Contents of the exercises
+- **01_introduction.Rmd**: Overview and guidance for the RAP exercises
+- **02_modules.Rmd**: Refactor monolithic code into functions and modular scripts
+- **03_config_files.Rmd**: Use configuration files to control pipeline behaviour
+- **04_unit_tests.Rmd**: Write and run unit tests for your code
+- **05_continuous_integration.Rmd**: Implement and test continuous integration
+
+## Aim of the exercises
+The aim is to guide to build on your understanding of reproducible analytical pipelines (RAP) with practical experience in a demonstration repository.  
+  
+These exercises are intended as a starting point that you can build upon. Please use this repository to practice elements of RAP you would like to improve that may not be covered by these exercises.
+
+## Where to find exercises, solutions, and outputs
+- **Exercises**: Located in the `exercises/` folder (e.g., `exercises/02_modules.Rmd`)
+- **Solutions**: Located in `exercises/solutions/` (e.g., `exercises/solutions/02_modules_solutions.Rmd`)
+- **Outputs**: Saved in `exercises/outputs/` (e.g., cleaned data, reports, charts)
+
+## How to use the exercises
+1. **Read each exercise notebook** and follow the instructions step by step.
+2. **Write your code** in the notebook cells or in the `R/` modules as instructed.
+4. **Check your solutions** by comparing your results with the solutions notebooks in `exercises/solutions/`.
+5. **View outputs** in the `data/outputs/` folder (e.g., cleaned data, markdown reports, charts).
+
+## Adding code to the src folder
+- Place reusable functions and classes in the appropriate module in `R/` (e.g., `cleaning.R`, `io.R`, `report.R`).
+- Use clear function names, type hints, and docstrings following tidyverse standards.
+
+## How to check if your solutions have worked
+- **Compare outputs**: Check your results against the solutions notebooks and output files.
+- **Check outputs**: Review generated files in `data/outputs/` for expected results.
+- **Run tests**: For unit test exercises you can run tests with testthat and then check coverage using covr
+- **Use pre-commit hooks and CI**: Ensure your code passes formatting, linting, and CI checks.
+
+By following these exercises, you will build a reproducible, automated, and transparent analytical pipeline suitable for real-world data analysis.

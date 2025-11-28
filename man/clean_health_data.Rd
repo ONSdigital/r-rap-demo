@@ -13,5 +13,5 @@ clean_health_data(df)
 df_clean cleaned health data data.frame
 }
 \description{
-Clean health data by handling missing values and standardizing columns
+Clean health data by handling missing values and standardising columns
 }

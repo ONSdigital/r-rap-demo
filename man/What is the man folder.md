@@ -1,6 +1,6 @@
 # What is the `man` folder?
 
-The `man` folder is used to store documentation files for your R package. These files provide detailed information about the functions, datasets, and overall usage of the package, making it easier for users to understand and utilize the package effectively.
+The `man` folder is used to store documentation files for your R package. These files provide detailed information about the functions, datasets, and overall usage of the package, making it easier for users to understand and utilise the package effectively.
 
 ## Why is it important?
 - Provides clear and structured documentation for users to understand the functions and features of the package

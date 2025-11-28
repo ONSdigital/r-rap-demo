@@ -2,14 +2,15 @@
 # generates GitHub Actions annotations for any warnings found.
 # It is included in the r-checks.yml GitHub Actions workflow to provide
 # immediate feedback on code quality issues.
+library(lintr)
 
-#' Summarize lintr warnings and print GitHub Actions annotations
+#' Summarise lintr warnings and print GitHub Actions annotations
 #'
 #' This function takes a list of lints and prints GitHub Actions warning annotations for each lint.
 #'
 #' @param lints A list of lint objects returned by lintr::lint_dir or lintr::lint
 #' @return A character vector of markdown-formatted warning summaries
-summarize_lintr_warnings <- function(lints) {
+summarise_lintr_warnings <- function(lints) {
   warnings <- c()
   # Loop through each lint object
   for (lint in lints) {
@@ -46,6 +47,6 @@ cat("DEBUG: lints length =", length(lints), "\n")
 # Filter only valid lint objects
 lints <- Filter(function(x) inherits(x, "lint"), lints)
 cat("Lintr found", length(lints), "warnings.\n")
-# Summarize and print warnings
-summarize_lintr_warnings(lints)
+# Summarise and print warnings
+summarise_lintr_warnings(lints)
 flush.console()

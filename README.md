@@ -77,7 +77,7 @@ If exercises are provided, they will be in a dedicated folder (e.g., `exercises/
   - Add new modules
   - Use configuration files
   - Write unit tests
-  - Set up and customize pre-commit hooks
+  - Set up and customise pre-commit hooks
   - Apply RAP principles in real code
 
 **Do not edit files in `R/` unless instructed by an exercise.**
