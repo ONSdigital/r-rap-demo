@@ -1,5 +1,6 @@
 # processing.R: Data processing functions for RAP pipeline
 library(dplyr)
+library(ggplot2)
 
 #' Calculate disease prevalence rates per month
 #' 

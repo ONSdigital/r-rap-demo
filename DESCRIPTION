@@ -1,0 +1,20 @@
+Package: r.rap.demo
+Title: R RAP Demo
+Version: 0.0.1
+Authors@R: 
+    person("Analysis for Action",
+    email = "analysisforaction@ons.gov.uk",
+    role = c("aut", "cre"))
+Description: Learn RAP principles through practical R exercises. This repo 
+    showcases best practices for Reproducible Analytical Pipelines, with 
+    descriptions of components and exercises to help users build confidence in 
+    useapplying RAP techniques.
+License: MIT
+RoxygenNote: 7.3.3
+Imports:
+  dplyr,
+  testthat,
+  yaml,
+  readr,
+  ggplot2
+

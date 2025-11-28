@@ -1,0 +1,51 @@
+# This is a GitHub Actions workflow file for Continuous Integration (CI).
+# CI automatically checks your code for errors and runs your unit tests every time you push changes
+# or open a pull request to the main branch. This helps keep your code reproducible and reliable.
+#
+# What this file does:
+# - Runs on every push or pull request to the main branch
+# - Sets up a fresh R environment
+# - Installs your project's dependencies
+# - Runs all unit tests in the 'tests/' folder
+#
+# Each step is explained below.
+
+name: CI
+
+on:
+  # Run this workflow when you push to 'main' or open a pull request to 'main'
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    # Use the latest Ubuntu operating system for the runner
+    runs-on: ubuntu-latest  # This is a virtual machine provided by GitHub
+    steps:
+      # Step 1: Download your repository code onto the runner
+      - uses: actions/checkout@v4
+      # Step 2: Set up R version 4.4.0 on the runner
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2 # check for latest version
+        with:
+          r-version: '4.4.0'
+      # Step 3: Cache R packages to speed up future runs 
+      - name: Set R_LIBS_USER
+        run: echo "R_LIBS_USER=$(Rscript -e 'cat(.libPaths()[1])')" >> $GITHUB_ENV
+      - name: Cache R packages
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ hashFiles('**/*.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-r-
+      # Step 4: Install all required R packages listed in DESCRIPTION
+      - name: Install dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::devtools  
+      - name: Run tests
+        run: Rscript -e 'devtools::test()'
+ 

@@ -2,7 +2,8 @@
 
 library(testthat)
 library(yaml)
-source("D:/repos/R_rap_demo/R/utils.R")
+
+source("R/utils.R")
 
 test_that("test_add_bmi_column", {
   # Test the add_bmi_column function to ensure it adds a 'bmi' column correctly.
