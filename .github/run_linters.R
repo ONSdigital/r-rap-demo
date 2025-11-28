@@ -1,11 +1,10 @@
-"""
-run_linters.R: This script runs lintr on the R scripts in the RAP demo project,
-generates GitHub Actions annotations for any warnings found, and creates a
-markdown summary of the warnings for review.
+# run_linters.R: This script runs lintr on the R scripts in the RAP demo project,
+# generates GitHub Actions annotations for any warnings found, and creates a
+# markdown summary of the warnings for review.
+# 
+# It is included in the r-checks.yml GitHub Actions workflow to provide
+# immediate feedback on code quality issues.
 
-It is included in the r-checks.yml GitHub Actions workflow to provide
-immediate feedback on code quality issues.
-"""
 
 # run_linters.R
 # Annotate and summarize lintr warnings for GitHub Actions

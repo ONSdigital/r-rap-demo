@@ -1,16 +1,14 @@
-"""
-main.R: Entry point for the RAP (Reproducible Analytical Pipeline) demo project.
-
-This script coordinates the full analysis pipeline, including:
-- Loading configuration settings
-- Reading input health data
-- Cleaning and transforming the data
-- Calculating disease prevalence
-- Generating a markdown report
-
-Run this file to execute the complete RAP workflow using modular functions from
-the R/ folder.
-"""
+# main.R: Entry point for the RAP (Reproducible Analytical Pipeline) demo project.
+#
+# This script coordinates the full analysis pipeline, including:
+# - Loading configuration settings
+# - Reading input health data
+# - Cleaning and transforming the data
+# - Calculating disease prevalence
+# - Generating a markdown report
+# 
+# Run this file to execute the complete RAP workflow using modular functions from
+# the R/ folder.
 
 # Main pipeline script for RAP demo
 library(yaml)
