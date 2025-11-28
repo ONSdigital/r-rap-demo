@@ -37,5 +37,15 @@ jobs:
         run: Rscript -e 'devtools::test()'
       # Step 6: Prints the percentage of lines covered by unit tests and the lines 
       # of code that are not covered
-      - name: Generate coverage report
-        run: Rscript -e 'cov <- covr::package_coverage(); print(covr::percent_coverage(cov)); print(covr::zero_coverage(cov))'
+      - name: Print coverage summary and uncovered lines
+        run: |
+          Rscript -e '
+            # Calculate test coverage for the package
+            cov <- covr::package_coverage()
+            # Print percentage coverage for each file
+            cat(\"\\nCoverage percentage by file:\\n\")
+            print(covr::percent_coverage(cov))
+            # Print lines of code not covered by tests
+            cat(\"\\nLines not covered by tests:\\n\")
+            print(covr::zero_coverage(cov))
+          '
