@@ -13,6 +13,6 @@ calculate_disease_prevalence(df)
 data.frame with prevalence rates per month and diagnosis
 }
 \description{
-Calculate disease prevalence rates per month from 
+Calculate disease prevalence rates per month from
 cleaned health data
 }
