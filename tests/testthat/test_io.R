@@ -2,8 +2,6 @@
 
 library(testthat)
 
-source("R/io.R")
-
 test_that("test_read_health_data", {
   #Test reading a CSV file into a data.frame.
   # Create a temporary CSV file
