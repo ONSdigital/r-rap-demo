@@ -12,14 +12,14 @@ This notebook provides step-by-step solutions for implementing and testing conti
 
 -   Add a fake secret to any Python file. For example:
 
-    ``` python
+    ```{r}
     password = "add_your_fake_password_here"
     print(password)
     ```
 
 -   Run:
 
-    ``` cmd
+    ``` 
     pre-commit run bandit --all-files
     ```
 
@@ -29,23 +29,59 @@ This notebook provides step-by-step solutions for implementing and testing conti
 
 ## Solution 3: Add a new workflow that activates on push to any branch
 
--   Create a new workflow file in `.github/workflows/ci_test_coverage.yml` with the following content: \`\`\`yaml name: Test coverage CI (Any Branch)
+-   Create a new workflow file in `.github/workflows/ci_test_coverage.yml` with the following content: 
+```{yaml}
+name: Test coverage CI (Any Branch)
 
-on: \# Run this workflow when you push to any branch push: branches: [ "\*" ]
+on:
+  # Run this workflow when you push to any branch
+  push:
+    branches: [ "*" ]
 
-jobs: build: \# Use the latest Ubuntu operating system for the runner runs-on: ubuntu-latest \# This is a virtual machine provided by GitHub steps: \# Step 1: Download your repository code onto the runner - uses: [actions/checkout\@v4](mailto:actions/checkout@v4){.email} \# Step 2: Set up R version 4.4.0 on the runner - name: Set up R uses: [r-lib/actions/setup-r\@v2](mailto:r-lib/actions/setup-r@v2){.email} \# check for latest version with: r-version: '4.4.0' \# Step 3: Cache R packages to speed up future runs - name: Set R_LIBS_USER run: echo "R_LIBS_USER=\$(Rscript -e 'cat(.libPaths()[1])')" \>\> \$GITHUB_ENV - name: Cache R packages uses: [actions/cache\@v3](mailto:actions/cache@v3){.email} with: path: \${{ env.R_LIBS_USER }} key: ${{ runner.os }}-r-${{ hashFiles('\*\*/\*.lock') }} restore-keys: \| \${{ runner.os }}-r- \# Step 4: Install all required R packages listed in DESCRIPTION - name: Install dependencies uses: [r-lib/actions/setup-r-dependencies\@v2](mailto:r-lib/actions/setup-r-dependencies@v2){.email} with: extra-packages: any::devtools\
-\# Step 5: Run unit tests using devtools - name: Run tests run: Rscript -e 'devtools::test()' \# Step 6: Generate coverage report and upload as artifact - name: Generate coverage report run: Rscript -e "cov <- covr::package_coverage(); print(covr::percent_coverage(cov)); print(covr::zero_coverage(cov))"
-
-```         
-  - uses: actions/upload-artifact@v4
-    with:
-      name: coverage-report
-      path: coverage.html
+jobs:
+  build:
+    # Use the latest Ubuntu operating system for the runner
+    runs-on: ubuntu-latest  # This is a virtual machine provided by GitHub
+    steps:
+      # Step 1: Download your repository code onto the runner
+      - uses: actions/checkout@v4
+      # Step 2: Set up R version 4.4.0 on the runner
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2 # check for latest version
+        with:
+          r-version: '4.4.0'
+      # Step 3: Cache R packages to speed up future runs 
+      - name: Set R_LIBS_USER
+        run: echo "R_LIBS_USER=$(Rscript -e 'cat(.libPaths()[1])')" >> $GITHUB_ENV
+      - name: Cache R packages
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ hashFiles('**/*.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-r-
+      # Step 4: Install all required R packages listed in DESCRIPTION
+      - name: Install dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::devtools  
+      # Step 5: Run unit tests using devtools
+      - name: Run tests
+        run: Rscript -e 'devtools::test()'
+      # Step 6: Generate coverage report and upload as artifact
+      - name: Generate coverage report
+        run: Rscript -e "cov <- covr::package_coverage(); print(covr::percent_coverage(cov)); print(covr::zero_coverage(cov))"
 ```
+- Update DESCRIPTION to include the packages covr, DT and htmltools:
 
-\`\`\` - Update DESCRIPTION to include the packages covr, DT and htmltools:
-
-Package: r.rap.demo Title: R RAP Demo Version: 0.0.1 [Authors\@R](mailto:Authors@R){.email}: person("Analysis for Action", email = "[analysisforaction\@ons.gov.uk](mailto:analysisforaction@ons.gov.uk){.email}", role = c("aut", "cre")) Description: Learn RAP principles through practical R exercises. This repo showcases best practices for Reproducible Analytical Pipelines, with descriptions of components and exercises to help users build confidence in useapplying RAP techniques. License: MIT Imports: dplyr, testthat, yaml, readr, ggplot2, covr, DT, htmltools
+```{yaml}
+Imports:
+  dplyr,
+  testthat,
+  yaml,
+  readr,
+  ggplot2
+```{yaml}
 
 -   Commit and push your change to any branch.
 -   Go to your repository on GitHub and click the **Actions** tab at the top of the page.

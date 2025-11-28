@@ -84,15 +84,11 @@ jobs:
       # Step 6: Generate coverage report wit covr and upload as artifact
       - name: Generate coverage report
         run: Rscript -e "cov <- covr::package_coverage(); print(covr::percent_coverage(cov)); print(covr::zero_coverage(cov))"
-      
-      - uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage.html
 ```
 
 The Imports section of the DESCRIPTION file must be updated to include the packages covr, DT and htmltools:
 
+``` {yaml}
 Imports: 
     dplyr,
     testthat,
