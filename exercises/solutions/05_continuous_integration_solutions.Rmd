@@ -13,7 +13,7 @@ This notebook provides step-by-step solutions for implementing and testing conti
 -   Add a fake secret to any Python file. For example:
 
     ```{r}
-    password = "add_your_fake_password_here"
+    password <- "add_your_fake_password_here"
     print(password)
     ```
 
@@ -81,7 +81,7 @@ Imports:
   yaml,
   readr,
   ggplot2
-```{yaml}
+```
 
 -   Commit and push your change to any branch.
 -   Go to your repository on GitHub and click the **Actions** tab at the top of the page.
