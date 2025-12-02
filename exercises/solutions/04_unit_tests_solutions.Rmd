@@ -30,9 +30,9 @@ testthat::test_that("test impute_by_group", {
   df <- data.frame(
     height_cm = c(170, NA, 160, 150, 190, 180, NA, NA, 170, NA),
     weight_kg = c(70, 80, 60, 50, 90, 70, 80, 100, 50, 90),
-    gender = c("M", "M", "F", "F", "M", "M", "F", "M", "F", "M"))
+    sex = c("M", "M", "F", "F", "M", "M", "F", "M", "F", "M"))
   expected_output <- c(170, 180, 160, 150, 190, 180, 160, 180, 170, 180)
-  output <- impute_by_group(df, "height_cm", "gender")
+  output <- impute_by_group(df, "height_cm", "sex")
   testthat::expect_equal(round(output, 1), round(expected_output, 1))
 })
 ```
@@ -113,11 +113,11 @@ patrick::with_parameters_test_that("test impute_by_group", {
   testthat::expect_equal(imputed, expected)
   },
   df = list(
-    data.frame(height_cm = c(170, NA, 160), gender = c("M", "F", "F")),
-    data.frame(height_cm = c(NA, NA, 150), gender = c("M", "M", "F"))
+    data.frame(height_cm = c(170, NA, 160), sex = c("M", "F", "F")),
+    data.frame(height_cm = c(NA, NA, 150), sex = c("M", "M", "F"))
   ),
   col = c("height_cm", "height_cm"),
-  group_col = c("gender", "gender"),
+  group_col = c("sex", "sex"),
     expected = list(
     height_cm = c(170, 160, 160),
     height_cm = c(150, 150, 150)

@@ -146,7 +146,7 @@ impute_by_group <- function(df, col, group_col) {
   return(df$imputed)
 }
 df <- read.csv("data/inputs/health_data.csv")
-impute_by_group(df = df, col = "weight_kg", group_col = "gender")
+impute_by_group(df = df, col = "weight_kg", group_col = "sex")
 ```
 
 **Task:** - Add the `flag_missing`, `impute_by_group` functions to the

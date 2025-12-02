@@ -24,7 +24,7 @@ Below is a single script that identifies missing values and performs imputation.
 
 **Tasks:**
 - Convert the below into functions
-- Extend the function to impute missing height and weight using group means (e.g., by gender or diagnosis)
+- Extend the function to impute missing height and weight using group means (e.g., by sex or diagnosis)
 - Add a new column to flag which values were imputed
 
 ```{r}
@@ -33,7 +33,7 @@ Below is a single script that identifies missing values and performs imputation.
 df$height_cm_imputed <- is.na(df$height_cm)
 df$weight_kg_imputed <- is.na(df$weight_kg)
 
-df <- dplyr::group_by(df, gender)
+df <- dplyr::group_by(df, sex)
 df <- dplyr::mutate(df,
              height_cm = ifelse(is.na(height_cm), mean(height_cm, na.rm = TRUE), height_cm),
              weight_kg = ifelse(is.na(weight_kg), mean(weight_kg, na.rm = TRUE), weight_kg)

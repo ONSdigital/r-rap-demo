@@ -28,7 +28,7 @@ prevalence_df = calculate_disease_prevalence(df_clean)
 ```
 ## Step 1 solution: Imputation function
 
-Below is a function that performs imputation for missing height and weight values using group means (e.g., by gender or diagnosis), and flags which values were imputed. This approach is more robust and transparent than using overall means.
+Below is a function that performs imputation for missing height and weight values using group means (e.g., by sex or diagnosis), and flags which values were imputed. This approach is more robust and transparent than using overall means.
 ```{r}
 flag_missing <- function(df, columns) {
   # Add boolean columns to flag missing values for specified columns
@@ -56,7 +56,7 @@ impute_height_weight <- function(df, group_col) {
   return(df)
 }
 
-imputed <- impute_height_weight(df, group_col = "gender")
+imputed <- impute_height_weight(df, group_col = "sex")
 head(imputed, 5)
 ```
 ## Step 2 solution: Add functions to pipeline
@@ -79,8 +79,8 @@ clean_health_data <- function(df) {
   # Fill missing smoker values with 'No'
   df_clean$smoker[is.na(df_clean$smoker)] <- "No"
   
-  # Ensure gender is uppercase
-  df_clean$gender <- toupper(df_clean$gender)
+  # Ensure sex is uppercase
+  df_clean$sex <- toupper(df_clean$sex)
   
   return(df_clean)
 }
@@ -135,8 +135,8 @@ clean_health_data <- function(df_clean, group_col) {
   # Fill missing smoker values with "No"
   df_clean$smoker[is.na(df_clean$smoker)] <- "No"
 
-  # Ensure gender is uppercase
-  df_clean$gender <- toupper(df_clean$gender)
+  # Ensure sex is uppercase
+  df_clean$sex <- toupper(df_clean$sex)
 
   # Impute mean values per group for height and weight
   df_clean <- impute_height_weight(df_clean, group_col = group_col)
@@ -149,7 +149,7 @@ df$diagnosis <- ifelse(trimws(df$diagnosis) == "" | df$diagnosis == "NA", NA, df
 cat("Missing values before imputation:\n")
 print(colSums(is.na(df)))
 
-imputed <- clean_health_data(df, group_col = "gender")
+imputed <- clean_health_data(df, group_col = "sex")
 
 cat("Missing values after imputation:\n")
 print(colSums(is.na(imputed)))
@@ -251,7 +251,7 @@ impute_columns <- function(df, group_col) {
   return(df)
 }
 df <- read.csv("data/inputs/health_data.csv")
-imputed <- impute_columns(df, "gender")
+imputed <- impute_columns(df, "sex")
 print(imputed)
 ```
 ## Step 4 Solution: Refactor Visualisation Code
