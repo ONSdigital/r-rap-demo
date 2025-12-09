@@ -24,7 +24,7 @@ These exercises are intended as a starting point that you can build upon. Please
 4. **Check your solutions** by comparing your results with the solutions notebooks in `exercises/solutions/`.
 5. **View outputs** in the `data/outputs/` folder (e.g., cleaned data, markdown reports, charts).
 
-## Adding code to the src folder
+## Adding code to the R folder
 - Place reusable functions and classes in the appropriate module in `R/` (e.g., `cleaning.R`, `io.R`, `report.R`).
 - Use clear function names, type hints, and docstrings following tidyverse standards.
 
@@ -33,5 +33,8 @@ These exercises are intended as a starting point that you can build upon. Please
 - **Check outputs**: Review generated files in `data/outputs/` for expected results.
 - **Run tests**: For unit test exercises you can run tests with testthat and then check coverage using covr
 - **Use pre-commit hooks and CI**: Ensure your code passes formatting, linting, and CI checks.
+
+## Note
+Some of the code blocks are examples and may not run as-is. You may need to copy the code into the R/ folder or tests/ folder.
 
 By following these exercises, you will build a reproducible, automated, and transparent analytical pipeline suitable for real-world data analysis.
