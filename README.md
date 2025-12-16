@@ -14,7 +14,7 @@ A well-written README makes your RAP project accessible and easy for others to u
 -->
 # Work in Progress – RAP demonstration repository for R
 
-Welcome to the RAP (Reproducible Analytical Pipeline) demonstration repository! This repository is designed for beginners to practice RAP principles, experiment with R code, and learn best practices for reproducible, automated, and transparent analytical pipelines in R.
+Welcome to the RAP (Reproducible Analytical Pipeline) demonstration repository! This repository is designed for beginner to intermediate coders to practice RAP principles, experiment with code, and learn best practices for Reproducible Analytical Pipelines in R.
 
 **This repository is still in development**
 
@@ -86,7 +86,7 @@ If exercises are provided, they will be in a dedicated folder (e.g., `exercises/
 
 Information about different files and folders can be found throughout the pipeline:
   - Files: Contain information on their purpose in the file itself, except `.secrets.baseline`. `.secrets.baseline` information can be found in the `docs` folder.
-  - Folders: Contain a README to explain their purpose and typical contents.
+  - Folders: Contain a markdown (.md) file to explain what the folder is for and typical files it contains.
   - Scripts: Fully documented with comments and Roxygen docstrings.
 
 ### Create and run tests
