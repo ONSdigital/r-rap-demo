@@ -21,13 +21,15 @@ Welcome to the RAP (Reproducible Analytical Pipeline) demonstration repository! 
 ## Getting Started
 
 1. **Fork the repository:**
-   - Go to the GitHub page for this repository.
-   - Click the "Fork" button in the top right to create your own copy.
-   - Clone your forked repository:
+   - Forking means creating your own copy of this project on GitHub. Go to the [GitHub page](https://github.com/ONSdigital/python_rap_demo) for this repository (if you are not there already) and click the "Fork" button in the top right.
+   - After forking, go to your new repository (it will be at `https://github.com/<your-username>/r-rap-demo`).
+   - Click the green "Code" button and copy the URL shown under "Clone".
+   - Open a terminal (Command Prompt) and run:
      ```cmd
-     git clone https://github.com/ONSdigital/r-rap-demo.git
+     git clone https://github.com/<your-username>/r-rap-demo.git
      cd r-rap-demo
      ```
+   - **Tip:** To check you are in the project root, run `dir` and make sure you see files like `README.md` and folders like `R` and `data`.
 
 > **Note:** The GitHub repository is named `r-rap-demo`, but the R package name (as used in R and in the `DESCRIPTION` file) is `r.rap.demo`. This difference is intentional and follows best practices for naming in each context.
 
@@ -79,8 +81,6 @@ If exercises are provided, they will be in a dedicated folder (e.g., `exercises/
   - Write unit tests
   - Set up and customise pre-commit hooks
   - Apply RAP principles in real code
-
-**Do not edit files in `R/` unless instructed by an exercise.**
 
 ### Understanding the purpose of each file and folder
 
