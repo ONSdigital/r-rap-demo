@@ -1,6 +1,10 @@
 # Exercise: using packages and functions
 
-In this exercise, you'll practice refactoring a single, monolithic script into a modular pipeline using functions and separate files. This is a key RAP best practice for reproducibility and maintainability.
+In this exercise, you'll practice refactoring a single, monolithic script into a modular pipeline using functions and separate files. This is a key RAP best practice. Modules and functions ensure:
+- Code is not duplicated unnecessarily
+- The pipeline can be scaled up easily by using existing functions or adding new modules when needed
+- Code is easy to navigate through the main.py file and appropriately named modules
+- Code is easy to understand with comprehensive documentation for each function
 
 **Learning objectives:**
 - Understand the difference between monolithic and modular code
