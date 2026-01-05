@@ -6,11 +6,11 @@ This document provides step-by-step solutions for adding and using configuration
 # Setup code for solutions
 
 library(yaml)
-source("R/cleaning.R")
-source("R/io.R")
-source("R/processing.R")
-source("R/report.R")
-source("R/utils.R")
+source(here::here("R", "cleaning.R"))
+source(here::here("R", "io.R"))
+source(here::here("R", "processing.R"))
+source(here::here("R", "report.R"))
+source(here::here("R", "utils.R"))
 
 # Construct the path to the YAML configuration file
 config_path <- file.path("config/user_config.yaml")
@@ -64,8 +64,8 @@ filter_by_min_height <- function(df, min_height) {
 Example usage in main.R
 
 ```{r}
-source("R/cleaning.R")
-source("R/io.R")
+source(here::here("R", "cleaning.R"))
+source(here::here("R", "io.R"))
 
 min_height <- config$min_height
 
@@ -96,7 +96,7 @@ save_output <- function(df, output_path, output_format) {
 ```
 
 ```{r}
-source("R/io.R")
+source(here::here("R", "io.R"))
 
 output_format <- config$output_format
 save_output(filtered_df, output_path, output_format)

@@ -6,11 +6,11 @@ This notebook provides step-by-step solutions for refactoring a monolithic imput
 # Setup for solutions
 library(dplyr)
 
-source("R/cleaning.R")
-source("R/io.R")
-source("R/processing.R")
-source("R/report.R")
-source("R/utils.R")
+source(here::here("R", "cleaning.R"))
+source(here::here("R", "io.R"))
+source(here::here("R", "processing.R"))
+source(here::here("R", "report.R"))
+source(here::here("R", "utils.R"))
 
 input_path = "data/inputs/health_data.csv"
 cleaned_path = "exercises/outputs/02_modules/cleaned_data.csv"
@@ -275,7 +275,7 @@ plot_missing_values(df, output_path = "exercises/outputs/")
 ```
 
 ```{r}
-source("R/processing.R")
+source(here::here("R", "processing.R"))
 library(ggplot2)
 
 df <- read.csv("data/inputs/health_data.csv")
@@ -342,7 +342,7 @@ plot_missing_values(df, output_path = "exercises/outputs/")
 ```
 
 ```{r}
-source("R/processing.R")
+source(here::here("R", "processing.R"))
 library(dplyr)
 library(ggplot2)
 

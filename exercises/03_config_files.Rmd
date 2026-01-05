@@ -33,8 +33,6 @@ Update your pipeline code (e.g., in `main.R` or `cleaning.R`) to read the new pa
 
 **Reflect:** - How does using config files improve reproducibility and flexibility? - What other parameters could you add to make your pipeline more configurable?
 
-**Bonus:** - Add unit tests to check that your code correctly applies the config parameter
-
 ## Step 4: Challenge
 
 Add another parameter to your config file, such as `output_format` (e.g., `csv` or `xlsx`). Update your pipeline to use this parameter when saving output files.

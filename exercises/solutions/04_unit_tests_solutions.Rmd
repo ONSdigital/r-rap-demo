@@ -7,7 +7,7 @@ This notebook provides step-by-step solutions for writing and running unit tests
 Here are example unit tests for the `flag_missing` and `impute_by_group` functions in `R/cleaning.R`:
 ```{r}
 library(testthat)
-source("R/cleaning.R")
+source(here::here("R", "cleaning.R"))
 testthat::test_that("test flag_missing", {
   df <- data.frame(
     height_cm = c(170, NA, 160),
@@ -25,7 +25,7 @@ testthat::test_that("test flag_missing", {
 
 ```{r}
 library(testthat)
-source("R/cleaning.R")
+source(here::here("R", "cleaning.R"))
 testthat::test_that("test impute_by_group", {
   df <- data.frame(
     height_cm = c(170, NA, 160, 150, 190, 180, NA, NA, 170, NA),
