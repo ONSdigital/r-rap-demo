@@ -30,7 +30,7 @@ These exercises are intended as a starting point that you can build upon. Please
 
 ## How to check if your solutions have worked
 - **Compare outputs**: Check your results against the solutions notebooks and output files.
-- **Check outputs**: Review generated files in `data/outputs/` for expected results.
+- **Check outputs**: Review generated files in `data/outputs/` or `reports/` for expected results.
 - **Run tests**: For unit test exercises you can run tests with testthat and then check coverage using covr
 - **Use pre-commit hooks and CI**: Ensure your code passes formatting, linting, and CI checks.
 

@@ -84,5 +84,5 @@ As an additional challenge, Add code to create visualisations. Place all visuali
 - Add the visualisations to the output report
 
 **Bonus:**
-- Save the charts to the outputs folder
+- Save the charts to the reports folder
 - Customise chart formatting and colours

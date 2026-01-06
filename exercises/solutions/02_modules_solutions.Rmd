@@ -13,8 +13,8 @@ source(here::here("R", "report.R"))
 source(here::here("R", "utils.R"))
 
 input_path = "data/inputs/health_data.csv"
-cleaned_path = "exercises/outputs/02_modules/cleaned_data.csv"
-report_path = "exercises//outputs/02_modules/"
+cleaned_path = "data/outputs/cleaned/cleaned_data.csv"
+report_path = "reports/"
 
 # I/O: Read data
 df = read_health_data(input_path)
@@ -271,7 +271,7 @@ plot_missing_values <- function(df, output_path) {
   print(plot)
 }
 df <- read.csv("data/inputs/health_data.csv")
-plot_missing_values(df, output_path = "exercises/outputs/")
+plot_missing_values(df, output_path = "reports/")
 ```
 
 ```{r}
@@ -289,7 +289,7 @@ plot_disease_prevalence <- function(prevalence, output_path, month) {
   ggplot2::ggsave(filename = paste0(output_path, "prevalence", month, ".png"), plot = plot)
   print(plot)
 }
-plot_disease_prevalence(prevalence, output_path = "exercises/outputs/", month = "2025-01")
+plot_disease_prevalence(prevalence, output_path = "reports/", month = "2025-01")
 
 ```
 2. Add the functions to report.R and import ggplot2
@@ -338,7 +338,7 @@ plot_missing_values <- function(df, output_path) {
   print(plot)
 }
 df <- read.csv("data/inputs/health_data.csv")
-plot_missing_values(df, output_path = "exercises/outputs/")
+plot_missing_values(df, output_path = "reports/")
 ```
 
 ```{r}
@@ -374,7 +374,7 @@ plot_disease_prevalence_timeseries <- function(prevalence, output_path) {
   
   ggplot2::ggsave(filename = paste0(output_path, "prevalence_timeseries.png"), plot = p, width = 8, height = 5)
 }
-plot_disease_prevalence_timeseries(prevalence, output_path = "exercises/outputs/")
+plot_disease_prevalence_timeseries(prevalence, output_path = "reports/")
 ```
 
 ```{r}
