@@ -25,7 +25,7 @@ main <- function() {
 
   input_path = config$input_path
   cleaned_path = config$cleaned_path
-  report_path = config$report_path
+  report_dir = config$report_dir
 
   # I/O Read data
   df <- read_health_data(input_path)
@@ -40,7 +40,7 @@ main <- function() {
   prevalence_df = calculate_disease_prevalence(df_clean)
 
   # Reporting
-  generate_markdown_report(prevalence_df, report_path)
-  cat("Report generated: ", report_path, "\n\n")
+  generate_markdown_report(prevalence_df, report_dir)
+  cat("Report generated: ", report_dir, "\n\n")
 }
 main()

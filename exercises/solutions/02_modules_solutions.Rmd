@@ -14,7 +14,7 @@ source(here::here("R", "utils.R"))
 
 input_path = "data/inputs/health_data.csv"
 cleaned_path = "data/outputs/cleaned/cleaned_data.csv"
-report_path = "reports/"
+report_dir = "reports/"
 
 # I/O: Read data
 df = read_health_data(input_path)
@@ -397,5 +397,5 @@ generate_markdown_report <- function(prevalence_df, raw_df, output_path) {
 ```
 
 ```{r}
-generate_markdown_report(prevalence_df, df, report_path)
+generate_markdown_report(prevalence_df, df, report_dir)
 ```
