@@ -2,7 +2,7 @@
 
 This notebook provides step-by-step solutions for writing and running unit tests in your RAP pipeline using testthat. Each solution matches the corresponding exercise notebook and is designed for beginners.
 
-## Solution 1: Write a simple unit test for a new function
+## Exercise 2 Solution: Write a simple unit test for a new function
 
 Here are example unit tests for the `flag_missing` and `impute_by_group` functions in `R/cleaning.R`:
 ```{r}
@@ -37,7 +37,7 @@ testthat::test_that("test impute_by_group", {
 })
 ```
 
-## Solution 2: Run your unit tests
+## Exercise 3 Solution: Run your unit tests
 
 **Task:**
 - To run tests in the `tests/` folder you must open each test one at a time and click the `run tests` button in the top right corner of the source pane.
@@ -46,7 +46,7 @@ testthat::test_that("test impute_by_group", {
 **Expected output:**
 - All tests should pass. If a test fails, check the error message and fix your code or tests.
 
-## Solution 3: Stretch - Check test coverage
+## Exercise 4 Solution: Stretch - Check test coverage
 
 Run the following commands:
 ```{r}
@@ -60,7 +60,7 @@ library(covr)
 - You will see a report showing the percentage of code covered by tests. Aim for high coverage, but focus on testing important logic.
 
 
-## Solution 4: Stretch - Try parameterisation in testthat
+## Exercise 5 Solution: Stretch - Try parameterisation in testthat
 
 Here are examples using `with_parameters_test_that` for `flag_missing` and `impute_by_group`. Parameterisation lets you run the same test with different inputs, making your tests more robust and easier to maintain.
 
