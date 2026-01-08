@@ -56,6 +56,7 @@ print(min_height)
 Update your pipeline (e.g., in `main.R` and the `cleaning.R` module) to use the config-driven parameter for filtering:
 
 ```{r}
+# This chunk will not produce an output
 filter_by_min_height <- function(df, min_height) {
   return(df[df$height_cm >= min_height, ])
 }
@@ -64,6 +65,7 @@ filter_by_min_height <- function(df, min_height) {
 Example usage in main.R
 
 ```{r}
+# This chunk will not produce an output
 source(here::here("R", "cleaning.R"))
 source(here::here("R", "io.R"))
 
@@ -83,6 +85,7 @@ output_format: csv  # Output file format: csv or xlsx
 Create a modular function to save output in the desired format, e.g., in `R/io.R`:
 
 ```{r}
+# This chunk will not produce an output
 library(openxlsx)
 save_output <- function(df, output_path, output_format) {
   if (output_format == "csv") {

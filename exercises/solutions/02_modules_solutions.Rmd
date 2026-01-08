@@ -64,6 +64,8 @@ Where you place these functions depends on the context and what makes most sense
 
 1. Place the `flag_missing`, `impute_by_group` and `impute_height_weight` function into `R/cleaning.R`. You could also have added `flag_missing` to utils as it could be used across other modules.
 ```{r}
+# This chunk will not produce an output
+
 # cleaning.R: Data cleaning functions for RAP pipeline
 
 clean_health_data <- function(df) {
