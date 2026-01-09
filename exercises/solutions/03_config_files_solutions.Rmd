@@ -6,14 +6,10 @@ This document provides step-by-step solutions for adding and using configuration
 # Setup code for solutions
 
 library(yaml)
-source(here::here("R", "cleaning.R"))
-source(here::here("R", "io.R"))
-source(here::here("R", "processing.R"))
-source(here::here("R", "report.R"))
-source(here::here("R", "utils.R"))
+devtools::load_all()
 
 # Construct the path to the YAML configuration file
-config_path <- file.path("config/user_config.yaml")
+config_path <- file.path("../../config/user_config.yaml")
 
 # Load the YAML configuration file
 config <- yaml::read_yaml(config_path)
@@ -24,7 +20,7 @@ input_path = config$input_path
 health_df <- read_health_data(input_path)
 
 # Output path
-output_path <- "data/outputs/cleaned/health_data_cleaned"
+output_path <- "../../data/outputs/cleaned/health_data_cleaned"
 ```
 
 ## Step 1 Solution: Add a new parameter to the config file
@@ -66,8 +62,6 @@ Example usage in main.R
 
 ```{r}
 # This chunk will not produce an output
-source(here::here("R", "cleaning.R"))
-source(here::here("R", "io.R"))
 
 min_height <- config$min_height
 
@@ -99,8 +93,7 @@ save_output <- function(df, output_path, output_format) {
 ```
 
 ```{r}
-source(here::here("R", "io.R"))
-
+# This chunk will not produce an output
 output_format <- config$output_format
 save_output(filtered_df, output_path, output_format)
 ```
