@@ -3,15 +3,6 @@
 This notebook provides step-by-step solutions for refactoring a monolithic imputation script into modular code, following RAP best practices. Each step matches the corresponding exercise notebook.
 
 ```{r}
-library(knitr)
-library(rprojroot)
-
-pkg_root <- rprojroot::find_root(rprojroot::is_r_package)
-
-knitr::opts_knit$set(root.dir = pkg_root)
-```
-
-```{r}
 # Setup for solutions
 
 library(dplyr)
