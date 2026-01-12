@@ -10,7 +10,11 @@ In this exercise, you'll practice refactoring a single, monolithic script into a
 
 ```{r}
 # Setup code for exercises
+
+# File paths in this markdown are relative, the code chunks that produce outputs will not run unless the working directory of the markdown is changed to the project root. To set the markdown directory, select the drop down menu next to knit at the top of the Rstudio source panel, then select to Knit Directory drop down menu and select Project Directory
+
 library(dplyr)
+
 # Load data
 df <- read.csv("data/inputs/health_data.csv")
 

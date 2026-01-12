@@ -71,6 +71,8 @@ Explore the existing code and add your own functions to the `R/` folder.
 
 ### Practice with exercises
 
+**Note:** File paths in the exercise markdown are relative, the code chunks that produce outputs will not run unless the working directory of the markdown is changed to the project root. To set the markdown directory, select the drop down menu next to knit at the top of the Rstudio source panel, then select to Knit Directory drop down menu and select Project Directory
+
 If exercises are provided, they will be in a dedicated folder (e.g., `exercises/`). These are for practice and experimentation, not part of the main package.
 
 - Each exercise has its own subfolder and README with instructions.
