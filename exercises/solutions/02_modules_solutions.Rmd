@@ -9,9 +9,9 @@ library(dplyr)
 
 devtools::load_all()
 
-input_path = "../../data/inputs/health_data.csv"
-cleaned_path = "../../data/outputs/cleaned/cleaned_data.csv"
-report_dir = "../../reports/"
+input_path = "data/inputs/health_data.csv"
+cleaned_path = "data/outputs/cleaned/cleaned_data.csv"
+report_dir = "reports/"
 
 # I/O: Read data
 df = read_health_data(input_path)
@@ -274,7 +274,7 @@ plot_missing_values(df, output_path = report_dir)
 ```{r}
 library(ggplot2)
 
-df <- read.csv("../../data/inputs/health_data.csv")
+df <- read.csv("data/inputs/health_data.csv")
 prevalence <- calculate_disease_prevalence(df)
 
 plot_disease_prevalence <- function(prevalence, output_path, month) {
@@ -332,7 +332,7 @@ plot_missing_values <- function(df, output_path) {
   ggplot2::ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
   print(plot)
 }
-df <- read.csv("../../data/inputs/health_data.csv")
+df <- read.csv("data/inputs/health_data.csv")
 plot_missing_values(df, output_path = report_dir)
 ```
 
@@ -340,7 +340,7 @@ plot_missing_values(df, output_path = report_dir)
 library(dplyr)
 library(ggplot2)
 
-df <- read.csv("../../data/inputs/health_data.csv")
+df <- read.csv("data/inputs/health_data.csv")
 prevalence <- calculate_disease_prevalence(df)
 
 plot_disease_prevalence_timeseries <- function(prevalence, output_path) {

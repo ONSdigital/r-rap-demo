@@ -1,4 +1,4 @@
 # RAP pipeline configuration
-input_path: ../../data/inputs/health_data.csv
-cleaned_path: ../../data/outputs/cleaned/health_data_cleaned.csv
-report_dir: ../../reports/
+input_path: data/inputs/health_data.csv
+cleaned_path: data/outputs/cleaned/health_data_cleaned.csv
+report_dir: reports/
