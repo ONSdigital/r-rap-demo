@@ -11,9 +11,9 @@ library(dplyr)
 
 devtools::load_all()
 
-input_path = "data/inputs/health_data.csv"
-cleaned_path = "data/outputs/cleaned/cleaned_data.csv"
-report_dir = "reports/"
+input_path = here::here("data", "inputs", "health_data.csv")
+cleaned_path = here::here("data", "outputs", "cleaned", "cleaned_data.csv")
+report_dir = here::here("reports")
 
 # I/O: Read data
 df = read_health_data(input_path)
@@ -261,14 +261,14 @@ Below are example functions for visualising missing values and disease prevalenc
 library(ggplot2)
 
 plot_missing_values <- function(df, output_path) {
-  cat("bulding", output_path, "missing_values.png\n")
+  cat(paste0("bulding ", output_path, "/missing_values.png\n"))
   missing_counts <- data.frame(
   columns = names(df),
   missing = sapply(df, function(x) sum(is.na(x))))
   plot <- ggplot2::ggplot(missing_counts, aes(x = columns, y = missing)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
-  ggplot2::ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
-  print(plot)
+  ggplot2::ggsave(filename = paste0(output_path, "/missing_values.png"), plot = plot)
+  print(output_path)
 }
 plot_missing_values(df, output_path = report_dir)
 ```
@@ -276,15 +276,15 @@ plot_missing_values(df, output_path = report_dir)
 ```{r}
 library(ggplot2)
 
-df <- read.csv("data/inputs/health_data.csv")
+df <- read.csv(input_path)
 prevalence <- calculate_disease_prevalence(df)
 
 plot_disease_prevalence <- function(prevalence, output_path, month) {
-  cat("building", output_path, "prevalence_", month, ".png\n")
+  cat(paste0("building ", output_path, "/prevalence_", month, ".png\n"))
   prevalence <- prevalence[prevalence$month == month, ]
   plot <- ggplot2::ggplot(prevalence, aes(x = diagnosis, y = prevalence_rate)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
-  ggplot2::ggsave(filename = paste0(output_path, "prevalence", month, ".png"), plot = plot)
+  ggplot2::ggsave(filename = paste0(output_path, "/prevalence", month, ".png"), plot = plot)
   print(plot)
 }
 plot_disease_prevalence(prevalence, output_path = report_dir, month = "2025-01")
@@ -325,16 +325,16 @@ generate_markdown_report <- function(prevalence_df, output_path) {
 ```{r}
 library(ggplot2)
 plot_missing_values <- function(df, output_path) {
-  cat("bulding", output_path, "missing_values.png\n")
+  cat(paste0("bulding", output_path, "/missing_values.png\n"))
   missing_counts <- data.frame(
   columns = names(df),
   missing = sapply(df, function(x) sum(is.na(x))))
   plot <- ggplot2::ggplot(missing_counts, aes(x = columns, y = missing)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
-  ggplot2::ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
+  ggplot2::ggsave(filename = paste0(output_path, "/missing_values.png"), plot = plot)
   print(plot)
 }
-df <- read.csv("data/inputs/health_data.csv")
+df <- read.csv(input_path)
 plot_missing_values(df, output_path = report_dir)
 ```
 
@@ -342,11 +342,11 @@ plot_missing_values(df, output_path = report_dir)
 library(dplyr)
 library(ggplot2)
 
-df <- read.csv("data/inputs/health_data.csv")
+df <- read.csv(input_path)
 prevalence <- calculate_disease_prevalence(df)
 
 plot_disease_prevalence_timeseries <- function(prevalence, output_path) {
-  cat(paste0("building ", output_path, "prevalence_timeseries.png\n"))
+  cat(paste0("building ", output_path, "/prevalence_timeseries.png\n"))
   
   # Remove Healthy cases
   prevalence <- prevalence[prevalence$diagnosis != "Healthy", ]
@@ -368,7 +368,7 @@ plot_disease_prevalence_timeseries <- function(prevalence, output_path) {
     ) +
     ggplot2::theme_minimal()
   
-  ggplot2::ggsave(filename = paste0(output_path, "prevalence_timeseries.png"), plot = p, width = 8, height = 5)
+  ggplot2::ggsave(filename = paste0(output_path, "/prevalence_timeseries.png"), plot = p, width = 8, height = 5)
 }
 plot_disease_prevalence_timeseries(prevalence, output_path = report_dir)
 ```
