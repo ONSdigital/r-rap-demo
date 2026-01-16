@@ -270,6 +270,8 @@ plot_missing_values <- function(df, output_path) {
   ggplot2::ggsave(filename = paste0(output_path, "/missing_values.png"), plot = plot)
   plot
 }
+
+# Example output
 missing_values_plot = plot_missing_values(df, output_path = report_dir)
 print(missing_values_plot)
 ```
