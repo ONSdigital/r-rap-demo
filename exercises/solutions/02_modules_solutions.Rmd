@@ -251,8 +251,6 @@ impute_columns <- function(df, group_col) {
   }
   return(df)
 }
-imputed <- impute_columns(df, "gender")
-print(imputed)
 ```
 ## Step 4 Solution: Refactor Visualisation Code
 
