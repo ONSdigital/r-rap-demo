@@ -4,10 +4,6 @@ Unit tests help ensure your code works as expected and make your RAP
 pipeline more robust and reproducible. In this exercise, you'll learn
 how to write and run unit tests.
 
-```{r}
-# File paths in this markdown are relative, the code chunks that produce outputs will not run unless the working directory of the markdown is changed to the project root. To set the markdown directory, select the drop down menu next to knit at the top of the Rstudio source panel, then select to Knit Directory drop down menu and select Project Directory
-```
-
 ## Why are unit tests important?
 
 Unit tests check that individual functions behave as expected. They: -
