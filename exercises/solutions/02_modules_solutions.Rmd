@@ -268,9 +268,10 @@ plot_missing_values <- function(df, output_path) {
   plot <- ggplot2::ggplot(missing_counts, aes(x = columns, y = missing)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
   ggplot2::ggsave(filename = paste0(output_path, "/missing_values.png"), plot = plot)
-  print(output_path)
+  plot
 }
-plot_missing_values(df, output_path = report_dir)
+missing_values_plot = plot_missing_values(df, output_path = report_dir)
+print(missing_values_plot)
 ```
 
 ```{r}
