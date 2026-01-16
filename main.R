@@ -23,9 +23,9 @@ main <- function() {
   # Load the YAML configuration file
   config <- yaml::read_yaml(config_path)
 
-  input_path = config$input_path
-  cleaned_path = config$cleaned_path
-  report_dir = config$report_dir
+  input_path <- config$input_path
+  cleaned_path <- config$cleaned_path
+  report_dir <- config$report_dir
 
   # I/O Read data
   df <- read_health_data(input_path)
