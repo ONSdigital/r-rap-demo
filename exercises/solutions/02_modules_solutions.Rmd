@@ -5,8 +5,6 @@ This notebook provides step-by-step solutions for refactoring a monolithic imput
 ```{r}
 # Setup for solutions
 
-# File paths in this markdown are relative, the code chunks that produce outputs will not run unless the working directory of the markdown is changed to the project root. To set the markdown directory, select the drop down menu next to knit at the top of the Rstudio source panel, then select to Knit Directory drop down menu and select Project Directory
-
 library(dplyr)
 
 devtools::load_all()
@@ -252,7 +250,7 @@ impute_columns <- function(df, group_col) {
   return(df)
 }
 imputed <- impute_columns(df, "gender")
-print(imputed)
+head(imputed, 5)
 ```
 ## Step 4 Solution: Refactor Visualisation Code
 
@@ -261,13 +259,13 @@ Below are example functions for visualising missing values and disease prevalenc
 library(ggplot2)
 
 plot_missing_values <- function(df, output_path) {
-  cat(paste0("bulding ", output_path, "/missing_values.png\n"))
+  cat(paste0("bulding ", output_path, "missing_values.png\n"))
   missing_counts <- data.frame(
   columns = names(df),
   missing = sapply(df, function(x) sum(is.na(x))))
   plot <- ggplot2::ggplot(missing_counts, aes(x = columns, y = missing)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
-  ggplot2::ggsave(filename = paste0(output_path, "/missing_values.png"), plot = plot)
+  ggplot2::ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
   plot
 }
 
@@ -288,7 +286,7 @@ plot_disease_prevalence <- function(prevalence, output_path, month) {
   plot <- ggplot2::ggplot(prevalence, aes(x = diagnosis, y = prevalence_rate)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
   ggplot2::ggsave(filename = paste0(output_path, "/prevalence", month, ".png"), plot = plot)
-  print(plot)
+  plot
 }
 plot_disease_prevalence(prevalence, output_path = report_dir, month = "2025-01")
 ```
@@ -335,7 +333,7 @@ plot_missing_values <- function(df, output_path) {
   plot <- ggplot2::ggplot(missing_counts, aes(x = columns, y = missing)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
   ggplot2::ggsave(filename = paste0(output_path, "/missing_values.png"), plot = plot)
-  print(plot)
+  plot
 }
 df <- read.csv(input_path)
 plot_missing_values(df, output_path = report_dir)
