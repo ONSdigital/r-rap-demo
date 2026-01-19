@@ -7,4 +7,4 @@ Getting started
 Or
 Set the working directory to the unzipped folder: Session -> Set Working Directory -> Select the unzipped folder
 
-Once these steps are complete refer to README.md step 2 and onwards 
+Once these steps are complete, refer to the README.md file in the unzipped folder and follow the instrcutions from step 2 onwards
