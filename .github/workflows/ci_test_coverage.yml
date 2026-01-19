@@ -33,8 +33,11 @@ jobs:
         with:
           extra-packages: any::devtools  
       # Step 5: Run unit tests using devtools
-      - name: Run tests
-        run: Rscript -e 'devtools::test()'
+
+      - name: Run tests (location + summary)
+        run: |
+          Rscript -e 'testthat::with_reporter(c("location", "summary"), testthat::test_local(stop_on_failure = TRUE))'
+
       # Step 6: Generate coverage report wit covr and upload as artifact
       - name: Generate coverage report
         run: Rscript -e "cov <- covr::package_coverage(); print(covr::percent_coverage(cov)); print(covr::zero_coverage(cov))"
