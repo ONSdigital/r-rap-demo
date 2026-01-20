@@ -17,6 +17,16 @@ jobs:
         uses: r-lib/actions/setup-r@v2 # check for latest version
         with:
           r-version: '4.4.0'
+      # Step 3: Cache R packages to speed up future runs 
+      - name: Set R_LIBS_USER
+        run: echo "R_LIBS_USER=$(Rscript -e 'cat(.libPaths()[1])')" >> $GITHUB_ENV
+      - name: Cache R packages
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ hashFiles('**/*.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-r-
       # Step 4: Install all required R packages listed in DESCRIPTION
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
@@ -25,6 +35,13 @@ jobs:
       # Step 5: Run unit tests using devtools
       - name: Run tests
         run: Rscript -e 'devtools::test()'
-      # Step 6: Generate coverage report wit covr and upload as artifact
+      # Step 6: Generate coverage report with covr and upload as artifact
       - name: Generate coverage report
         run: Rscript -e "cov <- covr::package_coverage(); print(covr::percent_coverage(cov)); print(covr::zero_coverage(cov))"
+      - name: Save coverage report to file
+        run: Rscript -e "cov <- covr::package_coverage(); writeLines(as.character(covr::report(cov)), 'coverage.txt')"
+      - name: Upload coverage report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.txt
