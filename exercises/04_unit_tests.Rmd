@@ -18,8 +18,10 @@ Read more in the [testthat documentation](https://testthat.r-lib.org/)
 The function `clean_health_data` in `R/cleaning.R` has an existing unit test in
 `tests/test_cleaning.R`.
 
-**Task:** 1. Run the existing unit test for `clean_health_data` to understand 
-how it works. 2. Modify the sample DataFrame in the test to understand what
+**Task:** 
+1. Run the existing unit test for `clean_health_data` to understand 
+how it works. 
+2. Modify the sample DataFrame in the test to understand what
 causes the tests to pass or fail (Note: if all rows are dropped all tests will fail).
 
 There is an example of a modified DataFrame below however it does not have to be used, feel free to modify the DataFrame and experiment with the tests without following the set exercise.
