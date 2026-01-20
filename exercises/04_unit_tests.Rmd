@@ -22,6 +22,19 @@ The function `clean_health_data` in `R/cleaning.R` has an existing unit test in
 how it works. 2. Modify the sample DataFrame in the test to understand what
 causes the tests to pass or fail (Note: if all rows are dropped all tests will fail).
 
+There is an example of a modified DataFrame below however it does not have to be used, feel free to modify the DataFrame and experiment with the tests without following the set exercise.
+
+```{r}
+df <- data.frame(
+  height_cm = c(170, NA, 160, 165),
+  weight_kg = c(70, 80, 75, 68),
+  diagnosis = c(NA, NA, "A", "B"),
+  smoker = c(NA, "No","Yes", NA),
+  gender = c("m", "f", "M", "F"),
+  stringsAsFactors = FALSE
+)
+```
+
 ## Exercise 2: Write a simple unit test for a new function
 
 Suppose you have created a function called `impute_by_group` in

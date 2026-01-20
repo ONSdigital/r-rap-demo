@@ -2,6 +2,56 @@
 
 This notebook provides step-by-step solutions for writing and running unit tests in your RAP pipeline using testthat. Each solution matches the corresponding exercise notebook and is designed for beginners.
 
+## Exercise 1 Solution: Review and Adapt an existing unit
+
+Open `tests/testthat/test_cleaning.R` and run the test.
+
+After the test passes, change the DataFrame to the following DataFrame and run the test again:
+
+```{r}
+df <- data.frame(
+  height_cm = c(170, NA, 160, 165),
+  weight_kg = c(70, 80, 75, 68),
+  diagnosis = c(NA, NA, "A", "B"),
+  smoker = c(NA, "No","Yes", NA),
+  gender = c("m", "f", "M", "F"),
+  stringsAsFactors = FALSE
+)
+```
+
+Notice how the check for the missing smoker value fails. The test checks column 0 for a "smoker" value of "No", with the new DataFrame the first 2 columns are imputed due to missing diagnosis leaving the DataFrame looking like this:
+
+```{r}
+df <- data.frame(
+  height_cm = c(160, 165),
+  weight_kg = c(75, 68),
+  diagnosis = c("A", "B"),
+  smoker = c("Yes", NA),
+  gender = c("M", "F"),
+  stringsAsFactors = FALSE
+```
+
+The test checks column 0 and expects the value "No" in the "smoker" column, instead it receives the value "Yes" and therefore the test fails.
+In order for the test to pass either change the column that the test checks or change the expected "smoker" value to "Yes" instead of "No".
+
+The original expect statement looks like this:
+
+```{r}
+testthat::expect_equal(cleaned$smoker[1], "No")
+```
+
+The changed expect statement should look like either:
+
+```{r}
+testthat::expect_equal(cleaned$smoker[1], "Yes")
+```
+
+or
+
+```{r}
+testthat::expect_equal(cleaned$smoker[2], "No")
+```
+
 ## Exercise 2 Solution: Write a simple unit test for a new function
 
 Here are example unit tests for the `flag_missing` and `impute_by_group` functions in `R/cleaning.R`:

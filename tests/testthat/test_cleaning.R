@@ -10,11 +10,11 @@ testthat::test_that("test_clean_health_data", {
 
   # Create a sample data frame
   df <- data.frame(
-    height_cm = c(NA, 170, 160),
-    weight_kg = c(60, 50, 80),
-    diagnosis = c("A", "B", NA),
-    smoker = c("Yes", NA, "No"),
-    gender = c("m", "f", "m"),
+    height_cm = c(170, NA),
+    weight_kg = c(70, 80),
+    diagnosis = c("A", NA),
+    smoker = c(NA, "Yes"),
+    gender = c("m", "f"),
     stringsAsFactors = FALSE
   )
 
