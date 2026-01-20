@@ -9,18 +9,18 @@ library(yaml)
 devtools::load_all()
 
 # Construct the path to the YAML configuration file
-config_path <- "../../config/user_config.yaml"
+config_path <- here::here("config", "user_config.yaml")
 
 # Load the YAML configuration file
 config <- yaml::read_yaml(config_path)
 
-input_path = config$input_path
+input_path <- config$input_path
 
 # I/O Read data
 health_df <- read_health_data(input_path)
 
 # Output path
-output_path <- "../../data/outputs/cleaned/health_data_cleaned"
+output_path <- here::here("data", "outputs", "cleaned_health_data")
 ```
 
 ## Step 1 Solution: Add a new parameter to the config file
