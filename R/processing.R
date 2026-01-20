@@ -11,7 +11,7 @@ library(dplyr)
 #' @returns data.frame with prevalence rates per month and diagnosis
 #'
 #' @export
-calculate_disease_prevalence <- function(df) {
+calculate_disease_prevalence <- function(df, height_cm, weight_kg) {
   prevalence <- df %>%
     dplyr::group_by(month, diagnosis) %>%
     dplyr::summarise(case_count = n(), .groups = "drop")

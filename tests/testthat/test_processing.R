@@ -10,7 +10,8 @@ testthat::test_that("test_calculate_disease_prevalence", {
   # Create a sample data.frame
   df <- data.frame(
     month = c("2025-01", "2025-01", "2025-02"),
-    diagnosis = c("A", "B", "A")
+    diagnosis = c("A", "B", "A"),
+    stringsAsFactors = FALSE
   )
 
   result <- calculate_disease_prevalence(df)
