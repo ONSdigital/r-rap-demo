@@ -258,6 +258,7 @@ Below are example functions for visualising missing values and disease prevalenc
 
 > Note the output_path which is set by report_dir in the user_config.yaml file
 would be changed to `reports/` in this solution
+
 ```{r}
 library(ggplot2)
 
@@ -381,7 +382,6 @@ plot_disease_prevalence_timeseries(prevalence, output_path = report_dir)
 generate_markdown_report <- function(prevalence_df, raw_df, output_path) {
   
   report_file <- file.path(output_path, "disease_prevalence_report.md")
-  print(report_file)
   f <- file(report_file, open = "w", encoding = "UTF-8")
   on.exit(close(f), add = TRUE)
 
