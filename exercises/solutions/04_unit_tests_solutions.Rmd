@@ -14,7 +14,7 @@ df <- data.frame(
   weight_kg = c(70, 80, 75, 68),
   diagnosis = c(NA, NA, "A", "B"),
   smoker = c(NA, "No","Yes", NA),
-  gender = c("m", "f", "M", "F"),
+  sex = c("m", "f", "M", "F"),
   stringsAsFactors = FALSE
 )
 ```
@@ -27,8 +27,9 @@ df <- data.frame(
   weight_kg = c(75, 68),
   diagnosis = c("A", "B"),
   smoker = c("Yes", NA),
-  gender = c("M", "F"),
+  sex = c("M", "F"),
   stringsAsFactors = FALSE
+)
 ```
 
 The test checks column 0 and expects the value "No" in the "smoker" column, instead it receives the value "Yes" and therefore the test fails.
