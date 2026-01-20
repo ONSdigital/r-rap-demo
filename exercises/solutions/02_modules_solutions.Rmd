@@ -4,17 +4,14 @@ This notebook provides step-by-step solutions for refactoring a monolithic imput
 
 ```{r}
 # Setup for solutions
+
 library(dplyr)
 
-source("R/cleaning.R")
-source("R/io.R")
-source("R/processing.R")
-source("R/report.R")
-source("R/utils.R")
+devtools::load_all()
 
-input_path = "data/inputs/health_data.csv"
-cleaned_path = "exercises/outputs/02_modules/cleaned_data.csv"
-report_path = "exercises//outputs/02_modules/"
+input_path = here::here("data", "inputs", "health_data.csv")
+cleaned_path = here::here("data", "outputs", "cleaned", "cleaned_data.csv")
+report_dir = here::here("reports")
 
 # I/O: Read data
 df = read_health_data(input_path)
@@ -26,6 +23,7 @@ df_clean = add_bmi_column(df_clean)
 # Processing
 prevalence_df = calculate_disease_prevalence(df_clean)
 ```
+
 ## Step 1 solution: Imputation function
 
 Below is a function that performs imputation for missing height and weight values using group means (e.g., by sex or diagnosis), and flags which values were imputed. This approach is more robust and transparent than using overall means.
@@ -64,6 +62,8 @@ Where you place these functions depends on the context and what makes most sense
 
 1. Place the `flag_missing`, `impute_by_group` and `impute_height_weight` function into `R/cleaning.R`. You could also have added `flag_missing` to utils as it could be used across other modules.
 ```{r}
+# This chunk will not produce an output
+
 # cleaning.R: Data cleaning functions for RAP pipeline
 
 clean_health_data <- function(df) {
@@ -183,7 +183,6 @@ get_column_types <- function(df) {
   numeric_cols <- names(df)[sapply(df, is_numeric_column)]
   categorical_cols <- names(df)[sapply(df, is_categorical_column)]
 }
-df <- read.csv("data/inputs/health_data.csv")
 get_column_types(df)
 ```
 
@@ -250,9 +249,8 @@ impute_columns <- function(df, group_col) {
   }
   return(df)
 }
-df <- read.csv("data/inputs/health_data.csv")
-imputed <- impute_columns(df, "sex")
-print(imputed)
+imputed <- impute_columns(df, "gender")
+head(imputed, 5)
 ```
 ## Step 4 Solution: Refactor Visualisation Code
 
@@ -261,36 +259,36 @@ Below are example functions for visualising missing values and disease prevalenc
 library(ggplot2)
 
 plot_missing_values <- function(df, output_path) {
-  cat("bulding", output_path, "missing_values.png\n")
+  cat(paste0("bulding ", output_path, "missing_values.png\n"))
   missing_counts <- data.frame(
   columns = names(df),
   missing = sapply(df, function(x) sum(is.na(x))))
   plot <- ggplot2::ggplot(missing_counts, aes(x = columns, y = missing)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
   ggplot2::ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
-  print(plot)
+  plot
 }
-df <- read.csv("data/inputs/health_data.csv")
-plot_missing_values(df, output_path = "exercises/outputs/")
+
+# Example output
+missing_values_plot = plot_missing_values(df, output_path = report_dir)
+print(missing_values_plot)
 ```
 
 ```{r}
-source("R/processing.R")
 library(ggplot2)
 
-df <- read.csv("data/inputs/health_data.csv")
+df <- read.csv(input_path)
 prevalence <- calculate_disease_prevalence(df)
 
 plot_disease_prevalence <- function(prevalence, output_path, month) {
-  cat("building", output_path, "prevalence_", month, ".png\n")
+  cat(paste0("building ", output_path, "/prevalence_", month, ".png\n"))
   prevalence <- prevalence[prevalence$month == month, ]
   plot <- ggplot2::ggplot(prevalence, aes(x = diagnosis, y = prevalence_rate)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
-  ggplot2::ggsave(filename = paste0(output_path, "prevalence", month, ".png"), plot = plot)
-  print(plot)
+  ggplot2::ggsave(filename = paste0(output_path, "/prevalence", month, ".png"), plot = plot)
+  plot
 }
-plot_disease_prevalence(prevalence, output_path = "exercises/outputs/", month = "2025-01")
-
+plot_disease_prevalence(prevalence, output_path = report_dir, month = "2025-01")
 ```
 2. Add the functions to report.R and import ggplot2
 ```{r}
@@ -328,29 +326,28 @@ generate_markdown_report <- function(prevalence_df, output_path) {
 ```{r}
 library(ggplot2)
 plot_missing_values <- function(df, output_path) {
-  cat("bulding", output_path, "missing_values.png\n")
+  cat(paste0("bulding", output_path, "/missing_values.png\n"))
   missing_counts <- data.frame(
   columns = names(df),
   missing = sapply(df, function(x) sum(is.na(x))))
   plot <- ggplot2::ggplot(missing_counts, aes(x = columns, y = missing)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
-  ggplot2::ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
-  print(plot)
+  ggplot2::ggsave(filename = paste0(output_path, "/missing_values.png"), plot = plot)
+  plot
 }
-df <- read.csv("data/inputs/health_data.csv")
-plot_missing_values(df, output_path = "exercises/outputs/")
+df <- read.csv(input_path)
+plot_missing_values(df, output_path = report_dir)
 ```
 
 ```{r}
-source("R/processing.R")
 library(dplyr)
 library(ggplot2)
 
-df <- read.csv("data/inputs/health_data.csv")
+df <- read.csv(input_path)
 prevalence <- calculate_disease_prevalence(df)
 
 plot_disease_prevalence_timeseries <- function(prevalence, output_path) {
-  cat(paste0("building ", output_path, "prevalence_timeseries.png\n"))
+  cat(paste0("building ", output_path, "/prevalence_timeseries.png\n"))
   
   # Remove Healthy cases
   prevalence <- prevalence[prevalence$diagnosis != "Healthy", ]
@@ -372,14 +369,18 @@ plot_disease_prevalence_timeseries <- function(prevalence, output_path) {
     ) +
     ggplot2::theme_minimal()
   
-  ggplot2::ggsave(filename = paste0(output_path, "prevalence_timeseries.png"), plot = p, width = 8, height = 5)
+  ggplot2::ggsave(filename = paste0(output_path, "/prevalence_timeseries.png"), plot = p, width = 8, height = 5)
 }
-plot_disease_prevalence_timeseries(prevalence, output_path = "exercises/outputs/")
+plot_disease_prevalence_timeseries(prevalence, output_path = report_dir)
 ```
 
 ```{r}
 generate_markdown_report <- function(prevalence_df, raw_df, output_path) {
-  f <- file(output_path, "w")
+  
+  report_file <- file.path(output_path, "disease_prevalence_report.md")
+  f <- file(report_file, open = "w", encoding = "UTF-8")
+  on.exit(close(f), add = TRUE)
+
   writeLines("# Disease Prevalence Report\n\n", con = f)
   plot_missing_values(raw_df, output_path)
   plot_disease_prevalence_timeseries(prevalence_df, output_path)
@@ -392,10 +393,9 @@ generate_markdown_report <- function(prevalence_df, raw_df, output_path) {
     month_df <- prevalence_df[prevalence_df$month == month, ]
     writeLines(format_month_section(month, month_df), con = f)
   }
-  close(f)
 }
 ```
 
 ```{r}
-generate_markdown_report(prevalence_df, df, report_path)
+generate_markdown_report(prevalence_df, df, report_dir)
 ```

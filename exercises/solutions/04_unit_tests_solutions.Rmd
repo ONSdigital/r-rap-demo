@@ -2,12 +2,62 @@
 
 This notebook provides step-by-step solutions for writing and running unit tests in your RAP pipeline using testthat. Each solution matches the corresponding exercise notebook and is designed for beginners.
 
-## Solution 1: Write a simple unit test for a new function
+## Exercise 1 Solution: Review and Adapt an existing unit
+
+Open `tests/testthat/test_cleaning.R` and run the test.
+
+After the test passes, change the DataFrame to the following DataFrame and run the test again:
+
+```{r}
+df <- data.frame(
+  height_cm = c(170, NA, 160, 165),
+  weight_kg = c(70, 80, 75, 68),
+  diagnosis = c(NA, NA, "A", "B"),
+  smoker = c(NA, "No","Yes", NA),
+  gender = c("m", "f", "M", "F"),
+  stringsAsFactors = FALSE
+)
+```
+
+Notice how the check for the missing smoker value fails. The test checks column 0 for a "smoker" value of "No", with the new DataFrame the first 2 columns are imputed due to missing diagnosis leaving the DataFrame looking like this:
+
+```{r}
+df <- data.frame(
+  height_cm = c(160, 165),
+  weight_kg = c(75, 68),
+  diagnosis = c("A", "B"),
+  smoker = c("Yes", NA),
+  gender = c("M", "F"),
+  stringsAsFactors = FALSE
+```
+
+The test checks column 0 and expects the value "No" in the "smoker" column, instead it receives the value "Yes" and therefore the test fails.
+In order for the test to pass either change the column that the test checks or change the expected "smoker" value to "Yes" instead of "No".
+
+The original expect statement looks like this:
+
+```{r}
+testthat::expect_equal(cleaned$smoker[1], "No")
+```
+
+The changed expect statement should look like either:
+
+```{r}
+testthat::expect_equal(cleaned$smoker[1], "Yes")
+```
+
+or
+
+```{r}
+testthat::expect_equal(cleaned$smoker[2], "No")
+```
+
+## Exercise 2 Solution: Write a simple unit test for a new function
 
 Here are example unit tests for the `flag_missing` and `impute_by_group` functions in `R/cleaning.R`:
 ```{r}
 library(testthat)
-source("R/cleaning.R")
+source(here::here("R", "cleaning.R"))
 testthat::test_that("test flag_missing", {
   df <- data.frame(
     height_cm = c(170, NA, 160),
@@ -25,7 +75,7 @@ testthat::test_that("test flag_missing", {
 
 ```{r}
 library(testthat)
-source("R/cleaning.R")
+source(here::here("R", "cleaning.R"))
 testthat::test_that("test impute_by_group", {
   df <- data.frame(
     height_cm = c(170, NA, 160, 150, 190, 180, NA, NA, 170, NA),
@@ -37,7 +87,7 @@ testthat::test_that("test impute_by_group", {
 })
 ```
 
-## Solution 2: Run your unit tests
+## Exercise 3 Solution: Run your unit tests
 
 **Task:**
 - To run tests in the `tests/` folder you must open each test one at a time and click the `run tests` button in the top right corner of the source pane.
@@ -46,7 +96,7 @@ testthat::test_that("test impute_by_group", {
 **Expected output:**
 - All tests should pass. If a test fails, check the error message and fix your code or tests.
 
-## Solution 3: Stretch - Check test coverage
+## Exercise 4 Solution: Stretch - Check test coverage
 
 Run the following commands:
 ```{r}
@@ -60,7 +110,7 @@ library(covr)
 - You will see a report showing the percentage of code covered by tests. Aim for high coverage, but focus on testing important logic.
 
 
-## Solution 4: Stretch - Try parameterisation in testthat
+## Exercise 5 Solution: Stretch - Try parameterisation in testthat
 
 Here are examples using `with_parameters_test_that` for `flag_missing` and `impute_by_group`. Parameterisation lets you run the same test with different inputs, making your tests more robust and easier to maintain.
 

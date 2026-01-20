@@ -14,9 +14,13 @@ In this exercise, you'll practice refactoring a single, monolithic script into a
 
 ```{r}
 # Setup code for exercises
+
 library(dplyr)
+
+input_path <- here::here("data", "inputs", "health_data.csv")
+
 # Load data
-df <- read.csv("data/inputs/health_data.csv")
+df <- read.csv(input_path)
 
 # print the first 5 rows of health data
 head(df, 5)
@@ -88,5 +92,5 @@ As an additional challenge, Add code to create visualisations. Place all visuali
 - Add the visualisations to the output report
 
 **Bonus:**
-- Save the charts to the outputs folder
+- Save the charts to the reports folder
 - Customise chart formatting and colours

@@ -6,25 +6,21 @@ This document provides step-by-step solutions for adding and using configuration
 # Setup code for solutions
 
 library(yaml)
-source("R/cleaning.R")
-source("R/io.R")
-source("R/processing.R")
-source("R/report.R")
-source("R/utils.R")
+devtools::load_all()
 
 # Construct the path to the YAML configuration file
-config_path <- file.path("config/user_config.yaml")
+config_path <- here::here("config", "user_config.yaml")
 
 # Load the YAML configuration file
 config <- yaml::read_yaml(config_path)
 
-input_path = config$input_path
+input_path <- config$input_path
 
 # I/O Read data
 health_df <- read_health_data(input_path)
 
 # Output path
-output_path <- "data/outputs/cleaned/health_data_cleaned"
+output_path <- here::here("data", "outputs", "cleaned_health_data")
 ```
 
 ## Step 1 Solution: Add a new parameter to the config file
@@ -56,6 +52,7 @@ print(min_height)
 Update your pipeline (e.g., in `main.R` and the `cleaning.R` module) to use the config-driven parameter for filtering:
 
 ```{r}
+# This chunk will not produce an output
 filter_by_min_height <- function(df, min_height) {
   return(df[df$height_cm >= min_height, ])
 }
@@ -64,8 +61,7 @@ filter_by_min_height <- function(df, min_height) {
 Example usage in main.R
 
 ```{r}
-source("R/cleaning.R")
-source("R/io.R")
+# This chunk will not produce an output
 
 min_height <- config$min_height
 
@@ -83,6 +79,7 @@ output_format: csv  # Output file format: csv or xlsx
 Create a modular function to save output in the desired format, e.g., in `R/io.R`:
 
 ```{r}
+# This chunk will not produce an output
 library(openxlsx)
 save_output <- function(df, output_path, output_format) {
   if (output_format == "csv") {
@@ -96,8 +93,7 @@ save_output <- function(df, output_path, output_format) {
 ```
 
 ```{r}
-source("R/io.R")
-
+# This chunk will not produce an output
 output_format <- config$output_format
 save_output(filtered_df, output_path, output_format)
 ```

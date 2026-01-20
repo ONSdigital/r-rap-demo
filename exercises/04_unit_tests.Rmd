@@ -13,7 +13,31 @@ adding new features
 
 Read more in the [testthat documentation](https://testthat.r-lib.org/)
 
-## Exercise 1: Write a simple unit test for a new function
+## Exercise 1: Review an existing unit test
+
+The function `clean_health_data` in `R/cleaning.R` has an existing unit test in
+`tests/test_cleaning.R`.
+
+**Task:** 
+1. Run the existing unit test for `clean_health_data` to understand 
+how it works. 
+2. Modify the sample DataFrame in the test to understand what
+causes the tests to pass or fail (Note: if all rows are dropped all tests will fail).
+
+There is an example of a modified DataFrame below however it does not have to be used, feel free to modify the DataFrame and experiment with the tests without following the set exercise.
+
+```{r}
+df <- data.frame(
+  height_cm = c(170, NA, 160, 165),
+  weight_kg = c(70, 80, 75, 68),
+  diagnosis = c(NA, NA, "A", "B"),
+  smoker = c(NA, "No","Yes", NA),
+  gender = c("m", "f", "M", "F"),
+  stringsAsFactors = FALSE
+)
+```
+
+## Exercise 2: Write a simple unit test for a new function
 
 Suppose you have created a function called `impute_by_group` in
 `R/cleaning.R`.
@@ -25,7 +49,7 @@ test.
 
 **Hints:** - Read on for more guidance
 
-## Exercise 1a: Walkthrough - Write a unit test for flag_missing
+## Exercise 2a: Walkthrough - Write a unit test for flag_missing
 
 Let's start with a simple function called `flag_missing`. This function
 adds a new column to your DataFrame to flag missing values in specified
@@ -107,7 +131,7 @@ This approach helps you check that your function does what you expect,
 using simple, readable code. You can add more assert statements or test
 with different data to make your tests even stronger.
 
-## Exercise 1b: Write a unit test for impute_by_group
+## Exercise 2b: Write a unit test for impute_by_group
 
 Now try writing your own tests for the following function. Use the
 walkthrough above as a guide.
@@ -160,14 +184,14 @@ are correctly imputed using group means.
 affect the output unless you implement them in the pipeline. See
 `02_modules_solutions` for a guide on how to do this
 
-## Exercise 2: Run your unit tests
+## Exercise 3: Run your unit tests
 
 **Task:** - To run tests in the `tests/` folder you must open each test
 one at a time and click the `run tests` button in the top right corner
 of the source pane or use devtools::test(). 
 - Check the output to see if your tests pass or fail.
 
-## Exercise 3: Stretch - Check test coverage
+## Exercise 4: Stretch - Check test coverage
 
 Test coverage shows how much of your code is tested by unit tests.
 
@@ -184,7 +208,7 @@ example: cov) equal to the code above and then run:
 `print(zero_lines)` - Check which lines of your code are covered by
 tests.
 
-## Exercise 4: Stretch - Try parameterisation in testthat
+## Exercise 5: Stretch - Try parameterisation in testthat
 
 Parameterisation lets you run the same test with different inputs.
 

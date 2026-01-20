@@ -47,6 +47,7 @@ Welcome to the RAP (Reproducible Analytical Pipeline) demonstration repository! 
 - `data/` — Example health data for analysis
 - `config/` — Configuration files (YAML)
 - `tests/` — Unit tests for pipeline modules
+- `reports/` — Graphs and reports
 - `exercises/` — **Practice exercises** ([see below](#practice-with-exercises))
 - `man/` — Documentation
 - `DESCRIPTION`, `NAMESPACE`, `R_rap_demo.Rproj` — R package metadata and project files
@@ -71,7 +72,6 @@ This will:
 Explore the existing code and add your own functions to the `R/` folder.
 
 ### Practice with exercises
-
 If exercises are provided, they will be in a dedicated folder (e.g., `exercises/`). These are for practice and experimentation, not part of the main package.
 
 - Each exercise has its own subfolder and README with instructions.
