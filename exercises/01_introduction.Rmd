@@ -1,5 +1,5 @@
 # Introduction to RAP pipeline exercises
-Welcome to the RAP (Reproducible Analytical Pipeline) exercises for this project. These exercises are designed to help you learn and apply best practices for reproducible, modular, and transparent data analysis in R.
+Welcome to the RAP (Reproducible Analytical Pipeline) exercises for this project. These exercises are designed to help you learn and apply best practices for reproducible data analysis in R.
 
 ## Contents of the exercises
 - **01_introduction.Rmd**: Overview and guidance for the RAP exercises
