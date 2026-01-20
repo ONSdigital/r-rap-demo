@@ -3,6 +3,12 @@
 library(testthat)
 library(yaml)
 
+testthat::test_that("test_calculate_bmi", {
+  # Test the calculate_bmi function to ensure it calculates BMI correctly.
+  bmi <- calculate_bmi(180, 80)
+  testthat::expect_equal(bmi, 24.69, tolerance = 0.01)
+})
+
 testthat::test_that("test_add_bmi_column", {
   # Test the add_bmi_column function to ensure it adds a 'bmi' column correctly.
   df <- data.frame(
@@ -13,12 +19,6 @@ testthat::test_that("test_add_bmi_column", {
   testthat::expect_true("bmi" %in% colnames(result))
   expected_bmi <- calculate_bmi(180, 80)
   testthat::expect_equal(result$bmi[1], expected_bmi, tolerance = 0.01)
-})
-
-testthat::test_that("test_calculate_bmi", {
-  # Test the calculate_bmi function to ensure it calculates BMI correctly.
-  bmi <- calculate_bmi(180, 80)
-  testthat::expect_equal(bmi, 24.69, tolerance = 0.01)
 })
 
 testthat::test_that("test_load_config", {
