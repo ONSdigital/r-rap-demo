@@ -41,7 +41,7 @@ jobs:
         run: |
           Rscript -e "cov <- covr::package_coverage(); \
                       covr::report(cov, file = 'coverage.html', browse = FALSE); \
-                      writeLines(as.character(cov), 'coverage.txt')""
+                      writeLines(as.character(cov), 'coverage.txt')"
       - name: Upload coverage artifacts
         uses: actions/upload-artifact@v4
         with:
