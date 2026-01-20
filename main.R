@@ -6,7 +6,7 @@
 # - Cleaning and transforming the data
 # - Calculating disease prevalence
 # - Generating a markdown report
-# 
+#
 # Run this file to execute the complete RAP workflow using modular functions from
 # the R/ folder.
 
@@ -37,10 +37,12 @@ main <- function() {
   cat("Cleaned health data generated: ", cleaned_path, "\n\n")
 
   # Processing
-  prevalence_df = calculate_disease_prevalence(df_clean)
+  prevalence_df <- calculate_disease_prevalence(df_clean)
 
   # Reporting
   generate_markdown_report(prevalence_df, report_dir)
   cat("Report generated: ", report_dir, "\n\n")
 }
+
+# Run the pipeline
 main()
