@@ -13,12 +13,10 @@ library(dplyr)
 #' @export
 calculate_disease_prevalence <- function(df, height_cm, weight_kg) {
   prevalence <- df %>%
-    dplyr::group_by(month, diagnosis) %>%
-    dplyr::summarise(case_count = n(), .groups = "drop")
+    dplyr::count(month, diagnosis, name = "case_count")
 
   total_per_month <- df %>%
-    dplyr::group_by(month) %>%
-    dplyr::summarise(total = n(), .groups = "drop")
+    dplyr::count(month, name = "total")
 
   prevalence <- prevalence %>%
     dplyr::left_join(total_per_month, by = "month")
