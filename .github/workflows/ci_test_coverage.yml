@@ -36,12 +36,18 @@ jobs:
       - name: Run tests
         run: Rscript -e 'devtools::test()'
       # Step 6: Generate coverage report with covr and upload as artifact
-      - name: Generate coverage report
-        run: Rscript -e "cov <- covr::package_coverage(); print(covr::percent_coverage(cov)); print(covr::zero_coverage(cov))"
-      - name: Save coverage report to file
-        run: Rscript -e "cov <- covr::package_coverage(); writeLines(as.character(covr::report(cov)), 'coverage.txt')"
-      - name: Upload coverage report artifact
+      - name: Run test coverage
+        run: |
+          Rscript -e "cov <- covr::package_coverage();
+                      covr::report(cov, file = 'coverage-report.html', browse = FALSE);
+                      covr::report(cov, file = 'coverage.txt', browse = FALSE);
+                      covr::to_cobertura(cov, 'coverage.xml')"
+      - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: coverage.txt
+          path: |
+            coverage.txt
+            coverage-report.html
+            coverage.xml
+          retention-days: 14
