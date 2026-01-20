@@ -13,8 +13,9 @@ License: MIT
 RoxygenNote: 7.3.3
 Imports:
   dplyr,
-  testthat,
-  yaml,
+  ggplot2,
+  openxlsx,
   readr,
-  ggplot2
+  testthat,
+  yaml
 
