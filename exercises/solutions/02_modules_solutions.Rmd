@@ -249,23 +249,26 @@ impute_columns <- function(df, group_col) {
   }
   return(df)
 }
-imputed <- impute_columns(df, "gender")
+imputed <- impute_columns(df, "sex")
 head(imputed, 5)
 ```
 ## Step 4 Solution: Refactor Visualisation Code
 
 Below are example functions for visualising missing values and disease prevalence using ggplot. These would go in `R/report.R`.
+
+> Note the output_path which is set by report_dir in the user_config.yaml file
+would be changed to `reports/` in this solution
 ```{r}
 library(ggplot2)
 
 plot_missing_values <- function(df, output_path) {
-  cat(paste0("bulding ", output_path, "missing_values.png\n"))
+  cat(paste0("bulding ", output_path, "/missing_values.png\n"))
   missing_counts <- data.frame(
   columns = names(df),
   missing = sapply(df, function(x) sum(is.na(x))))
   plot <- ggplot2::ggplot(missing_counts, aes(x = columns, y = missing)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
-  ggplot2::ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
+  ggplot2::ggsave(filename = paste0(output_path, "/missing_values.png"), plot = plot)
   plot
 }
 
@@ -326,7 +329,7 @@ generate_markdown_report <- function(prevalence_df, output_path) {
 ```{r}
 library(ggplot2)
 plot_missing_values <- function(df, output_path) {
-  cat(paste0("bulding", output_path, "/missing_values.png\n"))
+  cat(paste0("building ", output_path, "/missing_values.png\n"))
   missing_counts <- data.frame(
   columns = names(df),
   missing = sapply(df, function(x) sum(is.na(x))))
@@ -378,6 +381,7 @@ plot_disease_prevalence_timeseries(prevalence, output_path = report_dir)
 generate_markdown_report <- function(prevalence_df, raw_df, output_path) {
   
   report_file <- file.path(output_path, "disease_prevalence_report.md")
+  print(report_file)
   f <- file(report_file, open = "w", encoding = "UTF-8")
   on.exit(close(f), add = TRUE)
 

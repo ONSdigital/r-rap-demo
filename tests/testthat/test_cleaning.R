@@ -14,7 +14,7 @@ testthat::test_that("test_clean_health_data", {
     weight_kg = c(70, 80),
     diagnosis = c("A", NA),
     smoker = c(NA, "Yes"),
-    gender = c("m", "f"),
+    sex = c("m", "f"),
     stringsAsFactors = FALSE
   )
 

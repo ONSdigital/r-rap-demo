@@ -32,7 +32,7 @@ df <- data.frame(
   weight_kg = c(70, 80, 75, 68),
   diagnosis = c(NA, NA, "A", "B"),
   smoker = c(NA, "No","Yes", NA),
-  gender = c("m", "f", "M", "F"),
+  sex = c("m", "f", "M", "F"),
   stringsAsFactors = FALSE
 )
 ```
