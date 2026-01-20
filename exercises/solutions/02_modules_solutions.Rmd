@@ -1,32 +1,37 @@
 # Solutions: Refactor monolithic code to modular code (imputation example)
 
-This notebook provides step-by-step solutions for refactoring a monolithic imputation script into modular code, following RAP best practices. Each step matches the corresponding exercise notebook.
+This notebook provides step-by-step solutions for refactoring a monolithic
+imputation script into modular code, following RAP best practices.
+Each step matches the corresponding exercise notebook.
 
-```{r}
+```{r setup, include = FALSE}
 # Setup for solutions
 
 library(dplyr)
+library(rlang)
+library(ggplot2)
 
 devtools::load_all()
 
-input_path = here::here("data", "inputs", "health_data.csv")
-cleaned_path = here::here("data", "outputs", "cleaned", "cleaned_data.csv")
-report_dir = here::here("reports")
+input_path <- here::here("data", "inputs", "health_data.csv")
+cleaned_path <- here::here("data", "outputs", "cleaned", "cleaned_data.csv")
+report_dir <- here::here("reports")
 
 # I/O: Read data
-df = read_health_data(input_path)
+df <- read_health_data(input_path)
 
 # Cleaning
-df_clean = clean_health_data(df)
-df_clean = add_bmi_column(df_clean)
+df_clean <- clean_health_data(df)
+df_clean <- add_bmi_column(df_clean)
 
 # Processing
-prevalence_df = calculate_disease_prevalence(df_clean)
+prevalence_df <- calculate_disease_prevalence(df_clean)
 ```
 
-## Step 1 solution: Imputation function
+## Exercise 1 solution: Imputation function
 
-Below is a function that performs imputation for missing height and weight values using group means (e.g., by gender or diagnosis), and flags which values were imputed. This approach is more robust and transparent than using overall means.
+Below is a function that performs imputation for missing height and weight values
+using group means (e.g., by sex or diagnosis), and flags which values were imputed.
 ```{r}
 flag_missing <- function(df, columns) {
   # Add boolean columns to flag missing values for specified columns
@@ -39,28 +44,33 @@ flag_missing <- function(df, columns) {
 
 impute_by_group <- function(df, col, group_col) {
   group_means <- df %>%
-  dplyr::group_by(!!rlang::sym(group_col)) %>%
-  dplyr::mutate(group_mean = mean(!!rlang::sym(col), na.rm = TRUE)) %>%
-  dplyr::pull(group_mean)
+    dplyr::group_by(!!rlang::sym(group_col)) %>%
+    dplyr::mutate(group_mean = mean(!!rlang::sym(col), na.rm = TRUE)) %>%
+    dplyr::pull(group_mean)
   result <- ifelse(is.na(df[[col]]), group_means, df[[col]])
   result <- ifelse(is.na(result), mean(df[[col]], na.rm = TRUE), result)
   result <- round(result, 1)
 }
 
 impute_height_weight <- function(df, group_col) {
-  df = flag_missing(df, c("height_cm", "weight_kg"))
+  df <- flag_missing(df, c("height_cm", "weight_kg"))
   df$height_cm <- impute_by_group(df, "height_cm", group_col)
   df$weight_kg <- impute_by_group(df, "weight_kg", group_col)
   return(df)
 }
 
+# Example output
 imputed <- impute_height_weight(df, group_col = "gender")
 head(imputed, 5)
 ```
-## Step 2 solution: Add functions to pipeline
-Where you place these functions depends on the context and what makes most sense for your pipeline. However, for this exercise one appropriate solution is outlined below:
+## Exercise 2 solution: Add functions to pipeline
+Where you place these functions depends on the context and what makes most sense
+for your pipeline. However, for this exercise one appropriate solution is
+outlined below:
 
-1. Place the `flag_missing`, `impute_by_group` and `impute_height_weight` function into `R/cleaning.R`. You could also have added `flag_missing` to utils as it could be used across other modules.
+1. Place the `flag_missing`, `impute_by_group` and `impute_height_weight`
+function into `R/cleaning.R`. You could also have added `flag_missing` to utils
+as it could be used across other modules.
 ```{r}
 # This chunk will not produce an output
 
@@ -70,18 +80,18 @@ clean_health_data <- function(df) {
   #' Clean health data by handling missing values and standardising columns.
   #' @param df raw health data DataFrame.
   #' @returns df_clean cleaned health data DataFrame.
-  
+
   # Drop rows with missing diagnosis
   df$diagnosis[df$diagnosis == ""] <- NA
   df$diagnosis[df$diagnosis == "NA"] <- NA
-  df_clean <- df[complete.cases(df["diagnosis"]),]
-  
+  df_clean <- df[complete.cases(df["diagnosis"]), ]
+
   # Fill missing smoker values with 'No'
   df_clean$smoker[is.na(df_clean$smoker)] <- "No"
-  
+
   # Ensure gender is uppercase
   df_clean$gender <- toupper(df_clean$gender)
-  
+
   return(df_clean)
 }
 
@@ -96,9 +106,9 @@ flag_missing <- function(df, columns) {
 
 impute_by_group <- function(df, col, group_col) {
   group_means <- df %>%
-  dplyr::group_by(!!rlang::sym(group_col)) %>%
-  dplyr::mutate(group_mean = mean(!!rlang::sym(col), na.rm = TRUE)) %>%
-  dplyr::pull(group_mean)
+    dplyr::group_by(!!rlang::sym(group_col)) %>%
+    dplyr::mutate(group_mean = mean(!!rlang::sym(col), na.rm = TRUE)) %>%
+    dplyr::pull(group_mean)
   result <- ifelse(is.na(df[[col]]), group_means, df[[col]])
   result <- ifelse(is.na(result), mean(df[[col]], na.rm = TRUE), result)
   result <- round(result, 1)
@@ -106,7 +116,7 @@ impute_by_group <- function(df, col, group_col) {
 }
 
 impute_height_weight <- function(df, group_col) {
-  df = flag_missing(df, c("height_cm", "weight_kg"))
+  df <- flag_missing(df, c("height_cm", "weight_kg"))
   df$height_cm <- impute_by_group(df, "height_cm", group_col)
   df$weight_kg <- impute_by_group(df, "weight_kg", group_col)
   return(df)
@@ -128,7 +138,7 @@ clean_health_data <- function(df_clean, group_col) {
 
   # Make a copy of the data frame
   df_clean <- df
-  
+
   # Drop rows with missing values in the "diagnosis" column
   df_clean <- df_clean[!is.na(df_clean$diagnosis), ]
 
@@ -143,12 +153,14 @@ clean_health_data <- function(df_clean, group_col) {
 
   return(df_clean)
 }
+
+# Example output before imputation
 df$diagnosis <- ifelse(trimws(df$diagnosis) == "" | df$diagnosis == "NA", NA, df$diagnosis)
-  
-# Example usage
+
 cat("Missing values before imputation:\n")
 print(colSums(is.na(df)))
 
+# Example output after imputation
 imputed <- clean_health_data(df, group_col = "gender")
 
 cat("Missing values after imputation:\n")
@@ -156,19 +168,22 @@ print(colSums(is.na(imputed)))
 ```
 Running source("R/cleaning.R") in main will import the function
 
-## Step 3 Solution: Reflection
+## Exercise 3 Solution: Reflection
 
-- Group-based imputation preserves important differences in the data and improves reproducibility.
-- Flagging imputed values helps with transparency and downstream analysis.
-- Handling edge cases (e.g., all values missing in a group) ensures robustness.
+- Modular code improves reproducibility and maintainability by placing small
+functions that can be used across the pipeline into clearly named scripts.
+- The advantage of separating code into modules is that it allows users to find
+and reuse functions easily.
+- This pipeline could be extended further by adding more functions to existing
+modules such as extra cleaning or analysis functions. New modules could also be
+created for specific tasks such as creating consistent spreadsheet outputs.
 
 **Extension:**
-The above could be taken further to automatically detect categorical and numerical columns, applying imputation to each.  
+The above could be taken further to automatically detect categorical and
+numerical columns, applying imputation to each.  
 Look at the example below:
 ```{r}
 # for utils.R
-library(dplyr
-        )
 is_numeric_column <- function(series) {
   return(is.numeric(series))
 }
@@ -183,13 +198,13 @@ get_column_types <- function(df) {
   numeric_cols <- names(df)[sapply(df, is_numeric_column)]
   categorical_cols <- names(df)[sapply(df, is_categorical_column)]
 }
+
+# Example output
 get_column_types(df)
 ```
 
 ```{r}
 # for cleaning.R
-library(dplyr)
-library(rlang)
 
 get_column_types <- function(df) {
   numeric_cols <- names(df)[sapply(df, is.numeric)]
@@ -204,7 +219,7 @@ flag_missing <- function(df, columns) {
     df[[imputed_col_name]] <- is.na(df[[col]])
   }
   return(df)
-}  
+}
 impute_numeric_by_group <- function(df, col, group_col) {
   group_means <- df %>%
     dplyr::group_by(!!rlang::sym(group_col)) %>%
@@ -223,8 +238,9 @@ impute_categorical_by_group <- function(df, col, group_col) {
   df <- df %>%
     dplyr::group_by(!!sym(group_col)) %>%
     dplyr::mutate(!!sym(col) := ifelse(is.na(!!sym(col)),
-                                mode_function(!!sym(col)),
-                                !!sym(col)))
+      mode_function(!!sym(col)),
+      !!sym(col)
+    ))
   return(df[[col]])
 }
 
@@ -233,7 +249,7 @@ impute_columns <- function(df, group_col) {
   numeric_cols <- column_types$numeric
   categorical_cols <- column_types$categorical
   cols_to_flag <- setdiff(c(numeric_cols, categorical_cols), group_col)
-  
+
   df <- flag_missing(df, cols_to_flag)
 
   for (col in numeric_cols) {
@@ -249,20 +265,22 @@ impute_columns <- function(df, group_col) {
   }
   return(df)
 }
+
+# Example output
 imputed <- impute_columns(df, "gender")
 head(imputed, 5)
 ```
-## Step 4 Solution: Refactor Visualisation Code
+## Exercise 4 Solution: Refactor Visualisation Code
 
-Below are example functions for visualising missing values and disease prevalence using ggplot. These would go in `R/report.R`.
+Below are example functions for visualising missing values and disease prevalence
+using ggplot. These would go in `R/report.R`.
 ```{r}
-library(ggplot2)
-
 plot_missing_values <- function(df, output_path) {
   cat(paste0("bulding ", output_path, "missing_values.png\n"))
   missing_counts <- data.frame(
-  columns = names(df),
-  missing = sapply(df, function(x) sum(is.na(x))))
+    columns = names(df),
+    missing = sapply(df, function(x) sum(is.na(x)))
+  )
   plot <- ggplot2::ggplot(missing_counts, aes(x = columns, y = missing)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
   ggplot2::ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
@@ -270,16 +288,11 @@ plot_missing_values <- function(df, output_path) {
 }
 
 # Example output
-missing_values_plot = plot_missing_values(df, output_path = report_dir)
+missing_values_plot <- plot_missing_values(df, output_path = report_dir)
 print(missing_values_plot)
 ```
 
 ```{r}
-library(ggplot2)
-
-df <- read.csv(input_path)
-prevalence <- calculate_disease_prevalence(df)
-
 plot_disease_prevalence <- function(prevalence, output_path, month) {
   cat(paste0("building ", output_path, "/prevalence_", month, ".png\n"))
   prevalence <- prevalence[prevalence$month == month, ]
@@ -288,15 +301,18 @@ plot_disease_prevalence <- function(prevalence, output_path, month) {
   ggplot2::ggsave(filename = paste0(output_path, "/prevalence", month, ".png"), plot = plot)
   plot
 }
+
+# Example output
+df <- read.csv(input_path)
+prevalence <- calculate_disease_prevalence(df)
 plot_disease_prevalence(prevalence, output_path = report_dir, month = "2025-01")
 ```
 2. Add the functions to report.R and import ggplot2
 ```{r}
 format_month_section <- function(month, month_df) {
-  
   lines <- sprintf("## Month: %s\n", month)
-  
-  for (i in 1:nrow(month_df)){
+
+  for (i in 1:nrow(month_df)) {
     row <- month_df[i, ]
     line <- sprintf(
       "- %s: %.2f%% (%d cases)\n",
@@ -306,7 +322,7 @@ format_month_section <- function(month, month_df) {
     )
     lines <- c(lines, line)
   }
-  
+
   return(paste(lines, collapse = ""))
 }
 ```
@@ -324,37 +340,33 @@ generate_markdown_report <- function(prevalence_df, output_path) {
 ```
 
 ```{r}
-library(ggplot2)
 plot_missing_values <- function(df, output_path) {
   cat(paste0("bulding", output_path, "/missing_values.png\n"))
   missing_counts <- data.frame(
-  columns = names(df),
-  missing = sapply(df, function(x) sum(is.na(x))))
+    columns = names(df),
+    missing = sapply(df, function(x) sum(is.na(x)))
+  )
   plot <- ggplot2::ggplot(missing_counts, aes(x = columns, y = missing)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
   ggplot2::ggsave(filename = paste0(output_path, "/missing_values.png"), plot = plot)
   plot
 }
+
+# Example output
 df <- read.csv(input_path)
 plot_missing_values(df, output_path = report_dir)
 ```
 
 ```{r}
-library(dplyr)
-library(ggplot2)
-
-df <- read.csv(input_path)
-prevalence <- calculate_disease_prevalence(df)
-
 plot_disease_prevalence_timeseries <- function(prevalence, output_path) {
   cat(paste0("building ", output_path, "/prevalence_timeseries.png\n"))
-  
+
   # Remove Healthy cases
   prevalence <- prevalence[prevalence$diagnosis != "Healthy", ]
-  
+
   # Custom color palette
   palette <- c("#4C72B0", "#55A868", "#C44E52", "#8172B2", "#CCB974", "#64B5CD")
-  
+
   # Plot timeseries
   library(ggplot2)
   p <- ggplot2::ggplot(prevalence, aes(x = month, y = prevalence_rate, color = diagnosis, group = diagnosis)) +
@@ -368,15 +380,18 @@ plot_disease_prevalence_timeseries <- function(prevalence, output_path) {
       color = "Diagnosis"
     ) +
     ggplot2::theme_minimal()
-  
+
   ggplot2::ggsave(filename = paste0(output_path, "/prevalence_timeseries.png"), plot = p, width = 8, height = 5)
 }
+
+# Example output
+df <- read.csv(input_path)
+prevalence <- calculate_disease_prevalence(df)
 plot_disease_prevalence_timeseries(prevalence, output_path = report_dir)
 ```
 
 ```{r}
 generate_markdown_report <- function(prevalence_df, raw_df, output_path) {
-  
   report_file <- file.path(output_path, "disease_prevalence_report.md")
   f <- file(report_file, open = "w", encoding = "UTF-8")
   on.exit(close(f), add = TRUE)
@@ -397,5 +412,7 @@ generate_markdown_report <- function(prevalence_df, raw_df, output_path) {
 ```
 
 ```{r}
+# main.R
+
 generate_markdown_report(prevalence_df, df, report_dir)
 ```

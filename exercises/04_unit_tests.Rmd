@@ -7,11 +7,22 @@ how to write and run unit tests.
 ## Why are unit tests important?
 
 Unit tests check that individual functions behave as expected. They: -
-Help catch bugs early - Make code easier to maintain - Support
-reproducibility and automation - Give confidence when refactoring or
-adding new features
+- Help catch bugs, by testing small pieces of code in isolation
+- Make code easier to maintain by documenting expected behavior
+- Ensure code changes don't break existing functionality by running tests after
+modifications
+- Give confidence when refactoring or adding new features by verifying existing
+tests still pass
 
 Read more in the [testthat documentation](https://testthat.r-lib.org/)
+
+```{r setup, include = FALSE}
+# Setup code for exercises
+
+library(dplyr)
+
+input_path <- here::here("data", "inputs", "health_data.csv")
+```
 
 ## Exercise 1: Review an existing unit test
 
@@ -44,19 +55,22 @@ Below is the code for `flag_missing`:
 
 ```{r}
 library(dplyr)
+
 flag_missing <- function(df) {
   df <- df %>%
     dplyr::rowwise() %>%
     dplyr::mutate(height_cm_imputed = is.na(height_cm)) %>%
     dplyr::mutate(weight_kg_imputed = is.na(weight_kg)) %>%
     dplyr::ungroup()
-    return(df)
+  return(df)
 }
+
+# Example output
 df <- data.frame(
   height_cm = c(170, NA, 160),
-  weight_kg = c(70, 80, NA))
-flagged = flag_missing(df)
-
+  weight_kg = c(70, 80, NA)
+)
+flagged <- flag_missing(df)
 ```
 
 ## How to write a unit test for `flag_missing`
@@ -70,21 +84,24 @@ flagged = flag_missing(df)
 
 ```{r}
 library(testthat)
-# If running the test in a separate file to the function, use source() to import the function that is being tested
+# If running the test in a separate file to the function, use source() to import
+# the function that is being tested
 
 testthat::test_that("test flag_missing", {
   # Create data frame to feed into the flag_missing function
   df <- data.frame(
     height_cm = c(170, NA, 160),
-    weight_kg = c(70, 80, NA))
+    weight_kg = c(70, 80, NA)
+  )
   # Define a data frame of the expected output that is expected from flag_missing
   expected_output <- data.frame(
     height_cm = c(170, NA, 160),
-    weight_kg = c(70, 80, NA),    
+    weight_kg = c(70, 80, NA),
     height_cm_imputed = c(FALSE, TRUE, FALSE),
-    weight_kg_imputed = c(FALSE, FALSE, TRUE))
-  
-  flagged = flag_missing(df)
+    weight_kg_imputed = c(FALSE, FALSE, TRUE)
+  )
+
+  flagged <- flag_missing(df)
   # Check that the output of flag_missing is the same as the expected output
   testthat::expect_equal(as.data.frame(flagged), expected_output)
 })
@@ -129,10 +146,11 @@ Below is the function definition:
 
 ```{r}
 library(dplyr)
+
 impute_by_group <- function(df, col, group_col) {
   col <- rlang::sym(col)
   group_col <- rlang::sym(group_col)
-  
+
   df <- df %>%
     dplyr::group_by(!!group_col) %>%
     dplyr::mutate(
@@ -151,10 +169,12 @@ impute_by_group <- function(df, col, group_col) {
       ),
       imputed = round(imputed, 1)
     )
-  
+
   return(df$imputed)
 }
-df <- read.csv("data/inputs/health_data.csv")
+
+# Example output
+df <- read.csv(input_path)
 impute_by_group(df = df, col = "weight_kg", group_col = "gender")
 ```
 
