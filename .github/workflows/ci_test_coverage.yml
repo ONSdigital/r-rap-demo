@@ -3,7 +3,7 @@ name: Test coverage CI (Any Branch)
 on:
   # Run this workflow when you push to any branch
   push:
-    branches: [ "**" ]
+    branches: [ "*" ]
 
 jobs:
   build:
@@ -19,48 +19,26 @@ jobs:
           r-version: '4.4.0'
       # Step 3: Cache R packages to speed up future runs 
       - name: Set R_LIBS_USER
-        run: echo "R_LIBS_USER=$(Rscript -e 'cat(.libPaths()[1])')" >> $GITHUB_ENV
-      
+        run: |
+          R_LIBS_USER=$(Rscript -e 'cat(.libPaths()[1])')
+          echo "R_LIBS_USER=$R_LIBS_USER" >> $GITHUB_ENV
+          mkdir -p "$R_LIBS_USER"
+
       - name: Cache R packages
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ hashFiles('**/renv.lock', '**/pak.lock', '**/DESCRIPTION', '.github/workflows/*.yml') }}
+          key: ${{ runner.os }}-r-${{ hashFiles('**/*.lock') }}
           restore-keys: |
             ${{ runner.os }}-r-
-
       # Step 4: Install all required R packages listed in DESCRIPTION
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::devtools  
       # Step 5: Run unit tests using devtools
-
-      - name: Run tests (location + summary)
-        run: |
-          Rscript -e 'options(dplyr.summarise.inform = TRUE); testthat::with_reporter(c("location","summary"), testthat::test_local(stop_on_failure = TRUE))'
-
-
-      - name: R CMD check (optional)
-        if: always() && github.event_name == 'pull_request'
-        run: |
-          R CMD build .
-          PKG_TGZ=$(ls -1t *.tar.gz | head -n 1)
-          R CMD check "$PKG_TGZ" --no-manual
-        continue-on-error: true
-
-      - name: Upload check artifacts (if any) on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: r-cmd-check-output
-          path: |
-            *.Rcheck/00check.log
-            *.Rcheck/tests/testthat.Rout*
-            *.Rcheck/00install.out
-          if-no-files-found: ignore
-
+      - name: Run tests
+        run: Rscript -e 'devtools::test()'
       # Step 6: Generate coverage report wit covr and upload as artifact
       - name: Generate coverage report
-        if: success()
         run: Rscript -e "cov <- covr::package_coverage(); print(covr::percent_coverage(cov)); print(covr::zero_coverage(cov))"
