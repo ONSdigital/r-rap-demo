@@ -76,10 +76,10 @@ as it could be used across other modules.
 
 # cleaning.R: Data cleaning functions for RAP pipeline
 
+#' Clean health data by handling missing values and standardising columns.
+#' @param df raw health data DataFrame.
+#' @returns df_clean cleaned health data DataFrame.
 clean_health_data <- function(df) {
-  #' Clean health data by handling missing values and standardising columns.
-  #' @param df raw health data DataFrame.
-  #' @returns df_clean cleaned health data DataFrame.
 
   # Drop rows with missing diagnosis
   df$diagnosis[df$diagnosis == ""] <- NA
@@ -95,6 +95,10 @@ clean_health_data <- function(df) {
   return(df_clean)
 }
 
+#' Flag missing values.
+#' @param df health data DataFrame.
+#' @param group_col column name to group by for imputation.
+#' @returns df with flags for missing values.
 flag_missing <- function(df, columns) {
   # Add boolean columns to flag missing values for specified columns
   for (col in columns) {
@@ -104,6 +108,11 @@ flag_missing <- function(df, columns) {
   return(df)
 }
 
+#' Impute missing values in a column by group means.
+#' @param df health data DataFrame.
+#' @param col column name to impute.
+#' @param group_col column name to group by for imputation.
+#' @returns vector with imputed values.
 impute_by_group <- function(df, col, group_col) {
   group_means <- df %>%
     dplyr::group_by(!!rlang::sym(group_col)) %>%
@@ -115,6 +124,10 @@ impute_by_group <- function(df, col, group_col) {
   return(result)
 }
 
+#' Impute height and weight columns by group means and flag imputed values.
+#' @param df health data DataFrame.
+#' @param group_col column name to group by for imputation.
+#' @returns df with imputed height and weight and flags for imputed values.
 impute_height_weight <- function(df, group_col) {
   df <- flag_missing(df, c("height_cm", "weight_kg"))
   df$height_cm <- impute_by_group(df, "height_cm", group_col)
@@ -126,15 +139,11 @@ impute_height_weight <- function(df, group_col) {
     - Add the `group_col` parameter to the clean health data function
     - Make sure to remove height_cm and weight_kg from the dropna subset.
 ```{r}
+#' Clean health data by handling missing values and standardising columns.
+#' @param df raw health data DataFrame.
+#' @param group_col column name to group by for imputation.
+#' @returns df_clean cleaned health data DataFrame.
 clean_health_data <- function(df_clean, group_col) {
-  #' Clean health data by dropping rows with missing values in key columns.
-  #'
-  #' @param:
-  #'   df: A data frame containing raw health data.
-  #'   group_col: The column to group on for mean imputation.
-  #'
-  #' @returns:
-  #'   A cleaned data frame with no missing values in critical columns.
 
   # Make a copy of the data frame
   df_clean <- df

@@ -16,16 +16,14 @@ end-of-file-fixer and detect-secrets
 
 -   Add a fake secret to any Python file. For example:
 
-    ```{r}
+```{r}
 password <- "add_your_fake_password_here"
 print(password)
-    ```
+```
 
--   Run:
+-   Run the following in the terminal:
 
-    ``` 
-    pre-commit run bandit --all-files
-    ```
+`pre-commit run bandit --all-files`
 
 -   **How to check:** The hook will flag the secret in the output. Remove the
 secret and rerun the hook.
