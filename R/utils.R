@@ -24,7 +24,7 @@ calculate_bmi <- function(height_cm, weight_kg) {
 #' @return data.frame with added 'bmi' column
 #'
 #' @export
-add_bmi_column <- function(df, height_cm, weight_kg) {
+add_bmi_column <- function(df) {
   df <- df %>%
     dplyr::rowwise() %>%
     dplyr::mutate(bmi = calculate_bmi(height_cm, weight_kg)) %>%

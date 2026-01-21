@@ -81,9 +81,20 @@ jobs:
       # Step 5: Run unit tests using devtools
       - name: Run tests
         run: Rscript -e 'devtools::test()'
-      # Step 6: Generate coverage report wit covr and upload as artifact
-      - name: Generate coverage report
-        run: Rscript -e "cov <- covr::package_coverage(); print(covr::percent_coverage(cov)); print(covr::zero_coverage(cov))"
+      # Step 6: Generate coverage report with covr and upload as artifact
+      
+      - name: Run test coverage and generate reports
+        run: |
+          Rscript -e "cov <- covr::package_coverage(); \
+                      covr::report(cov, file = 'coverage.html', browse = FALSE); \
+                      writeLines(as.character(cov), 'coverage.txt')"
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            coverage.txt
+            coverage.html
 ```
 
 The Imports section of the DESCRIPTION file must be updated to include the packages covr, DT and htmltools:
