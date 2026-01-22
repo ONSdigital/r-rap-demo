@@ -6,50 +6,40 @@ This notebook provides step-by-step solutions for writing and running unit tests
 
 Open `tests/testthat/test_cleaning.R` and run the test.
 
-After the test passes, change the DataFrame to the following DataFrame and run the test again:
+After the test passes, change the function `clean_health_data` in `R/cleaning.R` to the following, save the file and then run the test again:
 
 ```{r}
-df <- data.frame(
-  height_cm = c(170, NA, 160, 165),
-  weight_kg = c(70, 80, 75, 68),
-  diagnosis = c(NA, NA, "A", "B"),
-  smoker = c(NA, "No","Yes", NA),
-  gender = c("m", "f", "M", "F"),
-  stringsAsFactors = FALSE
-)
+clean_health_data <- function(df) {
+  # Drop rows with missing diagnosis
+  df$diagnosis[df$diagnosis == ""] <- NA
+  df$diagnosis[df$diagnosis == "NA"] <- NA
+  df_clean <- df[
+    complete.cases(df[, c("diagnosis", "height_cm", "weight_kg")]),
+  ]
+
+  # Fill missing smoker values with 'No'
+  df_clean$smoker[is.na(df_clean$smoker)] <- "Yes"
+
+  # Ensure gender is uppercase
+  df_clean$gender <- toupper(df_clean$gender)
+
+  return(df_clean)
+}
 ```
 
-Notice how the check for the missing smoker value fails. The test checks column 0 for a "smoker" value of "No", with the new DataFrame the first 2 columns are imputed due to missing diagnosis leaving the DataFrame looking like this:
+Notice how the check for the missing smoker value fails. The test checks the first column for a "smoker" value of "No", however the changed `clean_health_data` function fills missing smoker values with "Yes". This causes the test to fail because the expected value does not match the actual value.
+In order for the test to pass change the unit test so that the test has an expected "smoker" value to "Yes" instead of "No".
 
-```{r}
-df <- data.frame(
-  height_cm = c(160, 165),
-  weight_kg = c(75, 68),
-  diagnosis = c("A", "B"),
-  smoker = c("Yes", NA),
-  gender = c("M", "F"),
-  stringsAsFactors = FALSE
-```
-
-The test checks column 0 and expects the value "No" in the "smoker" column, instead it receives the value "Yes" and therefore the test fails.
-In order for the test to pass either change the column that the test checks or change the expected "smoker" value to "Yes" instead of "No".
-
-The original expect statement looks like this:
+The original expect statement that causes the test to fail looks like this:
 
 ```{r}
 testthat::expect_equal(cleaned$smoker[1], "No")
 ```
 
-The changed expect statement should look like either:
+The changed expect statement should look like this:
 
 ```{r}
 testthat::expect_equal(cleaned$smoker[1], "Yes")
-```
-
-or
-
-```{r}
-testthat::expect_equal(cleaned$smoker[2], "No")
 ```
 
 ## Exercise 2 Solution: Write a simple unit test for a new function
