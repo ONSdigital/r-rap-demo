@@ -21,7 +21,7 @@ clean_health_data <- function(df) {
   df_clean$smoker[is.na(df_clean$smoker)] <- "Yes"
 
   # Ensure sex is uppercase
-  df_clean$gender <- toupper(df_clean$sex)
+  df_clean$sex <- toupper(df_clean$sex)
 
   return(df_clean)
 }
