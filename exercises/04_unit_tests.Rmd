@@ -20,6 +20,7 @@ Read more in the [testthat documentation](https://testthat.r-lib.org/)
 # Setup code for exercises
 
 library(dplyr)
+library(testthtat)
 
 input_path <- here::here("data", "inputs", "health_data.csv")
 ```
@@ -80,8 +81,6 @@ columns.
 Below is the code for `flag_missing`:
 
 ```{r}
-library(dplyr)
-
 flag_missing <- function(df) {
   df <- df %>%
     dplyr::rowwise() %>%
@@ -109,7 +108,6 @@ flagged <- flag_missing(df)
 4.  Write a test function using `test_that`:
 
 ```{r}
-library(testthat)
 # If running the test in a separate file to the function, use source() to import
 # the function that is being tested
 
@@ -171,8 +169,6 @@ statements to check the output.
 Below is the function definition:
 
 ```{r}
-library(dplyr)
-
 impute_by_group <- function(df, col, group_col) {
   col <- rlang::sym(col)
   group_col <- rlang::sym(group_col)
@@ -198,7 +194,9 @@ impute_by_group <- function(df, col, group_col) {
 
   return(df$imputed)
 }
-df <- read.csv("data/inputs/health_data.csv")
+
+# Example output
+df <- read.csv(input_path)
 impute_by_group(df = df, col = "weight_kg", group_col = "sex")
 ```
 
