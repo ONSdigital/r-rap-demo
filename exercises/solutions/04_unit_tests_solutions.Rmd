@@ -32,22 +32,21 @@ The test failing highlights the function to developers who can then check if the
 
 The original expect statement that causes the test to fail looks like this:
 
-```{r}
-testthat::expect_equal(cleaned$smoker[1], "No")
-```
+`testthat::expect_equal(cleaned$smoker[1], "No")`
 
 The changed expect statement should look like this:
 
-```{r}
-testthat::expect_equal(cleaned$smoker[1], "Yes")
-```
+`testthat::expect_equal(cleaned$smoker[1], "Yes")`
 
 ## Exercise 2 Solution: Write a simple unit test for a new function
 
 Here are example unit tests for the `flag_missing` and `impute_by_group` functions in `R/cleaning.R`:
-```{r}
+```{r, eval=FALSE}
+# Note: This test will not run unless flag_missing has been entered into cleaning.R
+
 library(testthat)
 source(here::here("R", "cleaning.R"))
+
 testthat::test_that("test flag_missing", {
   df <- data.frame(
     height_cm = c(170, NA, 160),
@@ -63,7 +62,9 @@ testthat::test_that("test flag_missing", {
 })
 ```
 
-```{r}
+```{r, eval=FALSE}
+# Note: This test will not run unless impute_by_group has been entered into cleaning.R
+
 library(testthat)
 source(here::here("R", "cleaning.R"))
 testthat::test_that("test impute_by_group", {
@@ -89,9 +90,9 @@ testthat::test_that("test impute_by_group", {
 ## Exercise 4 Solution: Stretch - Check test coverage
 
 Run the following commands:
-```{r}
+```{r, eval=FALSE}
 library(covr)
- cov <- covr::file_coverage("R/utils.R", "tests/test_utils.R")
+ cov <- covr::file_coverage(here::here("R", "utils.R"), here::here("tests", "testthat", "test_utils.R"))
  zero_lines <- covr::zero_coverage(cov)
  print(zero_lines)
 # Note: The first argument is the path to the function, the second argument is the path to the test function
@@ -104,7 +105,7 @@ library(covr)
 
 Here are examples using `with_parameters_test_that` for `flag_missing` and `impute_by_group`. Parameterisation lets you run the same test with different inputs, making your tests more robust and easier to maintain.
 
-```{r}
+```{r, eval=FALSE}
 library(testthat)
 library(patrick)
 
