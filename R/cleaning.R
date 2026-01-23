@@ -21,8 +21,8 @@ clean_health_data <- function(df) {
   # Fill missing smoker values with 'No'
   df_clean$smoker[is.na(df_clean$smoker)] <- "No"
 
-  # Ensure gender is uppercase
-  df_clean$gender <- toupper(df_clean$gender)
+  # Ensure sex is uppercase
+  df_clean$sex <- toupper(df_clean$sex)
 
   return(df_clean)
 }

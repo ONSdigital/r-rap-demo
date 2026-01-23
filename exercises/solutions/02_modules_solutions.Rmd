@@ -59,8 +59,7 @@ impute_height_weight <- function(df, group_col) {
   return(df)
 }
 
-# Example output
-imputed <- impute_height_weight(df, group_col = "gender")
+imputed <- impute_height_weight(df, group_col = "sex")
 head(imputed, 5)
 ```
 ## Exercise 2 solution: Add functions to pipeline
@@ -88,10 +87,10 @@ clean_health_data <- function(df) {
 
   # Fill missing smoker values with 'No'
   df_clean$smoker[is.na(df_clean$smoker)] <- "No"
-
-  # Ensure gender is uppercase
-  df_clean$gender <- toupper(df_clean$gender)
-
+  
+  # Ensure sex is uppercase
+  df_clean$sex <- toupper(df_clean$sex)
+  
   return(df_clean)
 }
 
@@ -154,8 +153,8 @@ clean_health_data <- function(df_clean, group_col) {
   # Fill missing smoker values with "No"
   df_clean$smoker[is.na(df_clean$smoker)] <- "No"
 
-  # Ensure gender is uppercase
-  df_clean$gender <- toupper(df_clean$gender)
+  # Ensure sex is uppercase
+  df_clean$sex <- toupper(df_clean$sex)
 
   # Impute mean values per group for height and weight
   df_clean <- impute_height_weight(df_clean, group_col = group_col)
@@ -169,8 +168,7 @@ df$diagnosis <- ifelse(trimws(df$diagnosis) == "" | df$diagnosis == "NA", NA, df
 cat("Missing values before imputation:\n")
 print(colSums(is.na(df)))
 
-# Example output after imputation
-imputed <- clean_health_data(df, group_col = "gender")
+imputed <- clean_health_data(df, group_col = "sex")
 
 cat("Missing values after imputation:\n")
 print(colSums(is.na(imputed)))
@@ -274,9 +272,7 @@ impute_columns <- function(df, group_col) {
   }
   return(df)
 }
-
-# Example output
-imputed <- impute_columns(df, "gender")
+imputed <- impute_columns(df, "sex")
 head(imputed, 5)
 ```
 ## Exercise 4 Solution: Refactor Visualisation Code
@@ -285,14 +281,14 @@ Below are example functions for visualising missing values and disease prevalenc
 using ggplot. These would go in `R/report.R`.
 ```{r}
 plot_missing_values <- function(df, output_path) {
-  cat(paste0("bulding ", output_path, "missing_values.png\n"))
+  cat(paste0("bulding ", output_path, "/missing_values.png\n"))
   missing_counts <- data.frame(
     columns = names(df),
     missing = sapply(df, function(x) sum(is.na(x)))
   )
   plot <- ggplot2::ggplot(missing_counts, aes(x = columns, y = missing)) +
     ggplot2::geom_bar(stat = "identity", fill = "#003d59", width = 0.6)
-  ggplot2::ggsave(filename = paste0(output_path, "missing_values.png"), plot = plot)
+  ggplot2::ggsave(filename = paste0(output_path, "/missing_values.png"), plot = plot)
   plot
 }
 
@@ -350,7 +346,7 @@ generate_markdown_report <- function(prevalence_df, output_path) {
 
 ```{r}
 plot_missing_values <- function(df, output_path) {
-  cat(paste0("bulding", output_path, "/missing_values.png\n"))
+  cat(paste0("building ", output_path, "/missing_values.png\n"))
   missing_counts <- data.frame(
     columns = names(df),
     missing = sapply(df, function(x) sum(is.na(x)))

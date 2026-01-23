@@ -26,9 +26,9 @@ may not be covered by these exercises.
 ## How to use the exercises
 1. **Read each exercise notebook** and follow the instructions step by step.
 2. **Write your code** in the notebook cells or in the `R/` modules as instructed.
-4. **Check your solutions** by comparing your results with the solutions notebooks
+3. **Check your solutions** by comparing your results with the solutions notebooks
 in `exercises/solutions/`.
-5. **View outputs** in the `data/outputs/` or `reports/` folder (e.g., cleaned data,
+4. **View outputs** in the `data/outputs/` or `reports/` folder (e.g., cleaned data,
 markdown reports, charts).
 
 ## Adding code to the R folder
