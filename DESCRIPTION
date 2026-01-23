@@ -12,10 +12,10 @@ Description: Learn RAP principles through practical R exercises. This repo
 License: MIT
 RoxygenNote: 7.3.3
 Imports:
+  covr,
   dplyr,
-  testthat,
-  yaml,
-  readr,
   ggplot2,
-  patrick
-
+  patrick,
+  readr,
+  testthat,
+  yaml
