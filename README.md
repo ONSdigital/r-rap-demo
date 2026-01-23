@@ -16,7 +16,7 @@ Update it as your project evolves.
 -->
 # Work in Progress – RAP demonstration repository for R
 
-Welcome to the RAP (Reproducible Analytical Pipeline) demonstration repository! This repository is designed for beginners to practice RAP principles, experiment with R code, and learn best practices for reproducible, automated, and transparent analytical pipelines in R.
+Welcome to the RAP (Reproducible Analytical Pipeline) demonstration repository! This repository is designed for beginner to intermediate coders to practice RAP principles, experiment with code, and learn best practices for Reproducible Analytical Pipelines in R.
 
 See the [Reproducible Analytical Pipelines]([PROVISIONAL_LINK]) materials on the Analysis for Action platform for more information about RAPs and their importance.
 
@@ -25,13 +25,15 @@ See the [Reproducible Analytical Pipelines]([PROVISIONAL_LINK]) materials on the
 ## Getting Started
 
 1. **Fork the repository:**
-   - Go to the GitHub page for this repository.
-   - Click the "Fork" button in the top right to create your own copy.
-   - Clone your forked repository:
+   - Forking means creating your own copy of this project on GitHub. Go to the [GitHub page](https://github.com/ONSdigital/python_rap_demo) for this repository (if you are not there already) and click the "Fork" button in the top right.
+   - After forking, go to your new repository (it will be at `https://github.com/<your-username>/r-rap-demo`).
+   - Click the green "Code" button and copy the URL shown under "Clone".
+   - Open a terminal (Command Prompt) and run:
      ```cmd
-     git clone https://github.com/ONSdigital/r-rap-demo.git
+     git clone https://github.com/<your-username>/r-rap-demo.git
      cd r-rap-demo
      ```
+   - **Tip:** To check you are in the project root, run `dir` and make sure you see files like `README.md` and folders like `R` and `data`.
 
 > **Note:** The GitHub repository is named `r-rap-demo`, but the R package name (as used in R and in the `DESCRIPTION` file) is `r.rap.demo`. This difference is intentional and follows best practices for naming in each context.
 
@@ -74,9 +76,6 @@ This will:
 Explore the existing code and add your own functions to the `R/` folder.
 
 ### Practice with exercises
-
-**Note:** File paths in the exercise markdown are relative, the code chunks that produce outputs will not run unless the working directory of the markdown is changed to the project root. To set the markdown directory, select the drop down menu next to knit at the top of the Rstudio source panel, then select to Knit Directory drop down menu and select Project Directory
-
 If exercises are provided, they will be in a dedicated folder (e.g., `exercises/`). These are for practice and experimentation, not part of the main package.
 
 - Each exercise has its own subfolder and README with instructions.
@@ -87,13 +86,11 @@ If exercises are provided, they will be in a dedicated folder (e.g., `exercises/
   - Set up and customise pre-commit hooks
   - Apply RAP principles in real code
 
-**Do not edit files in `R/` unless instructed by an exercise.**
-
 ### Understanding the purpose of each file and folder
 
 Information about different files and folders can be found throughout the pipeline:
   - Files: Contain information on their purpose in the file itself, except `.secrets.baseline`. `.secrets.baseline` information can be found in the `docs` folder.
-  - Folders: Contain a README to explain their purpose and typical contents.
+  - Folders: Contain a markdown (.md) file to explain what the folder is for and typical files it contains.
   - Scripts: Fully documented with comments and Roxygen docstrings.
 
 ### Create and run tests

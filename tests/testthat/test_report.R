@@ -1,7 +1,6 @@
 # Unit tests for the report module in the RAP pipeline.
 
 library(testthat)
-library(readr)
 
 testthat::test_that("test_format_month_section", {
   # Define the variable month used in format_month_section

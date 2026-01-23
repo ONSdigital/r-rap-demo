@@ -1,8 +1,12 @@
 # Exercise: using packages and functions
 
 In this exercise, you'll practice refactoring a single, monolithic script into a
-modular pipeline using functions and separate files. This is a key RAP best
-practice for reproducibility and maintainability.
+modular pipeline using functions and separate files. This is a key RAP best practice.
+Modules and functions ensure:
+- Code is not duplicated unnecessarily
+- The pipeline can be scaled up easily by using existing functions or adding new modules when needed
+- Code is easy to navigate through the main.py file and appropriately named modules
+- Code is easy to understand with comprehensive documentation for each function
 
 **Learning objectives:**
 - Understand the difference between monolithic and modular code
@@ -31,8 +35,7 @@ Your task is to refactor this into modular code.
 
 **Tasks:**
 - Convert the below into functions
-- Extend the function to impute missing height and weight using group means
-(e.g., by gender or diagnosis)
+- Extend the function to impute missing height and weight using group means (e.g., by sex or diagnosis)
 - Add a new column to flag which values were imputed
 
 ```{r}
@@ -41,7 +44,7 @@ Your task is to refactor this into modular code.
 df$height_cm_imputed <- is.na(df$height_cm)
 df$weight_kg_imputed <- is.na(df$weight_kg)
 
-df <- dplyr::group_by(df, gender)
+df <- dplyr::group_by(df, sex)
 df <- dplyr::mutate(df,
   height_cm = ifelse(is.na(height_cm), mean(height_cm, na.rm = TRUE), height_cm),
   weight_kg = ifelse(is.na(weight_kg), mean(weight_kg, na.rm = TRUE), weight_kg)

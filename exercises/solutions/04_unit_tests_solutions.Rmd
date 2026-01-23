@@ -4,11 +4,49 @@ This notebook provides step-by-step solutions for writing and running unit tests
 in your RAP pipeline using testthat. Each solution matches the corresponding
 exercise notebook and is designed for beginners.
 
+## Exercise 1 Solution: Review and Adapt an existing unit
+
+Open `tests/testthat/test_cleaning.R` and run the test.
+
+After the test passes, change the function `clean_health_data` in `R/cleaning.R` to the following, save the file and then run the test again:
+
+```{r}
+clean_health_data <- function(df) {
+  # Drop rows with missing diagnosis
+  df$diagnosis[df$diagnosis == ""] <- NA
+  df$diagnosis[df$diagnosis == "NA"] <- NA
+  df_clean <- df[
+    complete.cases(df[, c("diagnosis", "height_cm", "weight_kg")]),
+  ]
+
+  # Fill missing smoker values with 'Yes'
+  df_clean$smoker[is.na(df_clean$smoker)] <- "Yes"
+
+  # Ensure sex is uppercase
+  df_clean$sex <- toupper(df_clean$sex)
+
+  return(df_clean)
+}
+```
+
+Notice how the check for the missing smoker value fails. The test checks the first column for a "smoker" value of "No", however the changed `clean_health_data` function fills missing smoker values with "Yes". This causes the test to fail because the expected value does not match the actual value.
+The test failing highlights the function to developers who can then check if the change was correct or not. If it was not, the developer can fix the error in the function. If it was, the unit test can be adapted to incorporate the change. In this case assume the change was correct. In order for the test to pass change the unit test so that the test has an expected "smoker" value to "Yes" instead of "No".
+
+The original expect statement that causes the test to fail looks like this:
+
+`testthat::expect_equal(cleaned$smoker[1], "No")`
+
+The changed expect statement should look like this:
+
+`testthat::expect_equal(cleaned$smoker[1], "Yes")`
+
 ## Exercise 2 Solution: Write a simple unit test for a new function
 
 Here are example unit tests for the `flag_missing` and `impute_by_group` functions
 in `R/cleaning.R`:
-```{r}
+```{r, eval=FALSE}
+# Note: This test will not run unless flag_missing has been entered into cleaning.R
+
 library(testthat)
 
 source(here::here("R", "cleaning.R"))
@@ -30,7 +68,9 @@ testthat::test_that("test flag_missing", {
 })
 ```
 
-```{r}
+```{r, eval=FALSE}
+# Note: This test will not run unless impute_by_group has been entered into cleaning.R
+
 library(testthat)
 
 source(here::here("R", "cleaning.R"))
@@ -39,10 +79,9 @@ testthat::test_that("test impute_by_group", {
   df <- data.frame(
     height_cm = c(170, NA, 160, 150, 190, 180, NA, NA, 170, NA),
     weight_kg = c(70, 80, 60, 50, 90, 70, 80, 100, 50, 90),
-    gender = c("M", "M", "F", "F", "M", "M", "F", "M", "F", "M")
-  )
+    sex = c("M", "M", "F", "F", "M", "M", "F", "M", "F", "M"))
   expected_output <- c(170, 180, 160, 150, 190, 180, 160, 180, 170, 180)
-  output <- impute_by_group(df, "height_cm", "gender")
+  output <- impute_by_group(df, "height_cm", "sex")
   testthat::expect_equal(round(output, 1), round(expected_output, 1))
 })
 ```
@@ -61,9 +100,9 @@ code or tests.
 ## Exercise 4 Solution: Stretch - Check test coverage
 
 Run the following commands:
-```{r}
+```{r, eval=FALSE}
 library(covr)
-cov <- covr::file_coverage("R/utils.R", "tests/test_utils.R")
+cov <- covr::file_coverage(here::here("R", "utils.R"), here::here("tests", "testthat", "test_utils.R"))
 zero_lines <- covr::zero_coverage(cov)
 print(zero_lines)
 # Note: The first argument is the path to the function, the second argument is the path to the test function
@@ -79,7 +118,7 @@ Here are examples using `with_parameters_test_that` for `flag_missing` and
 `impute_by_group`. Parameterisation lets you run the same test with different
 inputs, making your tests more robust and easier to maintain.
 
-```{r}
+```{r, eval=FALSE}
 library(testthat)
 library(patrick)
 
@@ -130,12 +169,12 @@ patrick::with_parameters_test_that("test impute_by_group",
     testthat::expect_equal(imputed, expected)
   },
   df = list(
-    data.frame(height_cm = c(170, NA, 160), gender = c("M", "F", "F")),
-    data.frame(height_cm = c(NA, NA, 150), gender = c("M", "M", "F"))
+    data.frame(height_cm = c(170, NA, 160), sex = c("M", "F", "F")),
+    data.frame(height_cm = c(NA, NA, 150), sex = c("M", "M", "F"))
   ),
   col = c("height_cm", "height_cm"),
-  group_col = c("gender", "gender"),
-  expected = list(
+  group_col = c("sex", "sex"),
+    expected = list(
     height_cm = c(170, 160, 160),
     height_cm = c(150, 150, 150)
   )
