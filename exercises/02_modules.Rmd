@@ -1,6 +1,8 @@
 # Exercise: using packages and functions
 
-In this exercise, you'll practice refactoring a single, monolithic script into a modular pipeline using functions and separate files. This is a key RAP best practice. Modules and functions ensure:
+In this exercise, you'll practice refactoring a single, monolithic script into a
+modular pipeline using functions and separate files. This is a key RAP best practice.
+Modules and functions ensure:
 - Code is not duplicated unnecessarily
 - The pipeline can be scaled up easily by using existing functions or adding new modules when needed
 - Code is easy to navigate through the main.py file and appropriately named modules
@@ -12,7 +14,7 @@ In this exercise, you'll practice refactoring a single, monolithic script into a
 - Learn how to organise code into modules for analysis and reporting
 - Learn how to handle missing data using imputation
 
-```{r}
+```{r setup, include = FALSE}
 # Setup code for exercises
 
 library(dplyr)
@@ -26,9 +28,10 @@ df <- read.csv(input_path)
 head(df, 5)
 ```
 
-## Step 1: Review the Monolithic Script
+## Exercise 1: Review the Monolithic Script
 
-Below is a single script that identifies missing values and performs imputation. Your task is to refactor this into modular code.
+Below is a single script that identifies missing values and performs imputation.
+Your task is to refactor this into modular code.
 
 **Tasks:**
 - Convert the below into functions
@@ -43,22 +46,21 @@ df$weight_kg_imputed <- is.na(df$weight_kg)
 
 df <- dplyr::group_by(df, sex)
 df <- dplyr::mutate(df,
-             height_cm = ifelse(is.na(height_cm), mean(height_cm, na.rm = TRUE), height_cm),
-             weight_kg = ifelse(is.na(weight_kg), mean(weight_kg, na.rm = TRUE), weight_kg)
-             )
+  height_cm = ifelse(is.na(height_cm), mean(height_cm, na.rm = TRUE), height_cm),
+  weight_kg = ifelse(is.na(weight_kg), mean(weight_kg, na.rm = TRUE), weight_kg)
+)
 df <- dplyr::ungroup(df)
 
 df <- dplyr::mutate(df,
-             height_cm = ifelse(is.na(height_cm), mean(height_cm, na.rm = TRUE), height_cm),
-             weight_kg = ifelse(is.na(weight_kg), mean(weight_kg, na.rm = TRUE), weight_kg)
-             )
+  height_cm = ifelse(is.na(height_cm), mean(height_cm, na.rm = TRUE), height_cm),
+  weight_kg = ifelse(is.na(weight_kg), mean(weight_kg, na.rm = TRUE), weight_kg)
+)
 print(df)
 ```
 Write your function(s) in the cell below:
 ```{r}
-
 ```
-## Step 2: Add your functions to the pipeline
+## Exercise 2: Add your functions to the pipeline
 
 **Tasks:**
 - Add your functions to an appropriate module in the `R/` folder
@@ -68,7 +70,7 @@ Write your function(s) in the cell below:
 - Add your functions into another function in the same module
 - If you create a new module, import the module into the main.R script
 
-## Step 3: Challenge & Reflection
+## Exercise 3: Challenge & Reflection
 
 **Tasks:**
 - Compare the cleaned_data output with and without your changes
@@ -82,13 +84,15 @@ Write your function(s) in the cell below:
 **Bonus:**
 - Try adding your own modules and functions to the pipeline
 
-## Step 4: Refactor Visualisation Code
+## Exercise 4: Refactor Visualisation Code
 
-As an additional challenge, Add code to create visualisations. Place all visualisation functions in the `report.R` module.
+As an additional challenge, Add code to create visualisations. Place all
+visualisation functions in the `report.R` module.
 
 **Tasks:**
 - Write a function to plot missing values per column before the data is cleaned
-- Write a function to plot disease prevalence for each disease category over time after the data is cleaned
+- Write a function to plot disease prevalence for each disease category over time
+after the data is cleaned
 - Add the visualisations to the output report
 
 **Bonus:**

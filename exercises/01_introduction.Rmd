@@ -1,5 +1,7 @@
 # Introduction to RAP pipeline exercises
-Welcome to the RAP (Reproducible Analytical Pipeline) exercises for this project. These exercises are designed to help you learn and apply best practices for reproducible data analysis in R.
+Welcome to the RAP (Reproducible Analytical Pipeline) exercises. These exercises
+are designed to help you develop understanding of best practices for a RAP and
+walk through how to apply those practices in R.
 
 ## Contents of the exercises
 - **01_introduction.Rmd**: Overview and guidance for the RAP exercises
@@ -9,9 +11,12 @@ Welcome to the RAP (Reproducible Analytical Pipeline) exercises for this project
 - **05_continuous_integration.Rmd**: Implement and test continuous integration
 
 ## Aim of the exercises
-The aim is to guide to build on your understanding of reproducible analytical pipelines (RAP) with practical experience in a demonstration repository.  
+The aim is to guide to build on your understanding of RAP with practical
+experience in a demonstration repository.  
   
-These exercises are intended as a starting point that you can build upon. Please use this repository to practice elements of RAP you would like to improve that may not be covered by these exercises.
+These exercises are intended as a starting point that you can build upon. Please
+use this repository to practice elements of RAP you would like to improve that
+may not be covered by these exercises.
 
 ## Where to find exercises, solutions, and outputs
 - **Exercises**: Located in the `exercises/` folder (e.g., `exercises/02_modules.Rmd`)
@@ -21,20 +26,36 @@ These exercises are intended as a starting point that you can build upon. Please
 ## How to use the exercises
 1. **Read each exercise notebook** and follow the instructions step by step.
 2. **Write your code** in the notebook cells or in the `R/` modules as instructed.
-4. **Check your solutions** by comparing your results with the solutions notebooks in `exercises/solutions/`.
-5. **View outputs** in the `data/outputs/` or `reports/` folder (e.g., cleaned data, markdown reports, charts).
+3. **Check your solutions** by comparing your results with the solutions notebooks
+in `exercises/solutions/`.
+4. **View outputs** in the `data/outputs/` or `reports/` folder (e.g., cleaned data,
+markdown reports, charts).
 
 ## Adding code to the R folder
 - Place reusable functions and classes in the appropriate module in `R/` (e.g., `cleaning.R`, `io.R`, `report.R`).
-- Use clear function names, type hints, and docstrings following tidyverse standards.
+- Use clear function names, type hints, and docstrings following [tidyverse](https://www.tidyverse.org/)
+standards.
 
 ## How to check if your solutions have worked
-- **Compare outputs**: Check your results against the solutions notebooks and output files.
-- **Check outputs**: Review generated files in `data/outputs/` or `reports/` for expected results.
-- **Run tests**: For unit test exercises you can run tests with testthat and then check coverage using covr
-- **Use pre-commit hooks and CI**: Ensure your code passes formatting, linting, and CI checks.
+View the solutions for each exercise in the `exercises/solutions/` folder.
+The solutions will walk through the expected outputs and how to run them. This includes:
+- **Comparing outputs**: Check your results against the solutions notebooks and output files.
+- **Checking outputs**: Review generated files in `data/outputs/` or `reports/` for expected results.
+- **Running tests**: For unit test exercises you can run tests with testthat and then check coverage using covr
+- **Using pre-commit hooks and CI**: Ensure your code passes formatting, linting, and CI checks.
+
+## Troubleshooting in R
+If you encounter issues:
+- Ensure all dependencies are installed. Run:
+  ```R
+  devtools::install_deps()
+  ```
+- Check your working directory. Ensure you are in the project root directory when
+running commands. The terminal should show the path ending with `r-rap-demo`.
+- If you encounter any errors, try restarting your R session or RStudio.
+- For exercises, run code in order from top to bottom to ensure all dependencies
+are met.
 
 ## Note
-Some of the code blocks are examples and may not run as-is. You may need to copy the code into the R/ folder or tests/ folder.
-
-By following these exercises, you will build a reproducible, automated, and transparent analytical pipeline suitable for real-world data analysis.
+Some of the code blocks are examples and may not run as-is. You may need to copy
+the code into the R/ folder or tests/ folder.

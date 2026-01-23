@@ -1,6 +1,8 @@
 # Solutions: Unit Testing Exercises
 
-This notebook provides step-by-step solutions for writing and running unit tests in your RAP pipeline using testthat. Each solution matches the corresponding exercise notebook and is designed for beginners.
+This notebook provides step-by-step solutions for writing and running unit tests
+in your RAP pipeline using testthat. Each solution matches the corresponding
+exercise notebook and is designed for beginners.
 
 ## Exercise 1 Solution: Review and Adapt an existing unit
 
@@ -40,24 +42,28 @@ The changed expect statement should look like this:
 
 ## Exercise 2 Solution: Write a simple unit test for a new function
 
-Here are example unit tests for the `flag_missing` and `impute_by_group` functions in `R/cleaning.R`:
+Here are example unit tests for the `flag_missing` and `impute_by_group` functions
+in `R/cleaning.R`:
 ```{r, eval=FALSE}
 # Note: This test will not run unless flag_missing has been entered into cleaning.R
 
 library(testthat)
+
 source(here::here("R", "cleaning.R"))
 
 testthat::test_that("test flag_missing", {
   df <- data.frame(
     height_cm = c(170, NA, 160),
-    weight_kg = c(70, 80, NA))
+    weight_kg = c(70, 80, NA)
+  )
   expected_output <- data.frame(
     height_cm = c(170, NA, 160),
-    weight_kg = c(70, 80, NA),    
+    weight_kg = c(70, 80, NA),
     height_cm_imputed = c(FALSE, TRUE, FALSE),
-    weight_kg_imputed = c(FALSE, FALSE, TRUE))
-  
-  flagged = flag_missing(df)
+    weight_kg_imputed = c(FALSE, FALSE, TRUE)
+  )
+
+  flagged <- flag_missing(df)
   testthat::expect_equal(as.data.frame(flagged), expected_output)
 })
 ```
@@ -66,7 +72,9 @@ testthat::test_that("test flag_missing", {
 # Note: This test will not run unless impute_by_group has been entered into cleaning.R
 
 library(testthat)
+
 source(here::here("R", "cleaning.R"))
+
 testthat::test_that("test impute_by_group", {
   df <- data.frame(
     height_cm = c(170, NA, 160, 150, 190, 180, NA, NA, 170, NA),
@@ -81,35 +89,41 @@ testthat::test_that("test impute_by_group", {
 ## Exercise 3 Solution: Run your unit tests
 
 **Task:**
-- To run tests in the `tests/` folder you must open each test one at a time and click the `run tests` button in the top right corner of the source pane.
+- To run tests in the `tests/` folder you must open each test one at a time and
+click the `run tests` button in the top right corner of the source pane.
 - Check the output to see if your tests pass or fail.
  
 **Expected output:**
-- All tests should pass. If a test fails, check the error message and fix your code or tests.
+- All tests should pass. If a test fails, check the error message and fix your
+code or tests.
 
 ## Exercise 4 Solution: Stretch - Check test coverage
 
 Run the following commands:
 ```{r, eval=FALSE}
 library(covr)
- cov <- covr::file_coverage(here::here("R", "utils.R"), here::here("tests", "testthat", "test_utils.R"))
- zero_lines <- covr::zero_coverage(cov)
- print(zero_lines)
+cov <- covr::file_coverage(here::here("R", "utils.R"), here::here("tests", "testthat", "test_utils.R"))
+zero_lines <- covr::zero_coverage(cov)
+print(zero_lines)
 # Note: The first argument is the path to the function, the second argument is the path to the test function
 ```
 **Expected output:**
-- You will see a report showing the percentage of code covered by tests. Aim for high coverage, but focus on testing important logic.
+- You will see a report showing the percentage of code covered by tests. Aim
+for high coverage, but focus on testing important logic.
 
 
 ## Exercise 5 Solution: Stretch - Try parameterisation in testthat
 
-Here are examples using `with_parameters_test_that` for `flag_missing` and `impute_by_group`. Parameterisation lets you run the same test with different inputs, making your tests more robust and easier to maintain.
+Here are examples using `with_parameters_test_that` for `flag_missing` and
+`impute_by_group`. Parameterisation lets you run the same test with different
+inputs, making your tests more robust and easier to maintain.
 
 ```{r, eval=FALSE}
 library(testthat)
 library(patrick)
 
-patrick::with_parameters_test_that("test flag_missing", {
+patrick::with_parameters_test_that("test flag_missing",
+  {
     flagged <- flag_missing(df, columns)
     testthat::expect_equal(flagged$height_cm_imputed, expected_height_flags)
     testthat::expect_equal(flagged$weight_kg_imputed, expected_weight_flags)
@@ -140,18 +154,19 @@ library(covr)
 library(dplyr)
 impute_by_group <- function(df, col, group_col) {
   group_means <- df %>%
-  dplyr::group_by(!!rlang::sym(group_col)) %>%
-  dplyr::mutate(group_mean = mean(!!rlang::sym(col), na.rm = TRUE)) %>%
-  dplyr::pull(group_mean)
+    dplyr::group_by(!!rlang::sym(group_col)) %>%
+    dplyr::mutate(group_mean = mean(!!rlang::sym(col), na.rm = TRUE)) %>%
+    dplyr::pull(group_mean)
   result <- ifelse(is.na(df[[col]]), group_means, df[[col]])
   result <- ifelse(is.na(result), mean(df[[col]], na.rm = TRUE), result)
   result <- round(result, 1)
   return(result)
 }
 
-patrick::with_parameters_test_that("test impute_by_group", {
-  imputed <- impute_by_group(df, col, group_col)
-  testthat::expect_equal(imputed, expected)
+patrick::with_parameters_test_that("test impute_by_group",
+  {
+    imputed <- impute_by_group(df, col, group_col)
+    testthat::expect_equal(imputed, expected)
   },
   df = list(
     data.frame(height_cm = c(170, NA, 160), sex = c("M", "F", "F")),

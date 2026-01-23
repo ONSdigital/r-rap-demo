@@ -8,13 +8,17 @@ In a RAP project, the README is essential for:
 - Documenting setup steps and usage instructions
 - Outlining folder structure and key files
 - Explaining how to run the pipeline, tests, and automation tools
-- Sharing best practices for reproducibility, automation, and transparency
+- Any other information to help users and contributors understand and work with the project
 
-A well-written README makes your RAP project accessible and easy for others to use, review, or contribute to. Update it as your project evolves.
+The README file is the first file users and contributors will interact with in a RAP. 
+A well-written README makes the RAP project accessible and easy for others to use, review, or contribute to.
+Update it as your project evolves.
 -->
 # Work in Progress – RAP demonstration repository for R
 
 Welcome to the RAP (Reproducible Analytical Pipeline) demonstration repository! This repository is designed for beginner to intermediate coders to practice RAP principles, experiment with code, and learn best practices for Reproducible Analytical Pipelines in R.
+
+See the [Reproducible Analytical Pipelines]([PROVISIONAL_LINK]) materials on the Analysis for Action platform for more information about RAPs and their importance.
 
 **This repository is still in development**
 
@@ -98,9 +102,15 @@ Run tests with:
   devtools::test()
   ```
 
-## Contributing
-
-This repo is for learning and experimentation. If you want to contribute improvements, please read `CONTRIBUTING.md`.
+## Troubleshooting in R
+If you encounter issues:
+- Ensure all dependencies are installed. Run:
+  ```R
+  devtools::install_deps()
+  ```
+- Check your working directory. Ensure you are in the project root directory when running commands. The terminal should show the path ending with `r-rap-demo`.
+- If you encounter any errors, try restarting your R session or RStudio.
+- For exercises, run code in order from top to bottom to ensure all dependencies are met.
 
 ## AI declaration
 

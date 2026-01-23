@@ -3,7 +3,7 @@
 library(testthat)
 
 testthat::test_that("test_clean_health_data", {
-  #Test the clean_health_data function to ensure it:
+  # Test the clean_health_data function to ensure it:
   #- Fills missing smoker values with 'No'
   #- Converts 'sex' to uppercase
   #- Drops rows with missing 'diagnosis'

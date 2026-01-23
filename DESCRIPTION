@@ -15,6 +15,7 @@ Imports:
   covr,
   dplyr,
   ggplot2,
+  openxlsx,
   patrick,
   readr,
   testthat,

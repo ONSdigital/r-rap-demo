@@ -29,4 +29,3 @@ testthat::test_that("test_calculate_disease_prevalence", {
     all(result$prevalence_rate >= 0 & result$prevalence_rate <= 1)
   )
 })
-

@@ -25,8 +25,8 @@ and vulnerabilities in code.
 1. Add a fake secret to any R file. For example:
 
 ```{r}
-   password <- "add_your_fake_password_here"
-   print(password)
+password <- "add_your_fake_password_here"
+print(password)
 ```
 
 2.  Run:

@@ -1,35 +1,39 @@
 # Solutions: Continuous Integration in RAP pipeline
 
-This notebook provides step-by-step solutions for implementing and testing continuous integration (CI) best practices in your RAP pipeline. Each solution matches the corresponding exercise notebook and includes instructions for checking your changes and expected results.
+This notebook provides step-by-step solutions for implementing and testing
+continuous integration (CI) best practices in your RAP pipeline. Each solution
+matches the corresponding exercise notebook and includes instructions for
+checking your changes and expected results.
 
-## Solution 1: Explore the CI configuration files
+## Exercise 1 solution: Explore the CI configuration files
 
 -   Open `.pre-commit-config.yaml`, and `DESCRIPTION` in your project root.
 -   Review which hooks and tools are enabled for Python scripts and notebooks.
--   **Expected result:** You should see hooks for check-added-large-files, end-of-file-fixer and detect-secrets
+-   **Expected result:** You should see hooks for check-added-large-files,
+end-of-file-fixer and detect-secrets
 
-## Solution 2: Detect secrets in your code
+## Exercise 2 solution: Detect secrets in your code
 
 -   Add a fake secret to any Python file. For example:
 
-    ```{r}
-    password <- "add_your_fake_password_here"
-    print(password)
-    ```
+```{r}
+password <- "add_your_fake_password_here"
+print(password)
+```
 
--   Run:
+-   Run the following in the terminal:
 
-    ``` 
-    pre-commit run bandit --all-files
-    ```
+`pre-commit run bandit --all-files`
 
--   **How to check:** The hook will flag the secret in the output. Remove the secret and rerun the hook.
+-   **How to check:** The hook will flag the secret in the output. Remove the
+secret and rerun the hook.
 
 -   **Expected result:** No secrets detected after removal; hook passes.
 
-## Solution 3: Add a new workflow that activates on push to any branch
+## Exercise 3 solution: Add a new workflow that activates on push to any branch
 
--   Create a new workflow file in `.github/workflows/ci_test_coverage.yml` with the following content: 
+-   Create a new workflow file in `.github/workflows/ci_test_coverage.yml` with
+the following content: 
 ```{yaml}
 name: Test coverage CI (Any Branch)
 
@@ -84,13 +88,19 @@ Imports:
 ```
 
 -   Commit and push your change to any branch.
--   Go to your repository on GitHub and click the **Actions** tab at the top of the page.
--   Look for the workflow run named "Test coverage CI (Any Branch)" in the list of workflow runs.
+-   Go to your repository on GitHub and click the **Actions** tab at the top of
+the page.
+-   Look for the workflow run named "Test coverage CI (Any Branch)" in the list
+of workflow runs.
 -   Click on the workflow run to view its status and logs.
--   **Expected result:** The workflow should run automatically on any branch push and show its status (success or failure) in the Actions tab. If there are errors, they will be shown in the logs and the workflow will fail until fixed.
+-   **Expected result:** The workflow should run automatically on any branch push
+and show its status (success or failure) in the Actions tab. If there are errors,
+they will be shown in the logs and the workflow will fail until fixed.
 
 This action will run any time you push code up to GitHub on any branch.
 
 ## Reflection
 
-By following these solutions, you have implemented and tested continuous integration in your RAP pipeline. This ensures your code is reproducible, robust, and meets quality standards automatically.
+By following these solutions, you have implemented and tested continuous
+integration in your RAP pipeline. This ensures your code is reproducible, robust,
+and meets quality standards automatically.
