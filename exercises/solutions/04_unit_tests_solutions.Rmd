@@ -17,7 +17,7 @@ clean_health_data <- function(df) {
     complete.cases(df[, c("diagnosis", "height_cm", "weight_kg")]),
   ]
 
-  # Fill missing smoker values with 'No'
+  # Fill missing smoker values with 'Yes'
   df_clean$smoker[is.na(df_clean$smoker)] <- "Yes"
 
   # Ensure gender is uppercase
@@ -28,7 +28,7 @@ clean_health_data <- function(df) {
 ```
 
 Notice how the check for the missing smoker value fails. The test checks the first column for a "smoker" value of "No", however the changed `clean_health_data` function fills missing smoker values with "Yes". This causes the test to fail because the expected value does not match the actual value.
-In order for the test to pass change the unit test so that the test has an expected "smoker" value to "Yes" instead of "No".
+The test failing highlights the function to developers who can then check if the change was correct or not. If it was not, the developer can fix the error in the function. If it was, the unit test can be adapted to incorporate the change. In this case assume the change was correct. In order for the test to pass change the unit test so that the test has an expected "smoker" value to "Yes" instead of "No".
 
 The original expect statement that causes the test to fail looks like this:
 
