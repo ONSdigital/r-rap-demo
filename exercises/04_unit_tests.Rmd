@@ -21,20 +21,31 @@ The function `clean_health_data` in `R/cleaning.R` has an existing unit test in
 **Task:** 
 1. Run the existing unit test for `clean_health_data` to understand 
 how it works. 
-2. Modify the sample DataFrame in the test to understand what
-causes the tests to pass or fail (Note: if all rows are dropped all tests will fail).
+2. Modify the function `clean_health_data` and re-run the tests to understand what
+causes the tests to pass or fail, then modify the unit test so that the tests passes again.
 
-There is an example of a modified DataFrame below however it does not have to be used, feel free to modify the DataFrame and experiment with the tests without following the set exercise.
+There is an example of a modified function below however it does not have to be used, feel free to modify the function and experiment with the tests without following the set exercise.
 
 ```{r}
-df <- data.frame(
-  height_cm = c(170, NA, 160, 165),
-  weight_kg = c(70, 80, 75, 68),
-  diagnosis = c(NA, NA, "A", "B"),
-  smoker = c(NA, "No","Yes", NA),
-  sex = c("m", "f", "M", "F"),
-  stringsAsFactors = FALSE
-)
+# Modified clean_health_data function
+# Replace the clean_health_data function in R/cleaning.R with this modified version
+
+clean_health_data <- function(df) {
+  # Drop rows with missing diagnosis
+  df$diagnosis[df$diagnosis == ""] <- NA
+  df$diagnosis[df$diagnosis == "NA"] <- NA
+  df_clean <- df[
+    complete.cases(df[, c("diagnosis", "height_cm", "weight_kg")]),
+  ]
+
+  # Fill missing smoker values with 'Yes'
+  df_clean$smoker[is.na(df_clean$smoker)] <- "Yes"
+
+  # Ensure sex is uppercase
+  df_clean$sex <- toupper(df_clean$sex)
+
+  return(df_clean)
+}
 ```
 
 ## Exercise 2: Write a simple unit test for a new function

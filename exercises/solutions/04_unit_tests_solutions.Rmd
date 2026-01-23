@@ -6,59 +6,47 @@ This notebook provides step-by-step solutions for writing and running unit tests
 
 Open `tests/testthat/test_cleaning.R` and run the test.
 
-After the test passes, change the DataFrame to the following DataFrame and run the test again:
+After the test passes, change the function `clean_health_data` in `R/cleaning.R` to the following, save the file and then run the test again:
 
 ```{r}
-df <- data.frame(
-  height_cm = c(170, NA, 160, 165),
-  weight_kg = c(70, 80, 75, 68),
-  diagnosis = c(NA, NA, "A", "B"),
-  smoker = c(NA, "No","Yes", NA),
-  sex = c("m", "f", "M", "F"),
-  stringsAsFactors = FALSE
-)
+clean_health_data <- function(df) {
+  # Drop rows with missing diagnosis
+  df$diagnosis[df$diagnosis == ""] <- NA
+  df$diagnosis[df$diagnosis == "NA"] <- NA
+  df_clean <- df[
+    complete.cases(df[, c("diagnosis", "height_cm", "weight_kg")]),
+  ]
+
+  # Fill missing smoker values with 'Yes'
+  df_clean$smoker[is.na(df_clean$smoker)] <- "Yes"
+
+  # Ensure sex is uppercase
+  df_clean$sex <- toupper(df_clean$sex)
+
+  return(df_clean)
+}
 ```
 
-Notice how the check for the missing smoker value fails. The test checks column 0 for a "smoker" value of "No", with the new DataFrame the first 2 columns are imputed due to missing diagnosis leaving the DataFrame looking like this:
+Notice how the check for the missing smoker value fails. The test checks the first column for a "smoker" value of "No", however the changed `clean_health_data` function fills missing smoker values with "Yes". This causes the test to fail because the expected value does not match the actual value.
+The test failing highlights the function to developers who can then check if the change was correct or not. If it was not, the developer can fix the error in the function. If it was, the unit test can be adapted to incorporate the change. In this case assume the change was correct. In order for the test to pass change the unit test so that the test has an expected "smoker" value to "Yes" instead of "No".
 
-```{r}
-df <- data.frame(
-  height_cm = c(160, 165),
-  weight_kg = c(75, 68),
-  diagnosis = c("A", "B"),
-  smoker = c("Yes", NA),
-  sex = c("M", "F"),
-  stringsAsFactors = FALSE
-)
-```
+The original expect statement that causes the test to fail looks like this:
 
-The test checks column 0 and expects the value "No" in the "smoker" column, instead it receives the value "Yes" and therefore the test fails.
-In order for the test to pass either change the column that the test checks or change the expected "smoker" value to "Yes" instead of "No".
+`testthat::expect_equal(cleaned$smoker[1], "No")`
 
-The original expect statement looks like this:
+The changed expect statement should look like this:
 
-```{r}
-testthat::expect_equal(cleaned$smoker[1], "No")
-```
-
-The changed expect statement should look like either:
-
-```{r}
-testthat::expect_equal(cleaned$smoker[1], "Yes")
-```
-
-or
-
-```{r}
-testthat::expect_equal(cleaned$smoker[2], "No")
-```
+`testthat::expect_equal(cleaned$smoker[1], "Yes")`
 
 ## Exercise 2 Solution: Write a simple unit test for a new function
 
 Here are example unit tests for the `flag_missing` and `impute_by_group` functions in `R/cleaning.R`:
-```{r}
+```{r, eval=FALSE}
+# Note: This test will not run unless flag_missing has been entered into cleaning.R
+
 library(testthat)
 source(here::here("R", "cleaning.R"))
+
 testthat::test_that("test flag_missing", {
   df <- data.frame(
     height_cm = c(170, NA, 160),
@@ -74,7 +62,9 @@ testthat::test_that("test flag_missing", {
 })
 ```
 
-```{r}
+```{r, eval=FALSE}
+# Note: This test will not run unless impute_by_group has been entered into cleaning.R
+
 library(testthat)
 source(here::here("R", "cleaning.R"))
 testthat::test_that("test impute_by_group", {
@@ -100,9 +90,9 @@ testthat::test_that("test impute_by_group", {
 ## Exercise 4 Solution: Stretch - Check test coverage
 
 Run the following commands:
-```{r}
+```{r, eval=FALSE}
 library(covr)
- cov <- covr::file_coverage("R/utils.R", "tests/test_utils.R")
+ cov <- covr::file_coverage(here::here("R", "utils.R"), here::here("tests", "testthat", "test_utils.R"))
  zero_lines <- covr::zero_coverage(cov)
  print(zero_lines)
 # Note: The first argument is the path to the function, the second argument is the path to the test function
@@ -115,7 +105,7 @@ library(covr)
 
 Here are examples using `with_parameters_test_that` for `flag_missing` and `impute_by_group`. Parameterisation lets you run the same test with different inputs, making your tests more robust and easier to maintain.
 
-```{r}
+```{r, eval=FALSE}
 library(testthat)
 library(patrick)
 
